@@ -19,6 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IdRegisterComponent } from './components/forms/id-register/id-register.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { MaterialModule } from './modules/materials/material.module';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { MaterialModule } from './modules/materials/material.module';
     RegisterAgentComponent,
     AddClaimsComponent,
     IdRegisterComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ToolbarComponent
   ],
   imports: [
     BrowserModule,
