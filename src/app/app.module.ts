@@ -20,6 +20,8 @@ import { IdRegisterComponent } from './components/forms/id-register/id-register.
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { MaterialModule } from './modules/materials/material.module';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
