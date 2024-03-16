@@ -1,0 +1,237 @@
+<div>
+    <h1 class="align-text">Public Liability Claim</h1>
+    <form [formGroup]="publicLiabilityForm" class="flex column center-center">
+        <div class="width-80">
+            <div class="flex column gap-2">
+                <h3>Third Party Details</h3>
+                <mat-form-field class="full-width">
+                    <mat-label>Full name</mat-label>
+                    <input formControlName="thirdPatryFullName" type="text" matInput placeholder="Ex. pat@example.com">
+                    <mat-error *ngIf="publicLiabilityForm.get('thirdPatryFullName')?.hasError('required')">
+                        Third party name is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="full-width">
+                    <mat-label>Email</mat-label>
+                    <input formControlName="thirdPartyEmail" type="text" matInput placeholder="Ex. pat@example.com">
+                    <mat-error *ngIf="publicLiabilityForm.get('thirdPartyEmail')?.hasError('required')">
+                        email addres is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="full-width">
+                    <mat-label>Cellphone number</mat-label>
+                    <input formControlName="thirdPartyCellPhone" type="text" matInput placeholder="Ex. pat@example.com">
+                    <mat-error *ngIf="publicLiabilityForm.get('thirdPartyCellPhone')?.hasError('required')">
+                        ID number is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="flex column gap-2">
+                <h3>Incident Date & Place</h3>
+                <div>
+                    <mat-form-field class="full-width">
+                        <mat-label>Date of incident</mat-label>
+                        <input formControlName="incidentDate" type="text" matInput placeholder="Ex. pat@example.com">
+                        <mat-error *ngIf="publicLiabilityForm.get('incidentDate')?.hasError('required')">
+                            Date of incident is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>Time of incident</mat-label>
+                        <input formControlName="incidentTime" type="text" matInput placeholder="Ex. pat@example.com">
+                        <mat-error *ngIf="publicLiabilityForm.get('incidentTime')?.hasError('required')">
+                            Incident time to the deceased is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <mat-form-field class=" full-width">
+                <mat-label>Place where incident occurred </mat-label>
+                <input formControlName="incidentLocation" type="text" matInput placeholder="Ex. pat@example.com">
+                <mat-error *ngIf="publicLiabilityForm.get('incidentLocation')?.hasError('required')">
+                    Place where incident occurred is required
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class=" full-width">
+                <mat-label>On what date did the insured become aware of the incident </mat-label>
+                <input formControlName="awareDate" type="text" matInput placeholder="Ex. pat@example.com">
+                <mat-error *ngIf="publicLiabilityForm.get('awareDate')?.hasError('required')">
+                    Place where incident occurred is required
+                </mat-error>
+            </mat-form-field>
+            <div class="flex column gap-2">
+                <h3>Description of Incident </h3>
+                <div class="flex column gap-2">
+                    <mat-form-field class=" full-width">
+                        <mat-label>Please provide full details regarding the circumstances surrounding the
+                            incident</mat-label>
+                        <textarea formControlName="incidentDetails" type="number" matInput
+                            placeholder="Ex. pat@example.com"></textarea>
+                        <mat-error *ngIf="publicLiabilityForm.get('incidentDetails')?.hasError('required')">
+                            full details regarding the circumstances is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class=" full-width">
+                        <mat-label>What circumstance or condition caused the incident</mat-label>
+                        <textarea formControlName="incidentCause" type="number" matInput
+                            placeholder="Ex. pat@example.com"></textarea>
+                        <mat-error *ngIf="publicLiabilityForm.get('incidentCause')?.hasError('required')">
+                            Circumstance or condition caused the incident is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class=" full-width">
+                        <mat-label>Have incidents of a similar nature previously occurred in this area</mat-label>
+                        <textarea formControlName="previousIncident" type="number" matInput
+                            placeholder="Ex. pat@example.com"></textarea>
+                        <mat-error *ngIf="publicLiabilityForm.get('previousIncident')?.hasError('required')">
+                            Circumstance or condition caused the incident is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="flex column gap-2">
+                    <h3> Personal injuries </h3>
+                    <div class="flex column">
+                        <mat-form-field class=" full-width">
+                            <mat-label>Full details of injuries suffered by third party</mat-label>
+                            <textarea formControlName="injuryDetail" type="text" matInput
+                                placeholder="Ex. pat@example.com"></textarea>
+                            <mat-error *ngIf="publicLiabilityForm.get('injuryDetail')?.hasError('required')">
+                                injuries details is required
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class=" full-width">
+                            <mat-label>Did the third party have any pre-existing physical disability</mat-label>
+                            <input formControlName="thirdPartConditions" type="text" matInput
+                                placeholder="Ex. pat@example.com">
+                            <mat-error *ngIf="publicLiabilityForm.get('injuryDetail')?.hasError('required')">
+                                Doctor, Clinic or Hospital's telephone number is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="flex column gap-2">
+                    <mat-form-field class=" full-width">
+                        <mat-label>Name of property owner</mat-label>
+                        <input formControlName="propertyOwner" type="text" matInput placeholder="Ex. pat@example.com">
+                        <mat-error *ngIf="publicLiabilityForm.get('propertyOwner')?.hasError('required')">
+                            Name of property owner is required
+                        </mat-error>
+                    </mat-form-field> <mat-form-field class=" full-width">
+                        <mat-label>Contact details of property owner</mat-label>
+                        <input formControlName="contactDetails" type="text" matInput placeholder="Ex. pat@example.com">
+                        <mat-error *ngIf="publicLiabilityForm.get('contactDetails')?.hasError('required')">
+                            Contact details of property owner is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class=" full-width">
+                        <mat-label>Details of damage caused to property</mat-label>
+                        <textarea formControlName="damageDetails" type="text" matInput
+                            placeholder="Ex. pat@example.com"></textarea>
+                        <mat-error *ngIf="publicLiabilityForm.get('damageDetails')?.hasError('required')">
+                            Details of damage is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="flex column gap-2">
+                <h3>Insured Investigation</h3>
+                <section class="">
+                    <mat-label>Has the insured conducted their own investigation into the incident</mat-label>
+                    <mat-radio-group #forceEntry formControlName="hasInsuredInv">
+                        <mat-radio-button class="margin" value="Yes">Yes</mat-radio-button>
+                        <mat-radio-button class="margin" value="No">No</mat-radio-button>
+                        <mat-error *ngIf="publicLiabilityForm.get('hasInsuredInv')?.hasError('required')">
+                            This infor is required is <strong>required</strong>
+                        </mat-error>
+                    </mat-radio-group>
+                </section>
+                <mat-form-field class=" full-width">
+                    <mat-label>What is the insured’s views / comments on Liability</mat-label>
+                    <textarea formControlName="insuredComment" type="text" matInput
+                        placeholder="Ex. pat@example.com"></textarea>
+                    <mat-error *ngIf="publicLiabilityForm.get('insuredComment')?.hasError('required')">
+                        Details of damage is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class=" full-width">
+                    <mat-label>What is the insured’s view/comments on the amount claimed </mat-label>
+                    <textarea formControlName="insuredOnAmount" type="text" matInput
+                        placeholder="Ex. pat@example.com"></textarea>
+                    <mat-error *ngIf="publicLiabilityForm.get('insuredOnAmount')?.hasError('required')">
+                        insured’s view/comments on the amount claimed is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class=" full-width">
+                    <mat-label>Are there other individuals/parties who may have contributed to the incident? (excluding
+                        cleaning services) </mat-label>
+                    <textarea formControlName="externalContributor" type="text" matInput
+                        placeholder="Ex. pat@example.com"></textarea>
+                    <mat-error *ngIf="publicLiabilityForm.get('externalContributor')?.hasError('required')">
+                        insured’s view/comments on the amount claimed is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class=" full-width">
+                    <mat-label>Are there any additional details which you wish to notify us</mat-label>
+                    <textarea formControlName="additionalDetails" type="text" matInput
+                        placeholder="Ex. pat@example.com"></textarea>
+                    <mat-error *ngIf="publicLiabilityForm.get('additionalDetails')?.hasError('required')">
+                        insured’s view/comments on the amount claimed is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <h3>Witnesses</h3>
+                <button *ngIf="getWitnesses().controls.length < 1" class="del" mat-stroked-button
+                    (click)="addWitness()">Add
+                    Witnesses</button>
+                <div *ngIf="getWitnesses().controls.length">
+                    <div formArrayName="witnesses" class="flex column">
+                        <div *ngFor="let witness of getWitnesses()?.controls, let i = index">
+                            <div formGroupName={{i}} class="flex column">
+                                <div class="flex spacebetween-center">
+                                    <h3>{{i + 1}}. Witness</h3>
+                                    <mat-icon (click)="removeWitness(i)" matTooltip="Delete Witness"
+                                        class="close">delete</mat-icon>
+                                </div>
+                                <mat-form-field class="full-width">
+                                    <mat-label>First Name</mat-label>
+                                    <input formControlName="firstName" type="number" matInput placeholder="15">
+                                    <mat-error *ngIf="publicLiabilityForm.get('firstName')?.hasError('required')">
+                                        Number of items is <strong>required</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="full-width">
+                                    <mat-label>Last Name</mat-label>
+                                    <input formControlName="lastName" type="text" matInput
+                                        placeholder="Ex. pat@example.com">
+                                    <mat-error *ngIf="publicLiabilityForm.get('lastName')?.hasError('required')">
+                                        Make is <strong>required</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="full-width">
+                                    <mat-label>Cellphone number</mat-label>
+                                    <input formControlName="cellPhoneNo" type="text" matInput placeholder="Marko">
+                                    <mat-error *ngIf="publicLiabilityForm.get('cellPhoneNo')?.hasError('required')">
+                                        Place of purchase <strong>required</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="full-width">
+                                    <mat-label>Email</mat-label>
+                                    <input formControlName="email" type="text" matInput placeholder="R1000">
+                                    <mat-error *ngIf="publicLiabilityForm.get('email')?.hasError('required')">
+                                        value is <strong>required</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <button *ngIf="i === getWitnesses().controls.length-1 " mat-stroked-button
+                                (click)="addWitness()">Add Another</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex center-center">
+                <button mat-raised-button (click)="submit()" color="primary">Submit claim</button>
+            </div>
+        </div>
+    </form>
+</div>

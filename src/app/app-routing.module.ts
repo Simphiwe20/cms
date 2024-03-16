@@ -5,7 +5,7 @@ import { RegisterComponent } from './components/forms/register/register.componen
 import { LogInComponent } from './components/forms/log-in/log-in.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ClaimsComponent } from './components/claims/claims.component';
-import { AddClaimsComponent } from './components/forms/add-claims/add-claims.component';
+import { AddClaimsComponent } from './components/add-claims/add-claims.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { UsersComponent } from './components/users/users.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
