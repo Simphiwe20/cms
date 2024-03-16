@@ -1,3 +1,70 @@
-<div>
+<div class="flex center-center full-height full-width">
+    <mat-card>
+        <h1>Profile</h1>
+        <div class="flex gap-1em">
+           <h3>firstName: <span class="lightBlueC">Angel</span></h3>
+            <!-- <mat-form-field class="half-width">
+                <mat-label>First Name</mat-label>
+                <input type="text" matInput value="Angel" readonly>
+            </mat-form-field> -->
+            
+            <!-- <mat-form-field class="half-width">
+                <mat-label>Last Name:</mat-label>
+                <input type="text" matInput value="Nthebe" readonly>
+            </mat-form-field> -->
+        </div>
+        <div class="flex gap-1em">
+          
+            <mat-form-field class="half-width">
+                <mat-label>Id Number</mat-label>
+                <input type="text" matInput value="0012310134080" readonly>
+            </mat-form-field>
+            
+            <mat-form-field class="half-width">
+                <mat-label>dob</mat-label>
+                <input type="text" matInput value="200/12/31" readonly>
+            </mat-form-field>
+        </div>
+        <div class="flex gap-1em">
+        <mat-form-field class="half-width">
+            <mat-label>Gender</mat-label>
+            <input type="text" matInput value="Female" readonly>
+        </mat-form-field>
+        <mat-form-field class="half-width">
+            <mat-label>policy number</mat-label>
+            <input type="text" matInput value="2001231" readonly>
+        </mat-form-field>
+    </div>
+        <!-- address -->
+        <mat-label>Address:</mat-label>
+        <mat-form-field appearance="outline">
+           
+            <textarea matInput>
+              streetNumber,streetName
+              city
+              Suburb
+              code 
+            </textarea>
+        </mat-form-field>
     
+        <div class="flex gap-1em">
+    
+            <mat-form-field class="half-width">
+                <mat-label>Email</mat-label>
+                <input type="email" matInput value="angelnthebe@gmail.com" readonly>
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+                <mat-label>cell Number</mat-label>
+                <input type="number" matInput value="0792629926" readonly>
+            </mat-form-field>
+
+        </div>
+        <div>
+            <button class="btn1" mat-raised-button>change password</button>
+        </div>
+    </mat-card>
+
+
+
 </div>

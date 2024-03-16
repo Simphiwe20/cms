@@ -1,10 +1,7 @@
 .gap-1em{
     gap: 1em;
 }
-.heading{
-    font-size: -webkit-xxx-large;
-  
-}
+
 // .container{
 //     margin-top: 2em;
 //     background: #f7f7f7a6;
@@ -23,9 +20,7 @@
 .margin-1em{
     margin: 1em;
 }
-// bg{
-//     background-color: #f7f7f7;
-// }
+
 .btn{
     margin: 9px 0 1.5em 0;
     display: flex;
@@ -37,13 +32,13 @@
     // background: #f00101 !important;
     color: #1a3f7e !important;
     width: 40% !important;
-    font-size: x-large;
+ 
     border:  2px solid #1a3f7e !important;
  }
 .btn-cancel:hover{
     background-color: #1a3f7e !important;
     color: #ffffff !important ;
-    font-size: x-large;
+
 
  }
 
@@ -52,8 +47,24 @@
     background: #1a3f7e !important;
     color:#ffffff!important;
     width: 40% !important;
-    font-size: x-large;
+   
  }
  .font-color{
     color: #334057;
+   
  }
+ .darkBlue {
+    background-color: #163e7b;
+}
+
+.lightBlue {
+    background-color: #4190cb;
+}
+
+.darkBlueC {
+    color: #163e7b;
+}
+
+.lightBlueC {
+    color: #4190cb;
+}

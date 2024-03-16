@@ -1,0 +1,24 @@
+textarea{
+    height: 9em !important;
+}
+.gap-1em{
+    gap: 1em;
+}
+mat-card{
+    padding: 1em;
+    width: 70%;
+    height: auto;
+    // text-align: center;
+}
+.btn1 {
+    border: 2px solid #163e7b;
+    color: #163e7b;
+}
+.lightBlueC {
+    color: #4190cb;
+}
+
+.btn1:hover {
+    background-color: #163e7b;
+    color: white;
+}

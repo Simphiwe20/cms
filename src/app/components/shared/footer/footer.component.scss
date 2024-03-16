@@ -1,0 +1,77 @@
+mat-toolbar{
+    height: 90px;
+
+    .container{
+        width: 80%;
+        height: 90%;
+        // background-color: red;
+
+        .middle{
+            width: 2px;
+            height: 100%;
+            background-color: white;
+        }
+
+        .left, .right{
+            width: 40%;
+            height: 100%;
+            color: white;
+        }
+
+        .left{
+
+            h6{
+                margin: 0;
+                color: #4190cb;
+            }
+
+            a{
+                font-size: 14px;
+                margin: 0;
+                line-height: normal;
+                font-weight: bold;
+                color: white;
+            }
+        }
+
+        .right{
+
+            h6{
+                color: #4190cb;
+                margin: 0;
+            }
+
+            a{
+                font-size: 14px;
+                margin: 0;
+                line-height: normal;
+                font-weight: bold;
+                color: white;
+            }
+        }
+    }
+}
+
+.flex1{
+    flex: 1;
+}
+
+.gap1em{
+    gap: 1em;
+}
+
+.gap2em{
+    gap: 2em;
+}
+
+.row{
+    flex-direction: row;
+}
+
+.darkBlue{
+    background-color: #163e7b;
+}
+
+.lightBlue{
+    background-color:#4190cb;
+}

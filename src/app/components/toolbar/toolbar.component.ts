@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-toolbar',
@@ -6,5 +7,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent {
+
+  constructor(private router: Router){}
+
+  Register(){
+    this.router.navigate(['/register']);
+  }
+
+  Login(){
+    this.router.navigate(['/login']);
+  }
+
+ 
 
 }
