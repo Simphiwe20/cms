@@ -145,39 +145,42 @@
                         </mat-error>
                     </mat-radio-group>
                 </section>
-                <mat-form-field class=" full-width">
-                    <mat-label>What is the insured’s views / comments on Liability</mat-label>
-                    <textarea formControlName="insuredComment" type="text" matInput
-                        placeholder="Ex. pat@example.com"></textarea>
-                    <mat-error *ngIf="publicLiabilityForm.get('insuredComment')?.hasError('required')">
-                        Details of damage is required
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field class=" full-width">
-                    <mat-label>What is the insured’s view/comments on the amount claimed </mat-label>
-                    <textarea formControlName="insuredOnAmount" type="text" matInput
-                        placeholder="Ex. pat@example.com"></textarea>
-                    <mat-error *ngIf="publicLiabilityForm.get('insuredOnAmount')?.hasError('required')">
-                        insured’s view/comments on the amount claimed is required
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field class=" full-width">
-                    <mat-label>Are there other individuals/parties who may have contributed to the incident? (excluding
-                        cleaning services) </mat-label>
-                    <textarea formControlName="externalContributor" type="text" matInput
-                        placeholder="Ex. pat@example.com"></textarea>
-                    <mat-error *ngIf="publicLiabilityForm.get('externalContributor')?.hasError('required')">
-                        insured’s view/comments on the amount claimed is required
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field class=" full-width">
-                    <mat-label>Are there any additional details which you wish to notify us</mat-label>
-                    <textarea formControlName="additionalDetails" type="text" matInput
-                        placeholder="Ex. pat@example.com"></textarea>
-                    <mat-error *ngIf="publicLiabilityForm.get('additionalDetails')?.hasError('required')">
-                        insured’s view/comments on the amount claimed is required
-                    </mat-error>
-                </mat-form-field>
+                <div *ngIf="publicLiabilityForm.get('hasInsuredInv')?.value">
+                    <mat-form-field class=" full-width">
+                        <mat-label>What is the insured’s views / comments on Liability</mat-label>
+                        <textarea formControlName="insuredComment" type="text" matInput
+                            placeholder="Ex. pat@example.com"></textarea>
+                        <mat-error *ngIf="publicLiabilityForm.get('insuredComment')?.hasError('required')">
+                            Details of damage is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class=" full-width">
+                        <mat-label>What is the insured’s view/comments on the amount claimed </mat-label>
+                        <textarea formControlName="insuredOnAmount" type="text" matInput
+                            placeholder="Ex. pat@example.com"></textarea>
+                        <mat-error *ngIf="publicLiabilityForm.get('insuredOnAmount')?.hasError('required')">
+                            insured’s view/comments on the amount claimed is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class=" full-width">
+                        <mat-label>Are there other individuals/parties who may have contributed to the incident?
+                            (excluding
+                            cleaning services) </mat-label>
+                        <textarea formControlName="externalContributor" type="text" matInput
+                            placeholder="Ex. pat@example.com"></textarea>
+                        <mat-error *ngIf="publicLiabilityForm.get('externalContributor')?.hasError('required')">
+                            insured’s view/comments on the amount claimed is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class=" full-width">
+                        <mat-label>Are there any additional details which you wish to notify us</mat-label>
+                        <textarea formControlName="additionalDetails" type="text" matInput
+                            placeholder="Ex. pat@example.com"></textarea>
+                        <mat-error *ngIf="publicLiabilityForm.get('additionalDetails')?.hasError('required')">
+                            insured’s view/comments on the amount claimed is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
             </div>
             <div>
                 <h3>Witnesses</h3>
