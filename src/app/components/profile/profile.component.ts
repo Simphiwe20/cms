@@ -1,5 +1,6 @@
 import { isNgTemplate } from '@angular/compiler';
 import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/service/api.service';
 
 @Component({
@@ -8,17 +9,18 @@ import { ApiService } from 'src/app/service/api.service';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent {
+
+  editF: boolean = false
+
+editform:FormGroup;
   constructor(public api: ApiService) {
-    const data = this.api.genericGet('/get-profile')
-      .subscribe({
-        next: (res: any) => {
-        const item = res;
-         console.log( item);
-        },
-        error: (err: any) => console.log('Error', err),
-        complete: () => { }
-      });
-  }
+  this.editform = new FormGroup({
+    email:new FormControl('', Validators.required),
+     cellnumber: new FormControl('', Validators.required),
+  })
+  
+}
+
   profiles: any[] = [
     {
       name: 'Angel',
@@ -32,5 +34,8 @@ export class ProfileComponent {
       contact: '1234567890'
     }]
     
+    edit() {
+      this.editF ?  this.editF=true : this.editF=true
+    }
 
 }

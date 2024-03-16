@@ -1,20 +1,70 @@
 <div class="flex center-center full-height">
-<mat-card *ngFor="let profile of profiles">
-<mat-icon> person</mat-icon>
+  <mat-card *ngFor="let profile of profiles">
+    <mat-icon> person</mat-icon>
     <mat-card-header>
+
       <mat-card-title class="lightBlueC">{{ profile.name }} {{ profile.surname }}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
+      <div class="flex gap-1em">
+        <mat-form-field class="half-width">
+          <mat-label>ID</mat-label>
+          <input type="number" matInput [value]=" profile.id" readonly>
+        </mat-form-field>
+        <mat-form-field class="half-width">
+          <mat-label>Date of Birth</mat-label>
+          <input type="text" matInput [value]="profile.dateOfBirth |date  " readonly>
+        </mat-form-field>
+      </div>
+      <div class="flex gap-1em">
+        <mat-form-field class="half-width">
+          <mat-label> Gender</mat-label>
+          <input type="text" matInput [value]=" profile.gender" readonly>
+        </mat-form-field>
+        <mat-form-field class="half-width">
+          <mat-label> policy Number</mat-label>
+          <input type="text" matInput [value]=" profile.policyNumber" readonly>
+        </mat-form-field>
+      </div>
+      <div class="flex gap-1em">
+      <mat-form-field class="half-width" *ngIf="!editF">
+        <mat-label>cell Number</mat-label>
+        <input type="number" matInput [value]="profile.contact">
+      </mat-form-field>
+      <mat-form-field class="half-width"  *ngIf="editF" >
+        <mat-label>cell Number</mat-label>
+        <input type="number" matInput [value]="profile.contact">
+      </mat-form-field>
       
-      <p><strong>ID:</strong> {{ profile.id }}</p>
-      <p><strong>Date of Birth:</strong> {{ profile.dateOfBirth | date }}</p>
-      <p><strong>Gender:</strong> {{ profile.gender }}</p>
-      <p><strong>Address:</strong> {{ profile.address }}</p>
-      <p><strong>Policy Number:</strong> {{ profile.policyNumber }}</p>
-      <p><strong> Email Address:</strong> {{ profile.email }}</p>
-      <p><strong>Cell number:</strong> {{ profile.contact }}</p>
+      <mat-form-field class="half-width">
+      <mat-label>Email</mat-label>
+      <input type="email" matInput [value]="profile.email" readonly>
+      </mat-form-field>
+    </div>
+
+      <div *ngIf="!editF">
+        <mat-form-field  class="full-width">
+          <mat-label> adddress</mat-label>
+          <input type="text" matInput value="q" readonly>
+          <input type="text" matInput [value]=" profile.address" readonly>
+          <input type="text" matInput [value]=" profile.address" readonly>
+          <input type="text" matInput [value]=" profile.address" readonly>
+        </mat-form-field> 
+      </div>
+      <div class="flex column" *ngIf="editF">
+
+        <mat-form-field >
+          <mat-label> adddress</mat-label>
+          <input type="text" matInput [value]=" profile.address">
+          <input type="text" matInput [value]=" profile.address">
+          <input type="text" matInput [value]=" profile.address">
+          <input type="text" matInput [value]=" profile.address">
+        </mat-form-field>
       
+
+      </div>
     </mat-card-content>
+    <button mat-raised-button class="btn1" (click)="edit()">edit profile</button>
     <button mat-raised-button class="btn1">change Password</button>
   </mat-card>
 </div>
