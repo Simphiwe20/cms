@@ -1,1 +1,10 @@
-<p>toolbar works!</p>
+<mat-toolbar>
+    <span class="s1 flex center-center">
+        <img src="../../../assets/images/logo.png" alt="">
+    </span>
+    <span class="flex1"></span>
+    <div class="buttons flex gap2em center-center">
+        <button class="darkBlue" routerLink="register" (click)="Register()">REGISTER</button>
+        <button class="lightBlue" (click)="Login()">LOG IN</button>
+    </div>
+</mat-toolbar>

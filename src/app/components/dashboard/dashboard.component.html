@@ -1,1 +1,25 @@
-<p>dashboard works!</p>
+<app-tool-bar></app-tool-bar>
+<div class="mainContainer flex center-center">
+    <div class="middle flex row gap2em">
+        <div class="left flex column gap2em">
+            <div class="topL">
+                <mat-card class="flex center-center">
+                    <mat-card-content><h2>All Approved Claims</h2></mat-card-content>
+                </mat-card>
+            </div>
+            <div class="bottomL">
+                <app-pie></app-pie>
+            </div>
+        </div>
+        <div class="right flex column gap2em">
+            <div class="topR">
+                <mat-card class="flex center-center">
+                    <mat-card-content><h2>This Month's Claim Requests</h2></mat-card-content>
+                </mat-card>
+            </div>
+            <div class="bottomR">
+                <app-bar></app-bar>
+            </div>
+        </div>
+    </div>
+</div>

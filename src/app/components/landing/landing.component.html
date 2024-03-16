@@ -1,1 +1,55 @@
-<p>landing works!</p>
+<app-toolbar></app-toolbar>
+<div class="mainContainer flex column">
+    <div class="banner">
+        <img src="../../../assets/images/banner.png" alt="">
+    </div>
+    <div class="claiminfo flex column aic">
+        <h1>How to claim</h1>
+        <p>We pride ourselves on our hassle-free claiming process. We offer a number of convenient ways <br>
+            to start your claim.</p>
+        <div class="cards flex spacebetween-center">
+            <div class="card">
+                <mat-card [@zoomHoverCard1]="cardState1" (mouseenter)="onMouseEnter(1)" (mouseleave)="onMouseLeave(1)">
+                    <mat-card-content class="">
+                        <div class="cardTop1">
+                        </div>
+                        <div class="cardBottom">
+                            <h2>Call Us</h2>
+                            <p>Call us on 0860 751 751 to get your claim started.
+                                An agent is readily waiting to assist <br> you so you can get your payment asap.
+                            </p>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+            <div class="card">
+                <mat-card [@zoomHoverCard2]="cardState2" (mouseenter)="onMouseEnter(2)" (mouseleave)="onMouseLeave(2)">
+                    <mat-card-content class="">
+                        <div class="cardTop2">
+                        </div>
+                        <div class="cardBottom ">
+                            <h2>Log in to our website</h2>
+                            <p>Once you have logged in and started <br>
+                             your claim, a skilled claims adviser will attend <br> it
+                              to continue the claims process.
+                            </p>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+    <div class="status flex column aic">
+        <h1>Follow up on your claim</h1>
+        <mat-card>
+            <mat-card-content>
+                <div class="cardTopLast"></div>
+                <div class="cardBottomLast">
+                    <h1>View the progress of your claims</h1>
+                    <p>If you have a claim, you'll be able to view its progress online with ClaimsView.</p>
+                </div>
+            </mat-card-content>
+          </mat-card>
+    </div>
+</div>
+<app-footer></app-footer>
