@@ -13,6 +13,8 @@ mat-card{
 .btn1 {
     border: 2px solid #163e7b;
     color: #163e7b;
+    width: fit-content;
+    margin: 1em;
 }
 .lightBlueC {
     color: #4190cb;
@@ -21,4 +23,10 @@ mat-card{
 .btn1:hover {
     background-color: #163e7b;
     color: white;
+}
+mat-icon{
+    font-size: -webkit-xxx-large;
+    width: 74px;
+    height: 42px;
+    margin-left: 16px;
 }
