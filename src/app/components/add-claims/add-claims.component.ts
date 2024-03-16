@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-add-claims',
@@ -7,6 +10,16 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./add-claims.component.scss']
 })
 export class AddClaimsComponent {
+
+  dataSource!: MatTableDataSource<[]>;
+  displayedColumns: string[] = ['Patient_name', 'doctorName','start_date', 'start_time', 'end_time', 'status']
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  clients: any;
+  claims:any[] = ['Death claim', 'Property Loss Claim', 'Public Liability']
+
+  claimSelected: any;
 
   isAdded: boolean = false
   claimForm!: FormGroup
@@ -38,32 +51,30 @@ export class AddClaimsComponent {
      this.claimForm = new FormGroup({
     lossDetails: this.lossDetails,
     items: new FormArray([])
-
   })
+
+  
+  this.clients = localStorage.getItem('clients')
+  this.clients = this.clients ? JSON.parse(this.clients) : []
+
+  this.dataSource = this.clients
+
+  console.log(this.clients)
   }
 
-   // Adding tertiaries details
-   getItems(): FormArray {
-    return this.claimForm.get('items') as FormArray
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
-  addItem(): void {
-    console.log(this.getItems().controls)
-    this.getItems().controls.push(this.item)
-    this.isAdded = true
-  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
 
-  removeItem(i: number): any {
-    this.getItems().removeAt(i)
-    this.getItems()
-    if (!this.getItems().length) {
-      this.isAdded = false
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
     }
   }
 
-  submit() {
 
-  }
-
- 
 }

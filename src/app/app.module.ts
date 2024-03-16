@@ -19,7 +19,7 @@ import { IdRegisterComponent } from './components/forms/id-register/id-register.
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { MaterialModule } from './modules/materials/material.module';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DeathClaimComponent } from './components/forms/claims/death-claim/death-claim.component';
 import { PublicLiaClaimComponent } from './components/forms/claims/public-lia-claim/public-lia-claim.component';
@@ -54,7 +54,8 @@ import { AddClaimsComponent } from './components/add-claims/add-claims.component
     BrowserAnimationsModule,
     MaterialModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
