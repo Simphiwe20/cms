@@ -9,23 +9,24 @@ import { ApisServicesService } from 'src/app/services/apis-services.service';
 })
 export class PropLossClaimComponent {
 
+  count: Number = 0
   isAdded: boolean = false
   claimForm!: FormGroup
   lossDetails: FormGroup = new FormGroup({
-      dateTime: new FormControl('', [Validators.required]),
-      discoveryTime: new FormControl('', [Validators.required]),
-      location: new FormControl('', [Validators.required]),
-      lossState: new FormControl('', [Validators.required]),
-      premises: new FormControl('', [Validators.required]),
-      byWhom: new FormControl('', [Validators.required]),
-      lastOccuppied: new FormControl('', [Validators.required]),
-      forceEntry: new FormControl('', [Validators.required]),
-      forcedDetails: new FormControl('', [Validators.required]),
-      evidence: new FormControl('', [Validators.required]),
-      alarmActivation: new FormControl('', [Validators.required]),
-      alarmCompany: new FormControl('', [Validators.required]),
-      
-    }) 
+    dateTime: new FormControl('', [Validators.required]),
+    discoveryTime: new FormControl('', [Validators.required]),
+    location: new FormControl('', [Validators.required]),
+    lossState: new FormControl('', [Validators.required]),
+    premises: new FormControl('', [Validators.required]),
+    byWhom: new FormControl('', [Validators.required]),
+    lastOccuppied: new FormControl('', [Validators.required]),
+    forceEntry: new FormControl('', [Validators.required]),
+    forcedDetails: new FormControl('', [Validators.required]),
+    evidence: new FormControl('', [Validators.required]),
+    alarmActivation: new FormControl('', [Validators.required]),
+    alarmCompany: new FormControl('', [Validators.required]),
+
+  })
 
   item: FormGroup = new FormGroup({
     itemNum: new FormControl('', Validators.required),
@@ -36,22 +37,21 @@ export class PropLossClaimComponent {
   })
 
   constructor(private api: ApisServicesService) {
-     this.claimForm = new FormGroup({
-    lossDetails: this.lossDetails,
-    items: new FormArray([])
-
-  })
+    this.claimForm = new FormGroup({
+      lossDetails: this.lossDetails,
+      items: new FormArray([])
+    })
   }
 
-   // Adding tertiaries details
-   getItems(): FormArray {
+  // Adding Items details
+  getItems(): FormArray {
     return this.claimForm.get('items') as FormArray
   }
 
   addItem(): void {
-    console.log(this.getItems().controls)
     this.getItems().controls.push(this.item)
     this.isAdded = true
+    this.count
   }
 
   removeItem(i: number): any {
@@ -65,14 +65,15 @@ export class PropLossClaimComponent {
   submit() {
 
     let formValues = this.claimForm.value
-    if(!formValues.valid)
+    console.log(formValues)
+    if (!formValues.valid) return
 
-    this.api.genericPost('/addpropertyClaim', formValues)
-      .subscribe({
-        next: () => {},
-        error: () => {},
-        complete: () => {}
-      })
+      this.api.genericPost('/add-property-claim', formValues)
+        .subscribe({
+          next: () => { },
+          error: () => { },
+          complete: () => { }
+        })
 
     console.log(this.claimForm)
   }

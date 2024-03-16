@@ -25,7 +25,7 @@ export class HomeComponent {
       this.menuItems = [
         { item: 'Dashboard', route: '/home/dashboard' },
         { item: 'Claims', route: '/home/claims' },
-        { item: 'Add Claims', route: '/home/add-claims' },
+        { item: 'Add Claims', route: '/home/add-claim' },
         { item: 'Profile', route: '/home/profile' },
         { item: 'Log Out', route: '/login' }
       ]

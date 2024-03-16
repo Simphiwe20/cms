@@ -3,6 +3,7 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { SharedServicesService } from 'src/app/services/shared-services.service';
 
 @Component({
   selector: 'app-add-claims',
@@ -10,6 +11,8 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./add-claims.component.scss']
 })
 export class AddClaimsComponent {
+
+  currentUser: any;
 
   dataSource!: MatTableDataSource<[]>;
   displayedColumns: string[] = ['Patient_name', 'doctorName','start_date', 'start_time', 'end_time', 'status']
@@ -46,12 +49,13 @@ export class AddClaimsComponent {
     value: new FormControl('', Validators.required)
   })
 
-  constructor() {
+  constructor(private shared: SharedServicesService) {
      this.claimForm = new FormGroup({
     lossDetails: this.lossDetails,
     items: new FormArray([])
   })
 
+  this.currentUser = this.shared.getUser('currentUser', 'session')
   
   this.clients = localStorage.getItem('clients')
   this.clients = this.clients ? JSON.parse(this.clients) : []

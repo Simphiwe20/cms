@@ -3,7 +3,7 @@
         <h2>Add Claim</h2>
         <p>To add a claim on behalf of a PolicyHolder, look up the PolicyHolder on the table and click it</p>
         <p></p>
-        <mat-form-field class="">
+        <mat-form-field *ngIf="currentUser.role !== 'agent'">
             <mat-label>Select a claim</mat-label>
             <mat-select name="claim" [(ngModel)]="claimSelected" required>
                 <mat-option *ngFor="let claim of claims" [value]="claim">
@@ -11,7 +11,7 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-card class="full-width flex-1 padding-15" *ngIf="!claims">
+        <mat-card class="full-width flex-1 padding-15" *ngIf="currentUser.role === 'agent'">
             <mat-card-content class="flex column gap-1">
                 <mat-form-field>
                     <mat-label>Filter</mat-label>
