@@ -12,7 +12,6 @@ import { ToolBarComponent } from './components/shared/tool-bar/tool-bar.componen
 import { FooterComponent } from './components/shared/footer/footer.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterAgentComponent } from './components/popUps/register-agent/register-agent.component';
-import { AddClaimsComponent } from './components/forms/add-claims/add-claims.component';
 import { LogInComponent } from './components/forms/log-in/log-in.component';
 import { RegisterComponent } from './components/forms/register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,10 +19,16 @@ import { IdRegisterComponent } from './components/forms/id-register/id-register.
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { MaterialModule } from './modules/materials/material.module';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { HttpClientModule } from '@angular/common/http';
+import { DeathClaimComponent } from './components/forms/claims/death-claim/death-claim.component';
+import { PublicLiaClaimComponent } from './components/forms/claims/public-lia-claim/public-lia-claim.component';
+import { PropLossClaimComponent } from './components/forms/claims/prop-loss-claim/prop-loss-claim.component';
+import { AddClaimsComponent } from './components/add-claims/add-claims.component';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgChartsModule } from 'ng2-charts';
 import { BarComponent } from './components/shared/charts/bar/bar.component';
 import { PieComponent } from './components/shared/charts/pie/pie.component';
+import { NgChartsModule } from 'ng2-charts';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -43,8 +48,12 @@ import { PieComponent } from './components/shared/charts/pie/pie.component';
     IdRegisterComponent,
     PageNotFoundComponent,
     ToolbarComponent,
+    DeathClaimComponent,
+    PublicLiaClaimComponent,
+    PropLossClaimComponent,
     BarComponent,
-    PieComponent
+    PieComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -52,6 +61,7 @@ import { PieComponent } from './components/shared/charts/pie/pie.component';
     BrowserAnimationsModule,
     MaterialModule,
     ReactiveFormsModule,
+    HttpClientModule,
     FormsModule,
     NgChartsModule
   ],
