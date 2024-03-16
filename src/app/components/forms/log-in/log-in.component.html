@@ -1,1 +1,41 @@
-<p>Log In works</p>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="mainContainer flex column center-center">
+    <div class="container flex  column aic gap1em">
+        <div class="logo flex row center-center">
+            <img src="../../../../assets/images/logo.png" alt="">
+            <h1><span class="darkBlueC">C</span><span class="lightBlueC">M</span><span class="darkBlueC">S</span></h1>
+        </div>
+        <div class="login flex center-center">
+            <h2>Log in</h2>
+        </div>
+        <form [formGroup]="loginForm" class="">
+            <div class="email">
+                <mat-form-field>
+                    <mat-label>Enter your email</mat-label>
+                    <input matInput placeholder="pat@example.com">
+                    <mat-error></mat-error>
+                </mat-form-field>
+            </div>
+            <div class="psw">
+                <mat-form-field>
+                    <mat-label>Enter your password</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                  </mat-form-field>
+                <div class="forgotP flex end">
+                    <p class="forgotPswd">Forgot <span routerLink=""> password</span>?</p>
+                </div>
+            </div>
+            <div class="buttons flex row gap2em">
+                <button class="btn1" mat-raised-button>Cancel</button>
+                <button class="btn2" mat-raised-button>Log In</button>
+            </div>
+            <div class="reg flex center-center">
+                <p routerLink="/register">Registration</p>
+            </div>
+        </form>
+    </div>
+
+</div>

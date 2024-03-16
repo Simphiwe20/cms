@@ -1,0 +1,105 @@
+.mainContainer{
+    height: calc(100vh - 90px);
+    width: 100vw;
+    // background-color: red;
+
+    .middle{
+        height: 90%;
+        width: 80%;
+
+        .left, .right{
+            width: 50%;
+            height: 100%;
+        }
+
+        .left{
+
+            .topL{
+                height: 30%;
+                width: 100%;
+                
+                mat-card{
+                    height: 100%;
+                    border: 4px dotted gainsboro;
+
+                    mat-card-content{
+                        height: 100%;
+                        // width: 50%;
+                        // background-color: pink;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                }
+            }
+
+            .bottomL{
+                height: 70%;
+                width: 100%;
+                background-color: gainsboro;
+
+            }
+        }
+
+        .right{
+
+            .topR{
+                height: 30%;
+                width: 100%;
+
+                mat-card{
+                    height: 100%;
+                    border: 4px dotted gainsboro;
+
+                    mat-card-content{
+                        height: 100%;
+                        // width: 50%;
+                        // background-color: pink;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        h2{
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+
+            .bottomR{
+                height: 70%;
+                width: 100%;
+                background-color: gainsboro;
+                
+            }
+        }
+    }
+}
+
+.column {
+    flex-direction: column;
+}
+
+.row {
+    flex-direction: row;
+}
+
+.flex1{
+    flex: 1;
+}
+
+.gap1em{
+    gap: 1em;
+}
+
+.gap2em{
+    gap: 2em;
+}
+
+.aic{
+    align-items: center;
+}
+
+.jcc{
+    justify-content: center;
+}

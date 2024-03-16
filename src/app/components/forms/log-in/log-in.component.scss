@@ -1,0 +1,163 @@
+.mainContainer {
+    height: 100vh;
+    width: 100vw;
+
+    .container {
+        // background-color: green;
+        height: 80%;
+        width: 45%;
+
+        .logo {
+            width: 40%;
+            height: 15%;
+
+            img {
+                width: 40%;
+                height: 100%;
+            }
+
+            h1 {
+                width: 40%;
+                height: 50%;
+                text-align: center;
+                font-weight: normal;
+            }
+
+        }
+
+        .login {
+            width: 30%;
+            height: 15%;
+
+            h2 {
+                font-size: 25px;
+                font-weight: normal;
+            }
+        }
+
+        form {
+            height: 70%;
+            width: 100%;
+            
+            .email {
+                width: 100%;
+                height: 25%;
+
+                mat-form-field {
+                    width: 100%;
+                    border: none;
+                }
+            }
+
+            .psw {
+                width: 100%;
+                height: 35%;
+
+                mat-form-field {
+                    width: 100%;
+                    margin-bottom: 0;
+                    position: relative;
+                }
+
+                .forgotP {
+                    height: 18%;
+
+                    .forgotPswd {
+                        margin-top: 0;
+                        cursor: pointer;
+                        color: #4190cb;
+
+                    }
+
+                }
+            }
+
+            .buttons {
+                width: 100%;
+                height: 15%;
+
+                button {
+                    width: 50%;
+                    height: 100%;
+                }
+
+                .btn1 {
+                    border: 2px solid #163e7b;
+                    color: #163e7b;
+                }
+
+                .btn1:hover {
+                    background-color: #163e7b;
+                    color: white;
+                }
+
+                .btn2 {
+                    background-color: #163e7b;
+                    color: white;
+                }
+
+                .btn2:hover {
+                    background-color: #00305a;
+                }
+            }
+
+            .reg {
+                cursor: pointer;
+
+                p {
+                    color: #4190cb;
+                    font-size: 18px;
+                }
+            }
+
+        }
+    }
+}
+
+.column {
+    flex-direction: column;
+}
+
+.row {
+    flex-direction: row;
+}
+
+.aic {
+    align-items: center;
+}
+
+.jcc {
+    justify-content: center;
+}
+
+.flex1 {
+    flex: 1;
+}
+
+.gap1em {
+    gap: 1em;
+}
+
+.gap2em {
+    gap: 2em;
+}
+
+.end {
+    justify-content: end;
+}
+
+.darkBlue {
+    background-color: #163e7b;
+}
+
+.lightBlue {
+    background-color: #4190cb;
+}
+
+.darkBlueC {
+    color: #163e7b;
+}
+
+.lightBlueC {
+    color: #4190cb;
+}

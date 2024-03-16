@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ApisServicesService } from 'src/app/services/apis-services.service';
 
 @Component({
   selector: 'app-prop-loss-claim',
@@ -34,7 +35,7 @@ export class PropLossClaimComponent {
     value: new FormControl('', Validators.required)
   })
 
-  constructor() {
+  constructor(private api: ApisServicesService) {
      this.claimForm = new FormGroup({
     lossDetails: this.lossDetails,
     items: new FormArray([])
@@ -62,6 +63,17 @@ export class PropLossClaimComponent {
   }
 
   submit() {
+
+    let formValues = this.claimForm.value
+    if(!formValues.valid)
+
+    this.api.genericPost('/addpropertyClaim', formValues)
+      .subscribe({
+        next: () => {},
+        error: () => {},
+        complete: () => {}
+      })
+
     console.log(this.claimForm)
   }
 }

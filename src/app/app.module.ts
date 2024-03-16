@@ -19,12 +19,16 @@ import { IdRegisterComponent } from './components/forms/id-register/id-register.
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { MaterialModule } from './modules/materials/material.module';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DeathClaimComponent } from './components/forms/claims/death-claim/death-claim.component';
 import { PublicLiaClaimComponent } from './components/forms/claims/public-lia-claim/public-lia-claim.component';
 import { PropLossClaimComponent } from './components/forms/claims/prop-loss-claim/prop-loss-claim.component';
 import { AddClaimsComponent } from './components/add-claims/add-claims.component';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BarComponent } from './components/shared/charts/bar/bar.component';
+import { PieComponent } from './components/shared/charts/pie/pie.component';
+import { NgChartsModule } from 'ng2-charts';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +50,10 @@ import { AddClaimsComponent } from './components/add-claims/add-claims.component
     ToolbarComponent,
     DeathClaimComponent,
     PublicLiaClaimComponent,
-    PropLossClaimComponent
+    PropLossClaimComponent,
+    BarComponent,
+    PieComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +62,8 @@ import { AddClaimsComponent } from './components/add-claims/add-claims.component
     MaterialModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

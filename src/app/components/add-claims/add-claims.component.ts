@@ -35,8 +35,7 @@ export class AddClaimsComponent {
       forcedDetails: new FormControl('', [Validators.required]),
       evidence: new FormControl('', [Validators.required]),
       alarmActivation: new FormControl('', [Validators.required]),
-      alarmCompany: new FormControl('', [Validators.required]),
-      
+      alarmCompany: new FormControl('', [Validators.required]),  
     }) 
 
   item: FormGroup = new FormGroup({

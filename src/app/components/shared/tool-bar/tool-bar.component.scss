@@ -1,0 +1,29 @@
+$lightBlue: #4190cb;
+$darkBlue: #163e7b;
+
+.mat-toolbar {
+    p {
+        font-size: medium;
+        &:hover {
+            cursor: pointer;
+            color: lightBlue;
+        }
+    }
+}
+
+.img-container {
+    width: 100%;
+    height: 100%;
+    img {
+        // width: 100px;
+        height: 60%
+    }
+}
+
+.start-center {
+    align-items: center;
+}
+
+.gap-1 {
+    gap: 1em;
+}

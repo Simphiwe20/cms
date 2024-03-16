@@ -5,6 +5,9 @@ import { Injectable } from '@angular/core';
 })
 export class SharedServicesService {
 
+
+  res: any
+
   constructor() { }
 
   generatePwd(): any {
@@ -14,6 +17,11 @@ export class SharedServicesService {
       pwd += chars.charAt(Math.floor(Math.random() * chars.length))
     }
     return pwd
+  }
+
+  getUser(key: string, storage: string) {
+    this.res = storage === 'session' ? sessionStorage?.getItem(key) : localStorage.getItem(key)
+    return JSON.parse(this.res)
   }
 
 }
