@@ -20,6 +20,10 @@ import { IdRegisterComponent } from './components/forms/id-register/id-register.
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { MaterialModule } from './modules/materials/material.module';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgChartsModule } from 'ng2-charts';
+import { BarComponent } from './components/shared/charts/bar/bar.component';
+import { PieComponent } from './components/shared/charts/pie/pie.component';
 
 @NgModule({
   declarations: [
@@ -38,13 +42,18 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
     AddClaimsComponent,
     IdRegisterComponent,
     PageNotFoundComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    BarComponent,
+    PieComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NgChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
