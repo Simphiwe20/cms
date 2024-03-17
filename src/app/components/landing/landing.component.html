@@ -9,11 +9,11 @@
             to start your claim.</p>
         <div class="cards flex spacebetween-center">
             <div class="card">
-                <mat-card [@zoomHoverCard1]="cardState1" (mouseenter)="onMouseEnter(1)" (mouseleave)="onMouseLeave(1)">
-                    <mat-card-content class="">
+                <mat-card class="flex center-center" [@zoomHoverCard1]="cardState1" (mouseenter)="onMouseEnter(1)" (mouseleave)="onMouseLeave(1)">
+                    <mat-card-content class=" flex column gap-1">
                         <div class="cardTop1">
                         </div>
-                        <div class="cardBottom">
+                        <div class="cardBottom flex column gap-1">
                             <h2>Call Us</h2>
                             <p>Call us on 0860 751 751 to get your claim started.
                                 An agent is readily waiting to assist <br> you so you can get your payment asap.
@@ -23,7 +23,7 @@
                 </mat-card>
             </div>
             <div class="card">
-                <mat-card [@zoomHoverCard2]="cardState2" (mouseenter)="onMouseEnter(2)" (mouseleave)="onMouseLeave(2)">
+                <mat-card class="flex center-center" [@zoomHoverCard2]="cardState2" (mouseenter)="onMouseEnter(2)" (mouseleave)="onMouseLeave(2)">
                     <mat-card-content class="">
                         <div class="cardTop2">
                         </div>

@@ -1,0 +1,170 @@
+<form [formGroup]="claimForm" class="flex column center-center">
+    <div class="width-80">
+        <h1 class="align-text">Property Loss and Damage Claim</h1>
+        <div formGroupName="lossDetails" class="full-width flex column">
+            <h3>Loss Details</h3>
+            <div class="flex gap-1">
+                <mat-form-field appearance="fill" class="full-width">
+                    <mat-label>Date and time of loss</mat-label>
+                    <input formControlName="dateTime" matInput [matDatepicker]="picker" readonly>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="claimForm.get('lossDetails.dateTime')?.hasError('required')">
+                        Date and time is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="full-width">
+                    <mat-label>When was the loss discovered</mat-label>
+                    <input formControlName="discoveryTime" type="text" matInput placeholder="Ex. pat@example.com">
+                    <mat-error *ngIf="claimForm.get('lossDetails.discoveryTime')?.hasError('required')">
+                        Loss discovery time is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="flex gap-1">
+                <mat-form-field class="full-width">
+                    <mat-label>State full circumstances of the loss</mat-label>
+                    <textarea formControlName="lossState" matInput placeholder="Ex. It makes me feel..."></textarea>
+                    <mat-error *ngIf="claimForm.get('lossDetails.lossState')?.hasError('required')">
+                        Loss state is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="full-width">
+                    <mat-label>Address where the loss occured</mat-label>
+                    <textarea formControlName="location" type="text" matInput placeholder="Ex. pat@example.com"></textarea>
+                    <mat-error *ngIf="claimForm.get('lossDetails.location')?.hasError('required')">
+                        Loss location is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div >
+                <section class="">
+                    <mat-label>Were the premises occupied at the time of the loss</mat-label>
+                    <mat-radio-group formControlName="premises">
+                        <mat-radio-button class="margin" value="Yes">Yes</mat-radio-button>
+                        <mat-radio-button class="margin" value="No">No</mat-radio-button>
+                    </mat-radio-group>
+                    <!-- <mat-error *ngIf="claimForm.get('lossDetails.premises')?.hasError('required')">
+                        premises state during time of the loss is <strong>required</strong>
+                    </mat-error> -->
+                </section>
+                <div class="flex gap-1">
+                    <mat-form-field class=" full-width" *ngIf="claimForm.get('lossDetails.premises')?.value === 'Yes'">
+                        <mat-label>By whom</mat-label>
+                        <input formControlName="byWhom" type="number" matInput placeholder="Ex. pat@example.com">
+                        <mat-error *ngIf="claimForm.get('lossDetails.byWhom')?.hasError('required')">
+                            By whom is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class=" full-width" *ngIf="claimForm.get('lossDetails.premises')?.value === 'Yes'">
+                        <mat-label>When last occupied</mat-label>
+                        <input formControlName="lastOccuppied" type="number" matInput placeholder="Ex. pat@example.com">
+                        <mat-error *ngIf="claimForm.get('lossDetails.lastOccuppied')?.hasError('required')">
+                            Last occupied is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="m-b-20">
+                <section class="">
+                    <mat-label>Was there forced entry or exit from</mat-label>
+                    <mat-radio-group #forceEntry formControlName="forceEntry">
+                        <mat-radio-button class="margin" value="Yes">Yes</mat-radio-button>
+                        <mat-radio-button class="margin" value="No">No</mat-radio-button>
+                    </mat-radio-group>
+                    <!-- <mat-error *ngIf="claimForm.get('lossDetails.forceEntry')?.hasError('required')">
+                        Entry or exit is <strong>required</strong>
+                    </mat-error> -->
+                </section>
+                <div class="flex gap-1">
+                    <mat-form-field class=" full-width" *ngIf="claimForm.get('lossDetails.forceEntry')?.value === 'Yes'">
+                        <mat-label>Provide details</mat-label>
+                        <textarea formControlName="forcedDetails" matInput placeholder="Ex. It makes me feel..."></textarea>
+                        <mat-error *ngIf="claimForm.get('lossDetails.forcedDetails')?.hasError('required')">
+                            The details are required on the forced entry
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class=" full-width"  *ngIf="claimForm.get('lossDetails.forceEntry')?.value === 'Yes'">
+                        <mat-label>What evidence can be provided</mat-label>
+                        <textarea formControlName="evidence" matInput placeholder="Ex. It makes me feel..."></textarea>
+                        <mat-error *ngIf="claimForm.get('lossDetails.evidence')?.hasError('required')">
+                            What evidence can be provided is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-1">
+                <section class="full-width">
+                    <mat-label>Was there alarm activated during the loss occurence</mat-label>
+                    <mat-radio-group formControlName="alarmActivation">
+                        <mat-radio-button class="margin" value="Yes">Yes</mat-radio-button>
+                        <mat-radio-button class="margin" value="No">No</mat-radio-button>
+                    </mat-radio-group>
+                    <!-- <mat-error *ngIf="claimForm.get('lossDetails.alarmActivation')?.hasError('required')">
+                       alarm activayion is <strong>required</strong>
+                    </mat-error> -->
+                </section>
+                    <mat-form-field class=" full-width">
+                        <mat-label>Please provide details of the alarm company</mat-label>
+                        <textarea formControlName="alarmCompany" matInput placeholder="Ex. It makes me feel..."></textarea>
+                        <mat-error *ngIf="claimForm.get('lossDetails.alarmCompany')?.hasError('required')">
+                            company alarm details is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h3>List of lost or damaged items being claimed for</h3>
+            <button *ngIf="getItems().controls.length < 1" mat-stroked-button (click)="addItem()">Add Item</button>
+            <div *ngIf="getItems().controls.length">
+                <div formArrayName="items" class="flex column">
+                    <div *ngFor="let tertiary of getItems()?.controls, let i = index">
+                        <div formGroupName={{i}} class="flex column">
+                            <div class="flex spacebetween-center">
+                                <h3>{{i + 1}}. Item</h3>
+                                <mat-icon (click)="removeItem(i)" matTooltip="Delete item"
+                                    class="close">delete</mat-icon>
+                            </div>
+                            <mat-form-field class="full-width">
+                                <mat-label>Number of items</mat-label>
+                                <input formControlName="itemNum" type="number" matInput placeholder="15">
+                                <mat-error>
+                                    Number of items is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="full-width">
+                                <mat-label>Serial number</mat-label>
+                                <input formControlName="serial_number" type="text" matInput
+                                    placeholder="Ex. pat@example.com">
+                                <mat-error>
+                                    Make is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="full-width">
+                                <mat-label>Place of purchase</mat-label>
+                                <input formControlName="purchaseLocation" type="text" matInput placeholder="Marko">
+                                <mat-error>
+                                    Place of purchase <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="full-width">
+                                <mat-label>Replacement or repair value</mat-label>
+                                <input formControlName="value" type="text" matInput placeholder="R1000">
+                                <mat-error>
+                                    value is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <button *ngIf="i === getItems().controls.length-1 " mat-stroked-button (click)="addItem()">Add Another</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex center-center">
+            <button mat-raised-button (click)="submit()" color="primary">Submit claim</button>
+        </div>
+    </div>
+
+</form>
