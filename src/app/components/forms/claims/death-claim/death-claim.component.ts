@@ -9,31 +9,27 @@ import { ApisServicesService } from 'src/app/services/apis-services.service';
 })
 export class DeathClaimComponent {
 
+  deathCauses: any[] = ['Natural cause', 'terminal illness', 'Motor vehicle', 'Suicide', 'Murder', 'Other']
+  deathLocation: any[] = [{place: 'Hospital', value: 'Hospital'}, {place: 'Clinic', value: 'Clinic'}, {place: 'Home', value: 'Home'}, {place: 'Other', value: 'Other'}]
+
   deathClaimForm!: FormGroup
   deceasedDetails: FormGroup = new FormGroup({
     fullName: new FormControl('', [Validators.required]),
     idNum: new FormControl('', [Validators.required]),
-    claimerName: new FormControl('', [Validators.required]),
-    deceasedRelationship: new FormControl('', [Validators.required]),
-    phRelationship: new FormControl('', [Validators.required]),
-    hospital: new FormControl('', [Validators.required]),
-    telNo: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required])  
+    deathDate: new FormControl('', [Validators.required]),
+    deathCause: new FormControl('', [Validators.required]),
+    certifiedPer: new FormControl('', [Validators.required]),
+    telPhone: new FormControl('', [Validators.required]),
+    deathPlace: new FormControl(''),
+    admissionNo: new FormControl('', [Validators.required]),
   })
-  policeStationDetails: FormGroup = new FormGroup({
-    policeStationTelNo: new FormControl('', [Validators.required]),
-    policeStationCaseNo: new FormControl('', [Validators.required]),
-    policeStationName: new FormControl('', [Validators.required]),
-    investigatorName: new FormControl('', [Validators.required]),
-    investigatorContact: new FormControl('', [Validators.required])
-
-  })
-  accidentDetails: FormGroup = new FormGroup({
-    accidentDate: new FormControl('', [Validators.required]),
-    accidentTime: new FormControl('', [Validators.required]),
-    accidentLocation: new FormControl('', [Validators.required]),
-    policeStationDetails: this.policeStationDetails,
-    accidentDescription: new FormControl('', Validators.required)
+  undertakerDetails: FormGroup = new FormGroup({
+    companyName: new FormControl('', [Validators.required]),
+    companyNo: new FormControl('', [Validators.required]),
+    businessAddress: new FormControl('', [Validators.required]),
+    cellNo: new FormControl('', [Validators.required]),
+    burialDate: new FormControl('', [Validators.required]),
+    burialPlace: new FormControl('', [Validators.required])
 
   })
 
@@ -41,7 +37,7 @@ export class DeathClaimComponent {
 
     this.deathClaimForm = new FormGroup({
       deceasedDetails: this.deceasedDetails,
-      accidentDetails: this.accidentDetails
+      undertakerDetails: this.undertakerDetails
     })
   }
 
@@ -49,14 +45,14 @@ export class DeathClaimComponent {
     let formValues = this.deathClaimForm.value
     console.log(formValues)
     console.log(this.deathClaimForm)
-    if(!this.deathClaimForm.valid) return
+    if (!this.deathClaimForm.valid) return
 
     this.api.genericPost('/add-death-claim', this.deathClaimForm.value)
       .subscribe({
         next: (res) => console.log(res),
         error: (err) => console.log(err),
-        complete: () => {}
+        complete: () => { }
       })
-    
+
   }
 }
