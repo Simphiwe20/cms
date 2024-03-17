@@ -1,3 +1,11 @@
-<mat-toolbar>
-    
-</mat-toolbar>
+<mat-card>
+    <mat-toolbar>
+        <div class="img-container flex start-center">
+            <img src="../../../assets/images/logo.png" alt="">
+        </div>
+        <p>{{currentUser.firstName}}</p>
+        <div class="flex gap-1">
+            <p *ngFor="let menu of menuItems" [routerLink]="menu.route">{{menu.item}}</p>
+        </div>
+    </mat-toolbar>
+</mat-card>

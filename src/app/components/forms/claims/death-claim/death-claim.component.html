@@ -1,0 +1,177 @@
+<div>
+    <form [formGroup]="deathClaimForm" class="flex column center-center">
+        <h1 class="align-text">Death Claim Form</h1>
+        <div class="width-80">
+            <div formGroupName="deceasedDetails" class="full-width flex column">
+                <h3>Deceased Details</h3>
+                <div class="flex gap-2">
+                    <mat-form-field class="full-width">
+                        <mat-label>Full name of the deceased</mat-label>
+                        <input formControlName="fullName" type="text" matInput placeholder="Ex. pat@example.com">
+                        <mat-error *ngIf="deathClaimForm.get('deceasedDetails.fullName')?.hasError('required')">
+                            Deceased name is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>ID No.</mat-label>
+                        <input formControlName="idNum" type="text" matInput placeholder="Ex. pat@example.com">
+                        <mat-error *ngIf="deathClaimForm.get('deceasedDetails.idNum')?.hasError('required')">
+                            ID number is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="flex gap-2">
+                    <mat-form-field class="full-width">
+                        <mat-label>Name of the person submitting the claim</mat-label>
+                        <input formControlName="claimerName" type="text" matInput placeholder="Ex. pat@example.com">
+                        <mat-error *ngIf="deathClaimForm.get('deceasedDetails.claimerName')?.hasError('required')">
+                            your name is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>What is your relationsip to the deceased</mat-label>
+                        <input formControlName="deceasedRelationship" type="text" matInput
+                            placeholder="Ex. pat@example.com">
+                        <mat-error
+                            *ngIf="deathClaimForm.get('deceasedDetails.deceasedRelationship')?.hasError('required')">
+                            relationship to the deceased is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field class=" full-width">
+                        <mat-label>What is your relationship to the Main Policy Holder</mat-label>
+                        <input formControlName="phRelationship" type="text" matInput placeholder="Ex. pat@example.com">
+                        <mat-error *ngIf="deathClaimForm.get('deceasedDetails.phRelationship')?.hasError('required')">
+                            relationship to the Main Policy Holder is required
+                        </mat-error>
+                    </mat-form-field>
+                    <div class="flex gap-2">
+                        <mat-form-field class=" full-width">
+                            <mat-label>Name of the deceased’s usual Doctor, Clinic or Hospital</mat-label>
+                            <textarea formControlName="hospital" type="number" matInput
+                                placeholder="Ex. pat@example.com"></textarea>
+                            <mat-error *ngIf="deathClaimForm.get('deceasedDetails.hospital')?.hasError('required')">
+                                deceased’s usual Doctor, Clinic or Hospital is required
+                            </mat-error>
+                        </mat-form-field>
+                        <div class="flex column gap-2">
+                            <mat-form-field class=" full-width">
+                                <mat-label>Tel. No</mat-label>
+                                <input formControlName="telNo" type="number" matInput placeholder="Ex. pat@example.com">
+                                <mat-error *ngIf="deathClaimForm.get('deceasedDetails.telNo')?.hasError('required')">
+                                    Doctor, Clinic or Hospital's telephone number is required
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field class=" full-width">
+                                <mat-label>Email</mat-label>
+                                <input formControlName="email" type="email" matInput placeholder="Ex. pat@example.com">
+                                <mat-error *ngIf="deathClaimForm.get('deceasedDetails.email')?.hasError('required')">
+                                    Doctor, Clinic or Hospital's email address is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h3>Details of the accident</h3>
+                <p>If a motor accident occurred, please attach a copy of the road traffic collision report</p>
+                <div class="flex column gap-2" formGroupName="accidentDetails">
+                    <div class="flex gap-2">
+                        <div>
+                            <mat-form-field appearance="fill" class="">
+                                <mat-label>Date of accident</mat-label>
+                                <input formControlName="accidentDate" matInput [matDatepicker]="picker" readonly>
+                                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                                <mat-error
+                                    *ngIf="deathClaimForm.get('accidentDetails.accidentDate')?.hasError('required')">
+                                    Date of accident is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <mat-form-field class="full-width">
+                            <mat-label>Time of accident</mat-label>
+                            <input formControlName="accidentTime" type="time" matInput
+                                placeholder="Ex. pat@example.com">
+                            <mat-error *ngIf="deathClaimForm.get('accidentDetails.accidentTime')?.hasError('required')">
+                                Time of accident is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="full-width">
+                            <mat-label>The accident occurred where</mat-label>
+                            <input formControlName="accidentLocation" type="text" matInput
+                                placeholder="Ex. pat@example.com">
+                            <mat-error
+                                *ngIf="deathClaimForm.get('accidentDetails.accidentLocation')?.hasError('required')">
+                                accident location is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="flex gap-2 column" formGroupName="policeStationDetails">
+                        <div class="flex gap-2">
+                            <mat-form-field class="full-width">
+                                <mat-label>Police Station name where the accident was reported</mat-label>
+                                <input formControlName="policeStationName" type="text" matInput
+                                    placeholder="Ex. pat@example.com">
+                                <mat-error
+                                    *ngIf="deathClaimForm.get('policeStationDetails.policeStationName')?.hasError('required')">
+                                    Police station name is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="full-width">
+                                <mat-label>Tel. No of the Police Station</mat-label>
+                                <input formControlName="policeStationTelNo" type="text" matInput
+                                    placeholder="Ex. pat@example.com">
+                                <mat-error
+                                    *ngIf="deathClaimForm.get('policeStationDetails.policeStationTelNo')?.hasError('required')">
+                                    relationship to the deceased is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="full-width">
+                                <mat-label>CAS No. as provided by the Police Station</mat-label>
+                                <input formControlName="policeStationCaseNo" type="text" matInput
+                                    placeholder="Ex. pat@example.com">
+                                <mat-error
+                                    *ngIf="deathClaimForm.get('policeStationDetails.policeStationCaseNo')?.hasError('required')">
+                                    CAS No. as provided by the Police Station is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <mat-form-field class="full-width">
+                            <mat-label>Invenstigator name</mat-label>
+                            <input formControlName="investigatorName" type="text" matInput
+                                placeholder="Ex. pat@example.com">
+                            <mat-error
+                                *ngIf="deathClaimForm.get('policeStationDetails.investigatorName')?.hasError('required')">
+                                CAS No. as provided by the Police Station is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="">
+                            <mat-label>Contact details of the Investigating Officer Handling
+                                this case</mat-label>
+                            <textarea formControlName="investigatorContact" type="text" matInput
+                                placeholder="Ex. pat@example.com"></textarea>
+                            <mat-error
+                                *ngIf="deathClaimForm.get('policeStationDetails.investigatorContact')?.hasError('required')">
+                                Contact details is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <mat-form-field class="half-width">
+                        <mat-label>Please describe as fully as possible how the accident happened</mat-label>
+                        <textarea formControlName="accidentDescription" type="text" matInput
+                            placeholder="Ex. pat@example.com"></textarea>
+                        <mat-error *ngIf="deathClaimForm.get('accidentDescription')?.hasError('required')">
+                            relationship to the deceased is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="flex center-center">
+                <button mat-raised-button (click)="submit()" color="primary">Submit claim</button>
+            </div>
+        </div>
+    </form>
+</div>

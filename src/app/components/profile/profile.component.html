@@ -3,10 +3,10 @@
     <mat-icon> person</mat-icon>
     <mat-card-header>
 
-      <mat-card-title class="lightBlueC">{{ profile.name }} {{ profile.surname }}</mat-card-title>
+      <mat-card-title class="lightBlueC">{{ profile.name }} {{ profile.surname }} {{profile.fullName}}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <div class="flex gap-1em">
+      <!-- <div class="flex gap-1em">
         <mat-form-field class="half-width">
           <mat-label>ID</mat-label>
           <input type="number" matInput [value]=" profile.id" readonly>
@@ -62,7 +62,7 @@
         </mat-form-field>
       
 
-      </div>
+      </div> -->
     </mat-card-content>
     <button mat-raised-button class="btn1" (click)="edit()">edit profile</button>
     <button mat-raised-button class="btn1">change Password</button>

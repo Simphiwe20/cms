@@ -1,1 +1,20 @@
-<p>id-register works!</p>
+<div class="flex full-width full-height">
+    <div class="half-width">
+        <h1>Registration</h1>
+        <p ngIf="show=== false"> Enter your details to kick start your varification process inoder to start registarting</p>
+        <p *ngIf=" show===true">We couldn't find you on our records. Please ensure that you have entered your ID/Passport number
+            correctly and try again or contact</p>
+        <form [formGroup]="idForm">
+            <mat-form-field class="full-width">
+                <mat-label>Identification Number </mat-label>
+                <input type="number" matInput placeholder="0000000000" formControlName="Idnumber">
+                <mat-error *ngIf="idForm.get('Idnumber')?.hasError('required')">
+                    Identification Number is required
+                </mat-error>
+
+            </mat-form-field>
+        </form>
+        <button mat-raised-button class="btn-submit flex-1" routerLink="/register">Cancel</button>
+        <button mat-raised-button class="btn-submit flex-1" (click)="submit()">Next</button>
+    </div>
+</div>
