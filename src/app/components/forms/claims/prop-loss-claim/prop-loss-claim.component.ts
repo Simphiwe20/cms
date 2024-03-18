@@ -12,6 +12,12 @@ export class PropLossClaimComponent {
   count: Number = 0
   isAdded: boolean = false
   claimForm!: FormGroup
+  attachment: FormGroup = new FormGroup({
+    Id: new FormControl('', [Validators.required]),
+    proof: new FormControl('', [Validators.required])
+
+  })
+
   lossDetails: FormGroup = new FormGroup({
     dateTime: new FormControl('', [Validators.required]),
     discoveryTime: new FormControl('', [Validators.required]),
@@ -39,7 +45,8 @@ export class PropLossClaimComponent {
   constructor(private api: ApisServicesService) {
     this.claimForm = new FormGroup({
       lossDetails: this.lossDetails,
-      items: new FormArray([])
+      items: new FormArray([]),
+      attachment: this.attachment
     })
   }
 

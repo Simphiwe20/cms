@@ -9,6 +9,10 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 export class PublicLiaClaimComponent {
   isAdded: boolean = false
 
+  attachment: FormGroup = new FormGroup({
+    Id: new FormControl('', [Validators.required]),
+    proof: new FormControl('', [Validators.required])
+  })
   publicLiabilityForm: FormGroup
   witnesses: FormGroup = new FormGroup ({
     firstName: new FormControl('', [Validators.required]),
@@ -40,7 +44,8 @@ export class PublicLiaClaimComponent {
         insuredComment: new FormControl('', [Validators.required]),
         insuredOnAmount: new FormControl('', [Validators.required]),
         externalContributor: new FormControl('', [Validators.required]),
-        additionalDetails: new FormControl('', [Validators.required])
+        additionalDetails: new FormControl('', [Validators.required]),
+        attachment: this.attachment
 
     })
   }

@@ -1,8 +1,8 @@
 <form [formGroup]="claimForm" class="flex column center-center">
-    <div class="width-80">
-        <h1 class="align-text">Property Loss and Damage Claim</h1>
-        <div formGroupName="lossDetails" class="full-width flex column">
-            <h3>Loss Details</h3>
+    <h1 class="align-text">Property Loss and Damage Claim</h1>
+    <mat-stepper class="full-width" orientation="vertical" #stepper>
+        <mat-step formGroupName="lossDetails">
+            <ng-template matStepLabel> Loss Details </ng-template>
             <div class="flex gap-1">
                 <mat-form-field appearance="fill" class="full-width">
                     <mat-label>Date and time of loss</mat-label>
@@ -31,13 +31,14 @@
                 </mat-form-field>
                 <mat-form-field class="full-width">
                     <mat-label>Address where the loss occured</mat-label>
-                    <textarea formControlName="location" type="text" matInput placeholder="Ex. pat@example.com"></textarea>
+                    <textarea formControlName="location" type="text" matInput
+                        placeholder="Ex. pat@example.com"></textarea>
                     <mat-error *ngIf="claimForm.get('lossDetails.location')?.hasError('required')">
                         Loss location is <strong>required</strong>
                     </mat-error>
                 </mat-form-field>
             </div>
-            <div >
+            <div>
                 <section class="">
                     <mat-label>Were the premises occupied at the time of the loss</mat-label>
                     <mat-radio-group formControlName="premises">
@@ -77,14 +78,17 @@
                     </mat-error> -->
                 </section>
                 <div class="flex gap-1">
-                    <mat-form-field class=" full-width" *ngIf="claimForm.get('lossDetails.forceEntry')?.value === 'Yes'">
+                    <mat-form-field class=" full-width"
+                        *ngIf="claimForm.get('lossDetails.forceEntry')?.value === 'Yes'">
                         <mat-label>Provide details</mat-label>
-                        <textarea formControlName="forcedDetails" matInput placeholder="Ex. It makes me feel..."></textarea>
+                        <textarea formControlName="forcedDetails" matInput
+                            placeholder="Ex. It makes me feel..."></textarea>
                         <mat-error *ngIf="claimForm.get('lossDetails.forcedDetails')?.hasError('required')">
                             The details are required on the forced entry
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field class=" full-width"  *ngIf="claimForm.get('lossDetails.forceEntry')?.value === 'Yes'">
+                    <mat-form-field class=" full-width"
+                        *ngIf="claimForm.get('lossDetails.forceEntry')?.value === 'Yes'">
                         <mat-label>What evidence can be provided</mat-label>
                         <textarea formControlName="evidence" matInput placeholder="Ex. It makes me feel..."></textarea>
                         <mat-error *ngIf="claimForm.get('lossDetails.evidence')?.hasError('required')">
@@ -95,29 +99,33 @@
             </div>
             <div>
                 <div class="flex gap-1">
-                <section class="full-width">
-                    <mat-label>Was there alarm activated during the loss occurence</mat-label>
-                    <mat-radio-group formControlName="alarmActivation">
-                        <mat-radio-button class="margin" value="Yes">Yes</mat-radio-button>
-                        <mat-radio-button class="margin" value="No">No</mat-radio-button>
-                    </mat-radio-group>
-                    <!-- <mat-error *ngIf="claimForm.get('lossDetails.alarmActivation')?.hasError('required')">
+                    <section class="full-width">
+                        <mat-label>Was there alarm activated during the loss occurence</mat-label>
+                        <mat-radio-group formControlName="alarmActivation">
+                            <mat-radio-button class="margin" value="Yes">Yes</mat-radio-button>
+                            <mat-radio-button class="margin" value="No">No</mat-radio-button>
+                        </mat-radio-group>
+                        <!-- <mat-error *ngIf="claimForm.get('lossDetails.alarmActivation')?.hasError('required')">
                        alarm activayion is <strong>required</strong>
                     </mat-error> -->
-                </section>
+                    </section>
                     <mat-form-field class=" full-width">
                         <mat-label>Please provide details of the alarm company</mat-label>
-                        <textarea formControlName="alarmCompany" matInput placeholder="Ex. It makes me feel..."></textarea>
+                        <textarea formControlName="alarmCompany" matInput
+                            placeholder="Ex. It makes me feel..."></textarea>
                         <mat-error *ngIf="claimForm.get('lossDetails.alarmCompany')?.hasError('required')">
                             company alarm details is <strong>required</strong>
                         </mat-error>
                     </mat-form-field>
                 </div>
             </div>
-        </div>
-        <div>
-            <h3>List of lost or damaged items being claimed for</h3>
-            <button *ngIf="getItems().controls.length < 1" mat-stroked-button (click)="addItem()">Add Item</button>
+            <div>
+                <button mat-raised-button color="primary" matStepperNext>Next</button>
+            </div>
+        </mat-step>
+        <mat-step>
+            <ng-template class="m-b-20" matStepLabel>List of lost or damaged items being claimed for</ng-template>
+            <button class="m-b-20 m-t-20" *ngIf="getItems().controls.length < 1" mat-stroked-button (click)="addItem()">Add Item</button>
             <div *ngIf="getItems().controls.length">
                 <div formArrayName="items" class="flex column">
                     <div *ngFor="let tertiary of getItems()?.controls, let i = index">
@@ -157,14 +165,53 @@
                                 </mat-error>
                             </mat-form-field>
                         </div>
-                        <button *ngIf="i === getItems().controls.length-1 " mat-stroked-button (click)="addItem()">Add Another</button>
+                        <button *ngIf="i === getItems().controls.length-1 " mat-stroked-button (click)="addItem()">Add
+                            Another</button>
                     </div>
                 </div>
+
             </div>
-        </div>
-        <div class="flex center-center">
-            <button mat-raised-button (click)="submit()" color="primary">Submit claim</button>
-        </div>
-    </div>
+            <div class="flex gap-2">
+                <button mat-raised-button color="primary" matStepperPrevious>Back</button>
+                <button mat-raised-button color="primary" matStepperNext>Next</button>
+            </div>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>Attachments</ng-template>
+            <p>Please upload the required documents below.</p>
+            <div class="flex column gap-2" formGroupName="attachment">
+                <div class="flex gap-2">
+                    <p class="width-20">PH's ID</p>
+                    <div class="file flex start-center">
+                        <input formControlName="Id" class="m-l-30" type="file">
+                        <mat-error *ngIf="claimForm.get('attachment.Id')?.hasError('required')">
+                            PH's ID is <strong>required</strong>
+                        </mat-error>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <p class="width-20">Loss or damaged proof</p>
+                    <div class="file flex start-center">
+                        <input formControlName="proof" class="m-l-30" type="file">
+                        <mat-error *ngIf="claimForm.get('attachment.proof')?.hasError('required')">
+                            Loss or damaged proof is <strong>required</strong>
+                        </mat-error>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <button mat-raised-button color="primary" matStepperPrevious>Back</button>
+                    <button mat-raised-button color="primary" matStepperNext>Next</button>
+                </div>
+            </div>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>Done</ng-template>
+            <p>You are now done.</p>
+
+            <div class="flex center-center">
+                <button mat-raised-button (click)="submit()" color="primary">Submit claim</button>
+            </div>
+        </mat-step>
+    </mat-stepper>
 
 </form>

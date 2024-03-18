@@ -21,8 +21,12 @@ export class AddClaimsComponent {
 
   clients: any;
   claims:any[] = ['Death claim', 'Property Loss Claim', 'Public Liability']
+  claimer: any;
+
 
   claimSelected: any;
+  claim: boolean = false; 
+  eligibility!: boolean;
 
   isAdded: boolean = false
   claimForm!: FormGroup
@@ -53,6 +57,7 @@ export class AddClaimsComponent {
      this.claimForm = new FormGroup({
     lossDetails: this.lossDetails,
     items: new FormArray([])
+ 
   })
 
   this.currentUser = this.shared.getUser('currentUser', 'session')
@@ -63,7 +68,12 @@ export class AddClaimsComponent {
   this.dataSource = this.clients
 
   console.log(this.clients)
+
+  if(this.currentUser.role === 'claimer') {
+    this.claim = true
+    this.eligibility = this.shared.monthDiff(this.currentUser.dateStarted , new Date()) > 3
   }
+}
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -79,5 +89,11 @@ export class AddClaimsComponent {
     }
   }
 
+  apply(claimer: any) {
+    console.log(claimer)
+    this.claimer = claimer
+    this.eligibility = this.shared.monthDiff(new Date(claimer.dateStarted) , new Date()) > 3
+    this.claim = true
+  }
 
 }
