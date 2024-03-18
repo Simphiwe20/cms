@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { ApiService } from 'src/app/service/api.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class RegisterComponent {
   hide = true;
   saCellphoneRegex = /^(\+?27|0)(\d{9})$/;
   registrationForm: FormGroup;
-  constructor(private snackbar: MatSnackBar ,private api:ApiService){
+  constructor(private snackbar: MatSnackBar ,private api:ApiService , private router:Router){
     this.registrationForm = new FormGroup({
       firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),
       lastName: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -50,7 +51,7 @@ export class RegisterComponent {
         .subscribe({
           next: (res: any) => {
            console.log ('done')
-            this.registrationForm.reset();
+           this.router.navigate(['/login']);
           },
           error: (err: any) => console.log('Error', err),
           complete: () => { }

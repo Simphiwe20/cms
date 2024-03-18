@@ -11,10 +11,10 @@ export class ProfileComponent  {
 
   editF: boolean = false
  
-profiles:any;
+profile:any;
 editform:FormGroup;
   constructor() {
-    console.log(this .profiles)
+    console.log(this .profile)
   this.editform = new FormGroup({
     email:new FormControl('', Validators.required),
      cellnumber: new FormControl('', Validators.required),
@@ -22,7 +22,7 @@ editform:FormGroup;
   
   }
   ngOnInit():void {
-   this.profiles =  JSON.parse(sessionStorage.getItem('currentUser') || '[]');
+   this.profile =  JSON.parse(sessionStorage.getItem('currentUser') || '[]');
   }
     edit() {
       this.editF ?  this.editF=true : this.editF=true
