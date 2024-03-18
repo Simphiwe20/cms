@@ -54,7 +54,7 @@ export class DeathClaimComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.fileElement = document.querySelectorAll('.file1');
+    this.fileElement = document.querySelectorAll('.file');
   }
 
   submit() {
@@ -65,7 +65,7 @@ export class DeathClaimComponent implements AfterViewInit {
 
     const formData = new FormData();
     this.files.forEach((file: any, indx: number) => {
-      formData.append('file', file, file.name);
+      formData.append('file', file, );
     })
     this.api.genericPost('/upload', formData)
       .subscribe({
@@ -83,9 +83,7 @@ export class DeathClaimComponent implements AfterViewInit {
 
   fileUpload(e: any): void {
     console.log(e)
-    e.target.files.forEach((file: any, indx: number) => {
-       this.files[indx] = file 
-    })
+    this.files.push(e.target.files[0])
     console.log(this.files)
     const reader = new FileReader();
     console.log('reader', reader)
