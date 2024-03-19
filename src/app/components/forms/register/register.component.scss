@@ -1,0 +1,105 @@
+.gap-1em{
+    gap: 1em;
+}
+
+.height{
+    height: 110%;
+}
+.width-80{
+    width: 80%;
+}
+.height-80{
+    height: 80%;
+}
+.margin-1em{
+    margin: 1em;
+}
+
+.btn{
+    margin: 9px 0 1.5em 0;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    justify-content: space-evenly;
+}
+.btn-cancel {
+    // background: #f00101 !important;
+    color: #1a3f7e !important;
+    width: 40% !important;
+ 
+    border:  2px solid #1a3f7e !important;
+ }
+.btn-cancel:hover{
+    background-color: #1a3f7e !important;
+    color: #ffffff !important ;
+
+
+ }
+
+ 
+ .btn-submit {
+    background: #1a3f7e !important;
+    color:#ffffff!important;
+    width: 40% !important;
+   
+ }
+ .font-color{
+    color: #334057;
+   
+ }
+ .darkBlue {
+    background-color: #163e7b;
+}
+
+.lightBlue {
+    background-color: #4190cb;
+}
+
+.darkBlueC {
+    color: #163e7b;
+}
+
+.lightBlueC {
+    color: #4190cb;
+}
+.mainContainer {
+    height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+}
+
+.container {
+//   background-color: aqua;
+    height: 90%;
+    width: 80%;
+    .logo {
+        width: 25%;
+        height: 15%;
+
+        img {
+            width: 40%;
+            height: 100%;
+        }
+
+        h1 {
+            width: 40%;
+            height: 50%;
+            text-align: center;
+            font-weight: normal;
+        }
+}}
+.login {
+    width: 30%;
+    height: 15%;
+
+    h2 {
+        font-size: 29px;
+        font-weight: normal;
+    }
+}
+.aic {
+    align-items: center;
+}
+h3{
+    font-weight: normal;
+}
