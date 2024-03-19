@@ -29,6 +29,7 @@ import { BarComponent } from './components/shared/charts/bar/bar.component';
 import { PieComponent } from './components/shared/charts/pie/pie.component';
 import { NgChartsModule } from 'ng2-charts';
 import { HomeComponent } from './components/home/home.component';
+import { ViewClaimComponent } from './components/view-claim/view-claim.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { HomeComponent } from './components/home/home.component';
     PropLossClaimComponent,
     BarComponent,
     PieComponent,
-    HomeComponent
+    HomeComponent,
+    ViewClaimComponent
   ],
   imports: [
     BrowserModule,

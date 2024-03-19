@@ -21,6 +21,7 @@ export class DeathClaimComponent implements AfterViewInit, OnChanges {
   fileUploadResult: any = 0;
   uploadedfiles: File[][] = [];
   formData: FormData[] = []
+  currentUser: any;
 
 
 
@@ -53,6 +54,8 @@ export class DeathClaimComponent implements AfterViewInit, OnChanges {
   constructor(private api: ApisServicesService, private shared: SharedServicesService,
       private snackBar: MatSnackBar) {
 
+    this.currentUser = this.shared.getUser('currentUser', 'session')
+
     this.deathClaimForm = new FormGroup({
       deceasedDetails: this.deceasedDetails,
       undertakerDetails: this.undertakerDetails,
@@ -74,6 +77,10 @@ export class DeathClaimComponent implements AfterViewInit, OnChanges {
   submit() {
     let formValues = this.deathClaimForm.value
     formValues['memberID'] = this.client.memberID
+    formValues['status'] = this.currentUser.role === 'agent' ? 'Reviewed' : 'Submitted'
+    formValues['dateSubmitted'] = new Date() 
+    formValues['claimID'] = `Claim-${new Date().getFullYear()}${Math.random() * (500 - 100) + 100}`
+    formValues['submittedBy'] = this.shared.getWhoSubmitted()
   
     console.log(formValues)
     console.log(this.deathClaimForm)

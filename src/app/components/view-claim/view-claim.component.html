@@ -1,0 +1,29 @@
+<div class="main-container padding-20">
+    <p class="close" (click)="close()">X</p>
+    <h2>{{client.firstName }} {{client.lastName}} </h2>
+    <div class="flex column ">
+        <h3>Policy Holder Details</h3>
+        <div class="flex gap-2 ">
+            <p>Member ID: {{client.memberID}}</p>
+            <p>Claim Name: {{client.claimName}}</p>
+        </div>
+        <p>Email address: {{client.email}}</p>
+        <p>ID Number: {{client.idNumber}}</p>
+        <p>Started Paying On: {{client.startDate | date}}</p>
+    </div>
+    <div>
+        <h3>Claim details</h3>
+        <div class="flex gap-2">
+            <p>Date Submitted: {{client.dateSubmitted |date}}</p>
+            <p>Status: {{client.status}}</p>
+        </div>
+        <p>Submitted by: {{client.submittedBy}}</p>
+    </div>
+    <h2>Attachments</h2>
+    <div class="flex gap-2">
+        <p *ngFor="let file of files" class=" column flex center-center hover" (click)="viewFile(file.fileId)">
+            <mat-icon>{{file.icon}}</mat-icon>
+            <small>{{file.docType}}</small>
+        </p>
+    </div>
+</div>

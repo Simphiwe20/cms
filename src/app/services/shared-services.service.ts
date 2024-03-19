@@ -41,7 +41,17 @@ export class SharedServicesService {
       });
     });
 
+
     return this.api.genericPost('/upload', formData).toPromise();
+  }
+
+  getWhoSubmitted(): any {
+    let user = this.getUser('currentUser', 'session')
+    if(user.role === 'agent') {
+      return `${user.fullName}(${user.role})`
+    }else {
+      return 'This claim came from the policyholder\'s account'
+    }
   }
 
 }
