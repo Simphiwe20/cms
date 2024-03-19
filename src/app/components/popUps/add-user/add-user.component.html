@@ -1,0 +1,39 @@
+<form [formGroup]="myForm"  class="flex column center-center">
+    <h1 mat-dialog-title>Add User Details</h1>
+    <div mat-dialog-content class="flex inputs center-center">
+        <div class="flex row gap1em">
+            <mat-form-field>
+                <mat-label>Employee ID</mat-label>
+                <input formControlName="Emp_ID" matInput>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Employee Name</mat-label>
+                <input formControlName="Emp_Name" matInput>
+            </mat-form-field>
+        </div>
+        <div class="flex row gap1em">
+            <mat-form-field>
+                <mat-label>Employee Surname</mat-label>
+                <input formControlName="Emp_Surname" matInput>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Employee DOB</mat-label>
+                <input formControlName="Emp_DOB" matInput>
+            </mat-form-field>
+        </div>
+        <div class="flex row gap1em">
+            <mat-form-field>
+                <mat-label>Employee Gender</mat-label>
+                <input formControlName="Emp_Gender" matInput>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Employee Email</mat-label>
+                <input formControlName="Emp_Email" matInput>
+            </mat-form-field>
+        </div>
+    </div>
+    <div mat-dialog-actions class="flex gap2em buttons center-center">
+            <button class="lightBlue" (click)="saveUser()">Save</button>
+        <button class="darkBlue" (click)="closePopup()" >Close</button>
+    </div>
+    </form>

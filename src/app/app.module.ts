@@ -29,6 +29,8 @@ import { BarComponent } from './components/shared/charts/bar/bar.component';
 import { PieComponent } from './components/shared/charts/pie/pie.component';
 import { NgChartsModule } from 'ng2-charts';
 import { HomeComponent } from './components/home/home.component';
+import { AddUserComponent } from './components/popUps/add-user/add-user.component';
+import { EditUserComponent } from './components/popUps/edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import { HomeComponent } from './components/home/home.component';
     PropLossClaimComponent,
     BarComponent,
     PieComponent,
-    HomeComponent
+    HomeComponent,
+    AddUserComponent,
+    EditUserComponent
   ],
   imports: [
     BrowserModule,
