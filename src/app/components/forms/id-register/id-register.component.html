@@ -1,1 +1,35 @@
-<p>id-register works!</p>
+<div class="flex center-center column full-width full-height">
+    <div class="container  flex  column aic gap-1-em">
+        <div class="logo flex row center-center">
+            <img src="../../../../assets/images/logo.png" alt="">
+            <h1><span class="darkBlueC">C</span><span class="lightBlueC">M</span><span class="darkBlueC">S</span></h1>
+        </div>
+        <div class="idreg flex center-center">
+            <h2>Registration</h2>
+        </div>
+        <div>
+            <p *ngIf="!show"> We'll need this to verify your details and link any existing policies to your profile.</p>
+            <p *ngIf="show" class="color-red">We couldn't find you on our records. Please ensure that you have entered your ID/Passport
+                number
+                correctly and try again or contact</p>
+        </div>
+        <form [formGroup]="idForm">
+            <div class="idinput ">
+                <mat-form-field class="full-width">
+                    <mat-label>Identification Number </mat-label>
+                    <input type="text" matInput placeholder="0000000000" formControlName="Idnumber">
+                    <mat-error *ngIf="idForm.get('Idnumber')?.hasError('required')">
+                        Identification Number is required
+                    </mat-error>
+
+                </mat-form-field>
+            </div>
+            <div class="buttons flex row gap-2-em">
+                <button class="btn1" mat-raised-button>Cancel</button>
+                <button class="btn2" mat-raised-button (click)=" submit()">Next</button>
+            </div>
+            
+        </form>
+       
+    </div>
+</div>

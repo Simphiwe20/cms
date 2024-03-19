@@ -11,7 +11,7 @@ export class ToolbarComponent {
   constructor(private router: Router){}
 
   Register(){
-    this.router.navigate(['/register']);
+    this.router.navigate(['Registration-Identifier']);
   }
 
   Login(){

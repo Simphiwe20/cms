@@ -1,0 +1,103 @@
+.gap-1-em{
+    gap: 1em;
+}
+.logo {
+    width: 40%;
+    height: 15%;
+
+    img {
+        width: 40%;
+        height: 100%;
+    }
+
+    h1 {
+        width: 40%;
+        height: 50%;
+        text-align: center;
+        font-weight: normal;
+    }
+
+}
+.row {
+    flex-direction: row;
+}
+.darkBlue {
+    background-color: #163e7b;
+}
+
+.lightBlue {
+    background-color: #4190cb;
+}
+
+.darkBlueC {
+    color: #163e7b;
+}
+
+.lightBlueC {
+    color: #4190cb;
+}
+.idreg {
+    width: 30%;
+    height: 15%;
+
+    h2 {
+        font-size: 25px;
+        font-weight: normal;
+    }
+}
+.container {
+    
+    height: 80%;
+    width: 45%;
+}
+.aic {
+    align-items: center;
+}
+form {
+    height: 70%;
+    width: 100%;
+    
+    .idinput {
+        width: 100%;
+        height: 25%;
+
+        mat-form-field {
+            width: 100%;
+            border: none;
+        }
+    }
+}
+.buttons {
+    width: 100%;
+    height: 15%;
+
+    button {
+        width: 50%;
+        height: 100%;
+    }
+
+    .btn1 {
+        border: 2px solid #163e7b;
+        color: #163e7b;
+    }
+
+    .btn1:hover {
+        background-color: #163e7b;
+        color: white;
+    }
+
+    .btn2 {
+        background-color: #163e7b;
+        color: white;
+    }
+
+    .btn2:hover {
+        background-color: #00305a;
+    }
+}
+.gap-2-em{
+    gap: 2em;
+}
+.color-red{
+    color: red;
+}
