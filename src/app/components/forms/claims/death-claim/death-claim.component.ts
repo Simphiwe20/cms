@@ -1,21 +1,27 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ApisServicesService } from 'src/app/services/apis-services.service';
+import { SharedServicesService } from 'src/app/services/shared-services.service';
 
 @Component({
   selector: 'app-death-claim',
   templateUrl: './death-claim.component.html',
   styleUrls: ['./death-claim.component.scss']
 })
-export class DeathClaimComponent implements AfterViewInit {
+export class DeathClaimComponent implements AfterViewInit, OnChanges {
 
   deathCauses: any[] = ['Natural cause', 'terminal illness', 'Motor vehicle', 'Suicide', 'Murder', 'Other']
   deathLocation: any[] = [{ place: 'Hospital', value: 'Hospital' }, { place: 'Clinic', value: 'Clinic' }, { place: 'Home', value: 'Home' }, { place: 'Other', value: 'Other' }]
 
+  @Input() client: any;
   deathClaimForm!: FormGroup
   fileElement: any;
+  fileElement1: any;
   fileUploadResult: any = 0;
-  files: any[] = [];
+  uploadedfiles: File[][] = [];
+  formData: FormData[] = []
+
 
 
   attachment: FormGroup = new FormGroup({
@@ -44,7 +50,8 @@ export class DeathClaimComponent implements AfterViewInit {
 
   })
 
-  constructor(private api: ApisServicesService) {
+  constructor(private api: ApisServicesService, private shared: SharedServicesService,
+      private snackBar: MatSnackBar) {
 
     this.deathClaimForm = new FormGroup({
       deceasedDetails: this.deceasedDetails,
@@ -54,41 +61,60 @@ export class DeathClaimComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.fileElement = document.querySelectorAll('.file');
+    this.fileElement = document.getElementById('file');
+    this.fileElement1 = document.getElementById('file1');
+
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.client = this.client
+    console.log(changes)
   }
 
   submit() {
     let formValues = this.deathClaimForm.value
+    formValues['memberID'] = this.client.memberID
+  
     console.log(formValues)
     console.log(this.deathClaimForm)
-    if (!this.deathClaimForm.valid) return
 
     const formData = new FormData();
-    this.files.forEach((file: any, indx: number) => {
-      formData.append('file', file, );
+    this.uploadedfiles.forEach((fileArray, index) => {
+      fileArray.forEach((file, subIndex) => {
+        formData.append(`file${index + 1}-${subIndex + 1}`, file);
+      });
     })
-    this.api.genericPost('/upload', formData)
-      .subscribe({
-        next: (res) => console.log(res),
-        error: (err) => console.log(err),
-        complete: () => { }
-      })
+
+    if (!this.deathClaimForm.valid) return
+    console.log('Form Data', formData)
+
+    this.shared.uploadFiles(this.uploadedfiles)
+      .then((res) => console.log(res)),
+      // .catch((err) => console.log(err))
+
     this.api.genericPost('/add-death-claim', this.deathClaimForm.value)
       .subscribe({
         next: (res) => console.log(res),
         error: (err) => console.log(err),
         complete: () => { }
       })
+    this.snackBar.open(`Your ${this.client.memberID} Claim has been successfully submitted`, 'OK', {duration: 3000})
   }
 
-  fileUpload(e: any): void {
-    console.log(e)
-    this.files.push(e.target.files[0])
-    console.log(this.files)
-    const reader = new FileReader();
-    console.log('reader', reader)
-    console.log(this.fileElement)
-    console.log('files', this.fileElement.files.length)
-    this.fileUploadResult = this.fileElement.files.length
+  // appendFiles() {
+  //   let formData = new FormData();
+  //   for (let i = 0; i < this.uploadedfiles.length; i++) {
+  //     formData.append('files', this.uploadedfiles[i]);
+  //   }
+  //   console.log(this.uploadedfiles)
+  // }
+
+  fileUpload(e: any, inputIndex: number): void {
+    const files: FileList = e.target.files;
+    const fileArray: File[] = [];
+    for (let i = 0; i < files.length; i++) {
+      fileArray.push(files[i]);
+    }
+    this.uploadedfiles[inputIndex] = fileArray;
   }
 }

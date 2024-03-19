@@ -158,7 +158,7 @@
                     <div class="flex gap-2">
                         <p class="width-20">deceased's ID</p>
                         <div class="file flex start-center">
-                            <input  (change)="fileUpload($event)" class="file1"  class="m-l-30"  type="file">
+                            <input  (change)="fileUpload($event, 0)" id="file"  class="m-l-30"  type="file" multiple>
                             <!-- <mat-error *ngIf="deathClaimForm.get('attachment.Id')?.hasError('required')">
                                 deceased's ID is <strong>required</strong>
                             </mat-error> -->
@@ -167,7 +167,7 @@
                     <div class="flex gap-2">
                         <p class="width-20">Death Certificate</p>
                         <div class="file flex start-center">
-                            <input class="m-l-30 file1" (change)="fileUpload($event)"  type="file">
+                            <input class="m-l-30 file1" (change)="fileUpload($event, 1)" id="file1"  type="file" multiple>
                             <!-- <mat-error *ngIf="deathClaimForm.get('attachment.deathCert')?.hasError('required')">
                                 Death certificate is <strong>required</strong>
                             </mat-error> -->

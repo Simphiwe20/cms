@@ -20,5 +20,7 @@ export class ApisServicesService {
     return this.http.post(this.baseUrl+endPoint, payload)
   }
 
+  
+
 
 }

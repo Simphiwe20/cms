@@ -179,23 +179,23 @@
         <mat-step>
             <ng-template matStepLabel>Attachments</ng-template>
             <p>Please upload the required documents below.</p>
-            <div class="flex column gap-2" formGroupName="attachment">
+            <div class="flex column gap-2">
                 <div class="flex gap-2">
                     <p class="width-20">PH's ID</p>
                     <div class="file flex start-center">
-                        <input formControlName="Id" class="m-l-30" type="file">
-                        <mat-error *ngIf="claimForm.get('attachment.Id')?.hasError('required')">
+                        <input class="m-l-30" type="file">
+                        <!-- <mat-error *ngIf="claimForm.get('attachment.Id')?.hasError('required')">
                             PH's ID is <strong>required</strong>
-                        </mat-error>
+                        </mat-error> -->
                     </div>
                 </div>
                 <div class="flex gap-2">
                     <p class="width-20">Loss or damaged proof</p>
                     <div class="file flex start-center">
-                        <input formControlName="proof" class="m-l-30" type="file">
-                        <mat-error *ngIf="claimForm.get('attachment.proof')?.hasError('required')">
+                        <input class="m-l-30" type="file">
+                        <!-- <mat-error *ngIf="claimForm.get('attachment.proof')?.hasError('required')">
                             Loss or damaged proof is <strong>required</strong>
-                        </mat-error>
+                        </mat-error> -->
                     </div>
                 </div>
                 <div class="flex gap-2">

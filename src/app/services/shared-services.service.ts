@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ApisServicesService } from './apis-services.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ export class SharedServicesService {
 
   res: any
 
-  constructor() { }
+  constructor(private api: ApisServicesService) { }
 
   generatePwd(): any {
     let chars = 'Z*a&9Sx^Dc%V6$fG#b@7N3h!Jm~4Kl`Op/Iu?Y.tR;e2Wq:zAx]Sx[Cd|F\vB-F0g5Hj8MnkL1+'
@@ -30,6 +31,17 @@ export class SharedServicesService {
     months -= d1.getMonth();
     months += d2.getMonth();
     return months <= 0 ? 0 : months;
+  }
+
+  uploadFiles(files: File[][]): Promise<any> {
+    const formData = new FormData();
+    files.forEach((fileArray, index) => {
+      fileArray.forEach((file, subIndex) => {
+        formData.append(`file${index + 1}-${subIndex + 1}`, file);
+      });
+    });
+
+    return this.api.genericPost('/upload', formData).toPromise();
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApisServicesService } from 'src/app/services/apis-services.service';
 
@@ -7,16 +7,12 @@ import { ApisServicesService } from 'src/app/services/apis-services.service';
   templateUrl: './prop-loss-claim.component.html',
   styleUrls: ['./prop-loss-claim.component.scss']
 })
-export class PropLossClaimComponent {
+export class PropLossClaimComponent implements OnChanges {
 
   count: Number = 0
   isAdded: boolean = false
   claimForm!: FormGroup
-  attachment: FormGroup = new FormGroup({
-    Id: new FormControl('', [Validators.required]),
-    proof: new FormControl('', [Validators.required])
-
-  })
+  @Input() client: any;
 
   lossDetails: FormGroup = new FormGroup({
     dateTime: new FormControl('', [Validators.required]),
@@ -46,8 +42,12 @@ export class PropLossClaimComponent {
     this.claimForm = new FormGroup({
       lossDetails: this.lossDetails,
       items: new FormArray([]),
-      attachment: this.attachment
     })
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.client = this.client
+    console.log(changes)
   }
 
   // Adding Items details
@@ -77,8 +77,8 @@ export class PropLossClaimComponent {
 
       this.api.genericPost('/add-property-claim', formValues)
         .subscribe({
-          next: () => { },
-          error: () => { },
+          next: (res) => {console.log(res) },
+          error: (err) => {console.log(err)},
           complete: () => { }
         })
 
