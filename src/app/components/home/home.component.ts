@@ -36,11 +36,10 @@ export class HomeComponent {
         { item: 'Profile', route: '/home/profile' },
         { item: 'Log Out', route: '/login' }
       ]
-    } else if (this.menuItems.role === 'manager') {
+    } else if (this.currentUser.role === 'manager') {
       this.menuItems = [
         { item: 'Dashboard', route: '/home/dashboard' },
         { item: 'Claims', route: '/home/claims' },
-        { item: 'Add Claim', route: '/home/add-claim' },
         { item: 'Profile', route: '/home/profile' },
         { item: 'Log Out', route: '/login' }
       ]

@@ -10,6 +10,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { UsersComponent } from './components/users/users.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomeComponent } from './components/home/home.component';
+import { IdRegisterComponent } from './components/forms/id-register/id-register.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/landing', pathMatch: 'full' },
@@ -23,6 +24,7 @@ const routes: Routes = [
       { path: 'users', component: UsersComponent },
     ]
   },
+  {path:'Registration-Identifier',component:IdRegisterComponent},
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LogInComponent },
   { path: '**', component: PageNotFoundComponent }

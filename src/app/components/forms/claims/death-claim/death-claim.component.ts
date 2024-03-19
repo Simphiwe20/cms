@@ -1,62 +1,127 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ApisServicesService } from 'src/app/services/apis-services.service';
+import { SharedServicesService } from 'src/app/services/shared-services.service';
 
 @Component({
   selector: 'app-death-claim',
   templateUrl: './death-claim.component.html',
   styleUrls: ['./death-claim.component.scss']
 })
-export class DeathClaimComponent {
+export class DeathClaimComponent implements AfterViewInit, OnChanges {
 
+  deathCauses: any[] = ['Natural cause', 'terminal illness', 'Motor vehicle', 'Suicide', 'Murder', 'Other']
+  deathLocation: any[] = [{ place: 'Hospital', value: 'Hospital' }, { place: 'Clinic', value: 'Clinic' }, { place: 'Home', value: 'Home' }, { place: 'Other', value: 'Other' }]
+
+  @Input() client: any;
   deathClaimForm!: FormGroup
+  fileElement: any;
+  fileElement1: any;
+  fileUploadResult: any = 0;
+  uploadedfiles: File[][] = [];
+  formData: FormData[] = []
+  currentUser: any;
+
+
+
+  attachment: FormGroup = new FormGroup({
+    Id: new FormControl('', [Validators.required]),
+    deathCert: new FormControl('', [Validators.required]),
+
+  })
+
   deceasedDetails: FormGroup = new FormGroup({
     fullName: new FormControl('', [Validators.required]),
     idNum: new FormControl('', [Validators.required]),
-    claimerName: new FormControl('', [Validators.required]),
-    deceasedRelationship: new FormControl('', [Validators.required]),
-    phRelationship: new FormControl('', [Validators.required]),
-    hospital: new FormControl('', [Validators.required]),
-    telNo: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required])  
+    deathDate: new FormControl('', [Validators.required]),
+    deathCause: new FormControl('', [Validators.required]),
+    certifiedPer: new FormControl('', [Validators.required]),
+    telPhone: new FormControl('', [Validators.required]),
+    deathPlace: new FormControl(''),
+    admissionNo: new FormControl('', [Validators.required]),
   })
-  policeStationDetails: FormGroup = new FormGroup({
-    policeStationTelNo: new FormControl('', [Validators.required]),
-    policeStationCaseNo: new FormControl('', [Validators.required]),
-    policeStationName: new FormControl('', [Validators.required]),
-    investigatorName: new FormControl('', [Validators.required]),
-    investigatorContact: new FormControl('', [Validators.required])
-
-  })
-  accidentDetails: FormGroup = new FormGroup({
-    accidentDate: new FormControl('', [Validators.required]),
-    accidentTime: new FormControl('', [Validators.required]),
-    accidentLocation: new FormControl('', [Validators.required]),
-    policeStationDetails: this.policeStationDetails,
-    accidentDescription: new FormControl('', Validators.required)
+  undertakerDetails: FormGroup = new FormGroup({
+    companyName: new FormControl('', [Validators.required]),
+    companyNo: new FormControl('', [Validators.required]),
+    businessAddress: new FormControl('', [Validators.required]),
+    cellNo: new FormControl('', [Validators.required]),
+    burialDate: new FormControl('', [Validators.required]),
+    burialPlace: new FormControl('', [Validators.required])
 
   })
 
-  constructor(private api: ApisServicesService) {
+  constructor(private api: ApisServicesService, private shared: SharedServicesService,
+      private snackBar: MatSnackBar) {
+
+    this.currentUser = this.shared.getUser('currentUser', 'session')
 
     this.deathClaimForm = new FormGroup({
       deceasedDetails: this.deceasedDetails,
-      accidentDetails: this.accidentDetails
+      undertakerDetails: this.undertakerDetails,
+      // attachment: this.attachment
     })
+  }
+
+  ngAfterViewInit(): void {
+    this.fileElement = document.getElementById('file');
+    this.fileElement1 = document.getElementById('file1');
+
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.client = this.client
+    console.log(changes)
   }
 
   submit() {
     let formValues = this.deathClaimForm.value
+    formValues['memberID'] = this.client.memberID
+    formValues['status'] = this.currentUser.role === 'agent' ? 'Reviewed' : 'Submitted'
+    formValues['dateSubmitted'] = new Date() 
+    formValues['claimID'] = `Claim-${new Date().getFullYear()}${Math.random() * (500 - 100) + 100}`
+    formValues['submittedBy'] = this.shared.getWhoSubmitted()
+  
     console.log(formValues)
     console.log(this.deathClaimForm)
-    if(!this.deathClaimForm.valid) return
+
+    const formData = new FormData();
+    this.uploadedfiles.forEach((fileArray, index) => {
+      fileArray.forEach((file, subIndex) => {
+        formData.append(`file${index + 1}-${subIndex + 1}`, file);
+      });
+    })
+
+    if (!this.deathClaimForm.valid) return
+    console.log('Form Data', formData)
+
+    this.shared.uploadFiles(this.uploadedfiles)
+      .then((res) => console.log(res)),
+      // .catch((err) => console.log(err))
 
     this.api.genericPost('/add-death-claim', this.deathClaimForm.value)
       .subscribe({
         next: (res) => console.log(res),
         error: (err) => console.log(err),
-        complete: () => {}
+        complete: () => { }
       })
-    
+    this.snackBar.open(`Your ${this.client.memberID} Claim has been successfully submitted`, 'OK', {duration: 3000})
+  }
+
+  // appendFiles() {
+  //   let formData = new FormData();
+  //   for (let i = 0; i < this.uploadedfiles.length; i++) {
+  //     formData.append('files', this.uploadedfiles[i]);
+  //   }
+  //   console.log(this.uploadedfiles)
+  // }
+
+  fileUpload(e: any, inputIndex: number): void {
+    const files: FileList = e.target.files;
+    const fileArray: File[] = [];
+    for (let i = 0; i < files.length; i++) {
+      fileArray.push(files[i]);
+    }
+    this.uploadedfiles[inputIndex] = fileArray;
   }
 }

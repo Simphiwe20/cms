@@ -14,12 +14,15 @@ export class ApisServicesService {
 
   genericGet(endPoint: string) {
     console.log(this.baseUrl+endPoint)
+    if(endPoint.includes('/download-files')) window.open(this.baseUrl+endPoint)
     return this.http.get(this.baseUrl+endPoint)
   }
 
   genericPost(endPoint:String, payload: any) {
     return this.http.post(this.baseUrl+endPoint, payload)
   }
+
+  
 
   genericPut(endPoint:String, payload: any) {
     return this.http.put(this.baseUrl+endPoint, payload)
