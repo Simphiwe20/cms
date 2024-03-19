@@ -17,15 +17,18 @@
             <div class="idinput ">
                 <mat-form-field class="full-width">
                     <mat-label>Identification Number </mat-label>
-                    <input type="text" matInput placeholder="0000000000" formControlName="Idnumber">
+                    <input type="text" matInput placeholder="0000000000" formControlName="Idnumber" (input)="onInput(idForm.get('Idnumber')?.value)">
                     <mat-error *ngIf="idForm.get('Idnumber')?.hasError('required')">
                         Identification Number is required
+                    </mat-error>
+                    <mat-error *ngIf="idForm.get('Idnumber')?.hasError('pattern')">
+                        Identification Number is invalid
                     </mat-error>
 
                 </mat-form-field>
             </div>
             <div class="buttons flex row gap-2-em">
-                <button class="btn1" mat-raised-button>Cancel</button>
+                <button class="btn1" mat-raised-button (click)=" cancel()">Cancel</button>
                 <button class="btn2" mat-raised-button (click)=" submit()">Next</button>
             </div>
             
