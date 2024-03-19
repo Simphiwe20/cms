@@ -1,6 +1,11 @@
 $lightBlue: #4190cb;
 $darkBlue: #163e7b;
 
+.container {
+    // margin-top: 110px;
+    z-index: -1;
+}
+
 .width-80 {
     width: 80%;
 }

@@ -7,10 +7,10 @@
         <div class="login flex center-center">
             <h2>Register</h2>
         </div>
-        <form [formGroup]="registrationForm">
+        <form [formGroup]="registrationForm" class="full-width">
             <h3>Personal Information</h3>
             <div class="flex gap-1em full-width">
-                <mat-form-field class="half-width">
+                <mat-form-field class="full-width">
                     <mat-label>First Name</mat-label>
                     <input type="text" matInput formControlName="firstName" placeholder="Enter your First Name">
                     <mat-error *ngIf="registrationForm.get('firstName')?.hasError('required')">
@@ -20,7 +20,7 @@
                         First Name should at least have 3 charectors
                     </mat-error>
                 </mat-form-field>
-                <mat-form-field class="half-width">
+                <mat-form-field class="full-width">
                     <mat-label>Last Name</mat-label>
                     <input type="text" matInput formControlName="lastName" placeholder="Enter your Last Name">
                     <mat-error *ngIf="registrationForm.get('lastName')?.hasError('required')">
@@ -35,8 +35,8 @@
                 <!-- id number -->
                 <mat-form-field class="full-width">
                     <mat-label>Identification Number </mat-label>
-                    <input type="number" matInput placeholder="0000000000" formControlName="Idnumber">
-                    <mat-error *ngIf="registrationForm.get('Idnumber')?.hasError('required')">
+                    <input type="number" matInput placeholder="0000000000" formControlName="idNumber">
+                    <mat-error *ngIf="registrationForm.get('idNumber')?.hasError('required')">
                         Identification Number is required
                     </mat-error>
                     <!-- <mat-error *ngIf="registrationForm.get('companyRegistrationNumber')?.hasError('min')">
@@ -56,7 +56,7 @@
             </div>
             <h3>Contact Details</h3>
             <div class="flex gap-1em full-width">
-                <mat-form-field class="half-width">
+                <mat-form-field class="full-width">
                     <mat-label>Email</mat-label>
                     <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com">
                     <mat-error *ngIf="registrationForm.get('email')?.hasError('required')">
@@ -66,7 +66,7 @@
                         Please enter a valid email address
                     </mat-error>
                 </mat-form-field>
-                <mat-form-field class="half-width">
+                <mat-form-field class="full-width">
                     <mat-label>Cell Number</mat-label>
                     <input type="number" matInput formControlName="cellNumber" placeholder="Enter your Cell Number"
                         maxlength="10">
@@ -79,16 +79,16 @@
                 </mat-form-field>
             </div>
             <h3>Address Details</h3>
-            <div formGroupName="address">
-                <div class="flex gap-1em full-width">
-                    <mat-form-field class="half-width">
+            <div formGroupName="address" class="full-width">
+                <div class="flex gap-1em">
+                    <mat-form-field class="full-width">
                         <mat-label>Street Name</mat-label>
                         <input type="text" matInput formControlName="streetName" placeholder="Enter your Street Name">
                         <mat-error *ngIf="registrationForm.get('address.streetName')?.hasError('required')">
                             Street Name is <strong>required</strong>
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="half-width">
+                    <mat-form-field class="full-width">
                         <mat-label>Street Number</mat-label>
                         <input type="number" matInput formControlName="streetNumber"
                             placeholder="Enter your Street Number">
@@ -98,21 +98,21 @@
                     </mat-form-field>
                 </div>
                 <div class="flex gap-1em full-width">
-                    <mat-form-field class="half-width">
+                    <mat-form-field class="full-width">
                         <mat-label>Suburb</mat-label>
                         <input type="text" matInput formControlName="suburb" placeholder="Enter your Suburb">
                         <mat-error *ngIf="registrationForm.get('address.suburb')?.hasError('required')">
                             Suburb is <strong>required</strong>
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="half-width">
+                    <mat-form-field class="full-width">
                         <mat-label>City</mat-label>
                         <input type="text" matInput formControlName="city" placeholder="Enter your City">
                         <mat-error *ngIf="registrationForm.get('address.city')?.hasError('required')">
                             City is <strong>required</strong>
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="half-width">
+                    <mat-form-field class="full-width">
                         <mat-label>Code</mat-label>
                         <input type="number" matInput formControlName="code" placeholder="Enter your Code">
                         <mat-error *ngIf="registrationForm.get('address.code')?.hasError('required')">
@@ -123,7 +123,7 @@
             </div>
             <h3>Security Details</h3>
             <div class="flex gap-1em full-width full-width">
-                <mat-form-field class="half-width">
+                <mat-form-field class="full-width">
                     <mat-label>Password</mat-label>
                     <input type="password" matInput formControlName="password" placeholder="Enter your Password"
                         maxlength="10" [type]="hide ? 'password' : 'text'">
@@ -138,7 +138,7 @@
                         Password should at least have 4 charectors
                     </mat-error>
                 </mat-form-field>
-                <mat-form-field class="half-width">
+                <mat-form-field class="full-width">
                     <mat-label>Confrim Password</mat-label>
                     <input type="password" [type]="hide ? 'password' : 'text'" matInput
                         formControlName="confirmPassword" placeholder="Confrim your Password">

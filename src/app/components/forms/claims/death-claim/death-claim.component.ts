@@ -76,10 +76,10 @@ export class DeathClaimComponent implements AfterViewInit, OnChanges {
 
   submit() {
     let formValues = this.deathClaimForm.value
-    formValues['memberID'] = this.client.memberID
+    formValues['memberID'] = this.currentUser.role === 'agent' ? this.client.memberID : this.currentUser.memberID
     formValues['status'] = this.currentUser.role === 'agent' ? 'Reviewed' : 'Submitted'
     formValues['dateSubmitted'] = new Date() 
-    formValues['claimID'] = `Claim-${new Date().getFullYear()}${Math.random() * (500 - 100) + 100}`
+    formValues['claimID'] = `Claim-${new Date().getFullYear()}${Math.floor(Math.random() * (500 - 100) + 100)}`
     formValues['submittedBy'] = this.shared.getWhoSubmitted()
   
     console.log(formValues)
@@ -105,16 +105,8 @@ export class DeathClaimComponent implements AfterViewInit, OnChanges {
         error: (err) => console.log(err),
         complete: () => { }
       })
-    this.snackBar.open(`Your ${this.client.memberID} Claim has been successfully submitted`, 'OK', {duration: 3000})
+    this.snackBar.open(`Member ID: ${formValues.memberID}'s Claim has been successfully submitted`, 'OK', {duration: 3000})
   }
-
-  // appendFiles() {
-  //   let formData = new FormData();
-  //   for (let i = 0; i < this.uploadedfiles.length; i++) {
-  //     formData.append('files', this.uploadedfiles[i]);
-  //   }
-  //   console.log(this.uploadedfiles)
-  // }
 
   fileUpload(e: any, inputIndex: number): void {
     const files: FileList = e.target.files;

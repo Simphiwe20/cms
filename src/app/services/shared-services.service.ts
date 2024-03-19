@@ -25,6 +25,12 @@ export class SharedServicesService {
     return JSON.parse(this.res)
   }
 
+  storeUser(key: string, value: any, storage: string) {
+    this.res = JSON.stringify(value)
+    storage === 'session' ? sessionStorage?.setItem(key, this.res) : localStorage.setItem(key, this.res)
+    
+  }
+
    monthDiff(d1: Date, d2: Date): number  {
     let months;
     months = (d2.getFullYear() - d1.getFullYear()) * 12;

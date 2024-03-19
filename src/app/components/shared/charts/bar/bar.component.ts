@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ChartConfiguration } from 'chart.js';
+import { ApisServicesService } from 'src/app/services/apis-services.service';
 
 @Component({
   selector: 'app-bar',
@@ -10,6 +11,17 @@ export class BarComponent {
 
   public barChartLegend = true;
   public barChartPlugins = [];
+  
+
+  constructor(private api: ApisServicesService) {
+    
+    this.api.genericGet('/get-death-claims')
+      .subscribe({
+        next: (res) => {},
+        error: () => {},
+        complete: () => {}
+      })
+  }
 
   public barChartData: ChartConfiguration<'bar'>['data'] = {
     labels: [ '2006', '2007', '2008', '2009', '2010', '2011', '2012' ],
