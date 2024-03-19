@@ -1,17 +1,29 @@
 <div class="flex center-center">
     <div class="width-80">
         <h2>Add Claim</h2>
-        <p>To add a claim on behalf of a PolicyHolder, look up the PolicyHolder on the table and click it</p>
-        <p></p>
-        <mat-form-field *ngIf="currentUser.role !== 'agent'">
-            <mat-label>Select a claim</mat-label>
-            <mat-select name="claim" [(ngModel)]="claimSelected" required>
-                <mat-option *ngFor="let claim of claims" [value]="claim">
-                    {{claim | titlecase}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-card class="full-width flex-1 padding-15" *ngIf="currentUser.role === 'agent'">
+        <div *ngIf="claim && eligibility">
+            <p>Select a claim to apply for below, complete the form and submit it.</p>
+            <mat-form-field>
+                <mat-label>Select a claim</mat-label>
+                <mat-select name="claim" [(ngModel)]="claimSelected" required>
+                    <mat-option *ngFor="let claim of claims" [value]="claim">
+                        {{claim | titlecase}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div *ngIf="!eligibility && currentUser.role === 'claimer'">
+            {{currentUser.firstName}}{{ currentUser.lastName}} is currently not eligible for a claim. Our policy says
+            our the clients became eligible after paying with us for 3 months. To find out more please contact our agent
+            or go to the nearest branch. Thank you
+        </div>
+        <div *ngIf="claim && !eligibility && currentUser.role !== 'claimer'">
+            This person is currently not eligible for a claim. Our policy says
+            our the clients became eligible after paying with us for 3 months. To find out more please contact our agent
+            or go to the nearest branch. You can also check out company more which details more about our claim policies. Thank you.
+        </div>
+        <p *ngIf="currentUser.role === 'agent' && !claim">To add a claim on behalf of a PolicyHolder, look up the PolicyHolder on the table and click it</p>
+        <mat-card class="full-width flex-1 padding-15" *ngIf="currentUser.role === 'agent' && !claim">
             <mat-card-content class="flex column gap-1">
                 <mat-form-field>
                     <mat-label>Filter</mat-label>
@@ -22,40 +34,36 @@
                     <table mat-table [dataSource]="dataSource" matSort>
 
                         <!-- ID Column -->
-                        <ng-container matColumnDef="Patient_name">
+                        <ng-container matColumnDef="firstName">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
                             <td mat-cell *matCellDef="let row"> {{row.firstName}} </td>
                         </ng-container>
 
 
                         <!-- ID Column -->
-                        <ng-container matColumnDef="doctorName">
+                        <ng-container matColumnDef="lastName">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
                             <td mat-cell *matCellDef="let row"> {{row.lastName}} </td>
                         </ng-container>
 
                         <!-- Progress Column -->
-                        <ng-container matColumnDef="start_date">
+                        <ng-container matColumnDef="idNumber">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-                            <td mat-cell *matCellDef="let row"> {{row.ID}}</td>
-                        </ng-container>
-
-                        <!-- Name Column -->
-                        <ng-container matColumnDef="start_time">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Policy Name </th>
-                            <td mat-cell *matCellDef="let row"> {{row.policyName}}</td>
+                            <td mat-cell *matCellDef="let row"> {{row.idNumber}}</td>
                         </ng-container>
 
                         <!-- Fruit Column -->
-                        <ng-container matColumnDef="end_time">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Policy Number </th>
-                            <td mat-cell *matCellDef="let row"> {{row.policyNumber}} </td>
+                        <ng-container matColumnDef="policyNumber">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Member ID </th>
+                            <td mat-cell *matCellDef="let row"> {{row.memberID}} </td>
                         </ng-container>
 
                         <!-- Fruit Column -->
-                        <ng-container matColumnDef="status">
+                        <ng-container matColumnDef="claim">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Claim </th>
-                            <td mat-cell *matCellDef="let row"> {{row.claim}} </td>
+                            <td mat-cell *matCellDef="let row" class="hover" (click)="apply(row)"> 
+                                <mat-icon>add_circle</mat-icon>
+                            </td>
                         </ng-container>
 
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -72,10 +80,10 @@
                 </div>
             </mat-card-content>
         </mat-card>
-        <mat-card *ngIf="claimSelected"  class="p-b-20">
-            <app-death-claim *ngIf="claimSelected === 'Death claim'"></app-death-claim>
-            <app-public-lia-claim *ngIf="claimSelected === 'Public Liability'"></app-public-lia-claim>
-            <app-prop-loss-claim  *ngIf="claimSelected === 'Property Loss Claim'"></app-prop-loss-claim>
+        <mat-card *ngIf="claimSelected" class="p-b-20">
+            <app-death-claim *ngIf="claimSelected === 'Death claim'" [client]="claimer"></app-death-claim>
+            <app-public-lia-claim *ngIf="claimSelected === 'Public Liability'" [client]="claimer"></app-public-lia-claim>
+            <app-prop-loss-claim *ngIf="claimSelected === 'Property Loss Claim'" [client]="claimer"></app-prop-loss-claim>
         </mat-card>
 
     </div>

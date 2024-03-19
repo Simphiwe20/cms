@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ApisServicesService } from './apis-services.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class SharedServicesService {
   res: any ;
   currentUser : any ;
 
-  constructor() { }
+  constructor(private api: ApisServicesService) { }
 
   get(key: string, sessionType: string): any {
     let data = sessionType === 'session' ? sessionStorage.getItem(key) : localStorage.getItem(key);
@@ -32,6 +33,35 @@ export class SharedServicesService {
   getUser(key: string, storage: string) {
     this.res = storage === 'session' ? sessionStorage?.getItem(key) : localStorage.getItem(key)
     return JSON.parse(this.res)
+  }
+
+   monthDiff(d1: Date, d2: Date): number  {
+    let months;
+    months = (d2.getFullYear() - d1.getFullYear()) * 12;
+    months -= d1.getMonth();
+    months += d2.getMonth();
+    return months <= 0 ? 0 : months;
+  }
+
+  uploadFiles(files: File[][]): Promise<any> {
+    const formData = new FormData();
+    files.forEach((fileArray, index) => {
+      fileArray.forEach((file, subIndex) => {
+        formData.append(`file${index + 1}-${subIndex + 1}`, file);
+      });
+    });
+
+
+    return this.api.genericPost('/upload', formData).toPromise();
+  }
+
+  getWhoSubmitted(): any {
+    let user = this.getUser('currentUser', 'session')
+    if(user.role === 'agent') {
+      return `${user.fullName}(${user.role})`
+    }else {
+      return 'This claim came from the policyholder\'s account'
+    }
   }
 
 }
