@@ -21,7 +21,10 @@ export class ApisServicesService {
   genericPost(endPoint:String, payload: any) {
     return this.http.post(this.baseUrl+endPoint, payload)
   }
-
+ // Generic Post
+ genericPut(endpoint:string, payload:any) {
+  return this.http.put(this.baseUrl+endpoint, payload)
+}
   
 
   genericPut(endPoint:String, payload: any) {

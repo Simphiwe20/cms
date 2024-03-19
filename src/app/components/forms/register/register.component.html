@@ -35,14 +35,15 @@
                 <!-- id number -->
                 <mat-form-field class="full-width">
                     <mat-label>Identification Number </mat-label>
-                    <input type="number" matInput placeholder="0000000000" formControlName="Idnumber">
+                    <input type="text" matInput placeholder="0000000000" formControlName="Idnumber" (input)="extractBirthDate(registrationForm.get('Idnumber')?.value)">
                     <mat-error *ngIf="registrationForm.get('Idnumber')?.hasError('required')">
                         Identification Number is required
                     </mat-error>
-                    <!-- <mat-error *ngIf="registrationForm.get('companyRegistrationNumber')?.hasError('min')">
-        Identification Number requires 13 characters
-    </mat-error> -->
+                    <mat-error *ngIf="registrationForm.get('Idnumber')?.hasError('pattern')">
+                        Identification Number requires 13 characters
+                    </mat-error>
                 </mat-form-field>
+                
                 <mat-form-field class="full-width">
                     <mat-label>Gender</mat-label>
                     <mat-select formControlName="gender">
@@ -58,7 +59,7 @@
             <div class="flex gap-1em full-width">
                 <mat-form-field class="half-width">
                     <mat-label>Email</mat-label>
-                    <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com">
+                    <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com" >
                     <mat-error *ngIf="registrationForm.get('email')?.hasError('required')">
                         Email is <strong>required</strong>
                     </mat-error>
@@ -68,8 +69,8 @@
                 </mat-form-field>
                 <mat-form-field class="half-width">
                     <mat-label>Cell Number</mat-label>
-                    <input type="number" matInput formControlName="cellNumber" placeholder="Enter your Cell Number"
-                        maxlength="10">
+                    <input type="text" matInput formControlName="cellNumber" placeholder="Enter your Cell Number"
+                        maxlength="10" minlength="10"  (input)="onInput(registrationForm.get('cellNumber')?.value)">
                     <mat-error *ngIf="registrationForm.get('cellNumber')?.hasError('required')">
                         Cell Number is <strong>required</strong>
                     </mat-error>
@@ -91,7 +92,7 @@
                     <mat-form-field class="half-width">
                         <mat-label>Street Number</mat-label>
                         <input type="number" matInput formControlName="streetNumber"
-                            placeholder="Enter your Street Number">
+                            placeholder="Enter your Street Number"  >
                         <mat-error *ngIf="registrationForm.get('address.streetNumber')?.hasError('required')">
                             Street Number is <strong>required</strong>
                         </mat-error>
@@ -114,7 +115,7 @@
                     </mat-form-field>
                     <mat-form-field class="half-width">
                         <mat-label>Code</mat-label>
-                        <input type="number" matInput formControlName="code" placeholder="Enter your Code">
+                        <input type="number" matInput formControlName="code" placeholder="Enter your Code"  >
                         <mat-error *ngIf="registrationForm.get('address.code')?.hasError('required')">
                             Code is <strong>required</strong>
                         </mat-error>
@@ -159,7 +160,7 @@
                     routerLink="">Cancel</button>
                 <button mat-raised-button class="btn-submit flex-1" (click)="submit()">Submit</button>
             </div>
-            
+
         </form>
     </DIV>
 </div>
