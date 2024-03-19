@@ -30,6 +30,8 @@ import { PieComponent } from './components/shared/charts/pie/pie.component';
 import { NgChartsModule } from 'ng2-charts';
 import { HomeComponent } from './components/home/home.component';
 import { ViewClaimComponent } from './components/view-claim/view-claim.component';
+import { AddUserComponent } from './components/popUps/add-user/add-user.component';
+import { EditUserComponent } from './components/popUps/edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,9 @@ import { ViewClaimComponent } from './components/view-claim/view-claim.component
     BarComponent,
     PieComponent,
     HomeComponent,
-    ViewClaimComponent
+    ViewClaimComponent,
+    AddUserComponent,
+    EditUserComponent
   ],
   imports: [
     BrowserModule,

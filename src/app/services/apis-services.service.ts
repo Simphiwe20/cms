@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 
 @Injectable({
@@ -25,6 +26,20 @@ export class ApisServicesService {
   return this.http.put(this.baseUrl+endpoint, payload)
 }
   
+
+  genericPut(endPoint:String, payload: any) {
+    return this.http.put(this.baseUrl+endPoint, payload)
+  }
+
+  // Tiisetso Code Might remove
+  addUser(data:any){
+    return this.http.post(this.baseUrl, data)
+  }
+
+  updateUser(data: any) {
+    return this.http.put(this.baseUrl, data);
+  }
+
 
 
 }
