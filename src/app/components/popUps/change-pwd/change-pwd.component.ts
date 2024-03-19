@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ApisServicesService } from 'src/app/services/apis-services.service';
 import { SharedServicesService } from 'src/app/services/shared-services.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class ChangePwdComponent {
   user: any
   users: any
 
-  constructor(private userInfor: SharedServicesService, private snackBar: MatSnackBar, private matDialogRef: MatDialogRef<ChangePwdComponent>) {
+  constructor(private userInfor: SharedServicesService, private snackBar: MatSnackBar, private matDialogRef: MatDialogRef<ChangePwdComponent>, private api:ApisServicesService) {
 
     this.user = this.userInfor.get('currentUser', 'session')
     this.users = this.userInfor.get('users', 'local')
@@ -41,7 +42,7 @@ export class ChangePwdComponent {
             console.log(user)
           }
         })
-        this.userInfor.store(this.users, 'users', 'local')
+      this.api.genericPut('/changepsswrd', this.changePwdForm['controls']['currentPwd'].value )
         this.close()
         this.snackBar.open('Your password, hass been changed successfully', 'OK', {duration: 3000})
 
