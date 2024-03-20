@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/service/api.service';
 
 @Component({
@@ -9,21 +9,31 @@ import { ApiService } from 'src/app/service/api.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent {
+export class RegisterComponent{
+
+  receivedClient: any
   client: any;
   hide = true;
   saCellphoneRegex =/^0(6|7|8){1}[0-9]{1}[0-9]{7}$/;
   idpattern  = /^(((\d{2}((0[13578]|1[02])(0[1-9]|[12]\d|3[01])|(0[13456789]|1[012])(0[1-9]|[12]\d|30)|02(0[1-9]|1\d|2[0-8])))|([02468][048]|[13579][26])0229))(( |-)(\d{4})( |-)(\d{3})|(\d{7}))/;
   registrationForm: FormGroup;
-  constructor(private snackbar: MatSnackBar, private api: ApiService, private router: Router) {
+
+  constructor(private snackbar: MatSnackBar, private api: ApiService, private router: Router,
+    private route: ActivatedRoute) {
+
+      this.route.queryParams.subscribe(params => {
+        this.receivedClient = JSON.parse(params['data'])
+        console.log(this.receivedClient)
+      })
+
     this.registrationForm = new FormGroup({
-      firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      lastName: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      idNumber: new FormControl('', [Validators.required]),
-      gender: new FormControl('', [Validators.required]),
+      firstName: new FormControl({value: `${this.receivedClient.firstName}`, disabled: true},  [Validators.required, Validators.minLength(3)]),
+      lastName: new FormControl({value: `${this.receivedClient.lastName}`, disabled: true}, [Validators.required, Validators.minLength(3)]),
+      idNumber: new FormControl({value: `${this.receivedClient.idNumber}`, disabled: true}, [Validators.required]),
+      gender: new FormControl({value: `${this.receivedClient.gender}`, disabled:true}, [Validators.required]),
       DOB: new FormControl(''),
-      email: new FormControl('', [Validators.required, Validators.pattern(/^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/)]),
-      cellNumber: new FormControl('', [Validators.required]),
+      email: new FormControl({value: `${this.receivedClient.email}`, disabled: true}, [Validators.required, Validators.pattern(/^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/)]),
+      cellNumber: new FormControl({value: `0${this.receivedClient.cellPhone}`, disabled: true}, [Validators.required]),
       address: new FormGroup({
         streetName: new FormControl('', [Validators.required]),
         streetNumber: new FormControl(null, [Validators.required]),
@@ -38,7 +48,13 @@ export class RegisterComponent {
     })
   }
 
+  // ngOnInit(): void {
+    
+  // }
+
   submit(): void {
+    console.log(this.registrationForm.getRawValue())
+    console.log(this.registrationForm)
     if (this.registrationForm.invalid) return;
 
     if (this.registrationForm.get('password')?.value !== this.registrationForm.get('confirmPassword')?.value) {
@@ -46,8 +62,11 @@ export class RegisterComponent {
       return;
     }
 
-    let formValue = this.registrationForm.value;
+    let formValue = this.registrationForm.getRawValue();
     delete formValue.confirmPassword; // Remove password from Form Value
+    formValue['role'] = 'claimer',
+    formValue['startDate'] = this.receivedClient.startDate
+    formValue['memberID'] = this.receivedClient.memberID
     this.getValues(formValue)
     console.log(formValue)
 

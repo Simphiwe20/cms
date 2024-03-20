@@ -15,7 +15,7 @@ export class LogInComponent {
   user: any;
   users: any;
   adminAccount: any = {
-    email: "admin@cms.co.za", firstName: "built-in", idNumber: 998645132, gender: "none", address: {streetName: 'Jozi' ,streetNumber: 2023 ,city: 'Jozi',code: 2009 },
+    email: "admin@cms.co.za", firstName: "built-in", idNumber: 998645132, gender: "none", address: {streetName: 'Jozi' ,streetNumber: 2023 ,city: 'Jozi',code: 2009, surburb: 'Jozi' },
     lastName: "admin", password: "admin@123", role: "admin", status: "active", cellNumber: 545464512, employeeID: 157458641, memberID: 1454654, startDate: new Date()
   }
 

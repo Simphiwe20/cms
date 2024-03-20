@@ -113,6 +113,7 @@ export class SharedServicesService {
             streetNumber: 20234566,
             city: "Jozi",
             code: 2009,
+            suburb: 'Jozi'
           },
           startDate: new Date()
         })
