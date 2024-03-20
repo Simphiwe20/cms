@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output } from '@angular/core';
 import { ChartConfiguration } from 'chart.js';
 import { ApisServicesService } from 'src/app/services/apis-services.service';
 
@@ -7,27 +7,37 @@ import { ApisServicesService } from 'src/app/services/apis-services.service';
   templateUrl: './bar.component.html',
   styleUrls: ['./bar.component.scss']
 })
-export class BarComponent {
 
+export class BarComponent {
+  _claims = localStorage.getItem('claims');
+  claimData = this. _claims ? JSON.parse(this._claims) : []
+  approvedClaimsCount: number = 0;
+  reviewedClaimsCount:number =0;
+  submittedClaimsCount:number =0
+  constructor() {
+    this.countApprovedClaims();
+    this.countReviewedClaims();
+    this.countSubmittedClaims()
+  }
+ 
+  countApprovedClaims(): any {
+   return this.approvedClaimsCount = this.claimData.filter((claim:any) => claim.status === "Approved").length;
+  }
+  countReviewedClaims(): any {
+    return this.reviewedClaimsCount = this.claimData.filter((claim:any) => claim.status === "Reviewed").length;
+   }
+   countSubmittedClaims(): any {
+    return this.submittedClaimsCount = this.claimData.filter((claim:any) => claim.status === "Submitted").length;
+   }
   public barChartLegend = true;
   public barChartPlugins = [];
-  
-
-  constructor(private api: ApisServicesService) {
-    
-    this.api.genericGet('/get-death-claims')
-      .subscribe({
-        next: (res) => {},
-        error: () => {},
-        complete: () => {}
-      })
-  }
 
   public barChartData: ChartConfiguration<'bar'>['data'] = {
-    labels: [ '2006', '2007', '2008', '2009', '2010', '2011', '2012' ],
+    labels: [ ' death policy', 'Property Loss and Damage Claim', 'Public Liability Claim' ],
     datasets: [
-      { data: [ 65, 59, 80, 81, 56, 55, 40 ], label: 'Series A' },
-      { data: [ 28, 48, 40, 19, 86, 27, 90 ], label: 'Series B' }
+      { data: [ this.countApprovedClaims()  ], label: 'approved' },
+      { data: [  this.countReviewedClaims() ], label: 'Reviewed' },
+      { data: [ this.countSubmittedClaims() ], label: 'Submitted' }
     ]
   };
 

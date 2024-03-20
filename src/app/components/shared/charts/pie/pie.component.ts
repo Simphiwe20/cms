@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Input, Component, OnInit } from '@angular/core';
 import { ChartOptions } from 'chart.js';
 import { ApisServicesService } from 'src/app/services/apis-services.service';
 
@@ -7,7 +7,64 @@ import { ApisServicesService } from 'src/app/services/apis-services.service';
   templateUrl: './pie.component.html',
   styleUrls: ['./pie.component.scss']
 })
-export class PieComponent implements AfterViewInit{
+export class PieComponent implements AfterViewInit {
+
+  // status:any = this.claims.status
+
+
+  approve: number = 0;
+  _claims = localStorage.getItem('claims');
+  claimData = this._claims ? JSON.parse(this._claims) : []
+  approvedClaimsCount: number = 0;
+  reviewedClaimsCount: number = 0;
+  submittedClaimsCount: number = 0
+  constructor() {
+    this.countApprovedClaims();
+    this.countReviewedClaims();
+    this.countSubmittedClaims()
+  }
+
+  countApprovedClaims(): any {
+    return this.approvedClaimsCount = this.claimData.filter((claim: any) => claim.status === "Approved").length;
+  }
+  countReviewedClaims(): any {
+    return this.reviewedClaimsCount = this.claimData.filter((claim: any) => claim.status === "Reviewed").length;
+  }
+  countSubmittedClaims(): any {
+    return this.submittedClaimsCount = this.claimData.filter((claim: any) => claim.status === "Submitted").length;
+  }
+  // }
+
+
+
+  // constructor(){
+  // this.countStatus();
+
+  // for(let i =0 ;i< claims.length ;i++){
+  //   if(claims[i].status ==='Approved'){
+  //   this.approve +=this.approve
+  //   }
+  // }
+
+  //    console.log('number',claims.status)
+  //  console.log(this.aprovedcount())
+
+  // }
+
+  // statusCounts: { [status: string]: number } = {};
+  // countStatus(): void {
+  //   this.approvedClaimsCount = this.claimData.filter(claim => claim.status === "Approved").length;
+  // this.claimData.forEach((claim: { status: string | number; }):any => {
+  //   if (this.statusCounts[claim.status] ) {
+  //     this.statusCounts[claim.status]++;
+  //   } else {
+  //     this.statusCounts[claim.status] = 1;
+  //   }
+  //   console.log(claim.status)
+  // }
+
+
+
 
   public pieChartOptions: ChartOptions<'pie'> = {
     responsive: false,
@@ -15,33 +72,16 @@ export class PieComponent implements AfterViewInit{
 
   deathClaims: any[] = [];
 
-  constructor(private api: ApisServicesService){
-
-    this.api.genericGet('/get-death-claims')
-      .subscribe({
-        next: (res) => {
-          this.deathClaims = [res]
-          console.log(res)
-        },
-        error: () => { },
-        complete: () => { }
-      })
-    
-
-    // this.pieChartDatasets[0].data.push(this.deathClaims.length)
-  }
-
   ngAfterViewInit(): void {
     console.log(this.deathClaims)
   }
-
-  public pieChartLabels = [['Approved claims'], ['Rejected claims'], ['Reviewed Claims'], ['Submitted Claims']];
+  public pieChartLabels = [['approved'], ['Reviewed'], 'Submitted'];
   public pieChartDatasets = [{
-    data: []
+    data: [this.countApprovedClaims(), this.countReviewedClaims(), this.countSubmittedClaims()]
   }];
   public pieChartLegend = true;
   public pieChartPlugins = [];
-  
+
 
 
 }
