@@ -57,8 +57,9 @@ export class AddClaimsComponent {
     console.log(this.clients)
 
     if (this.currentUser.role === 'claimer') {
+      console.log(typeof new Date(this.currentUser.startDate))
       this.claim = true
-      this.eligibility = this.shared.monthDiff(this.currentUser.startDate, new Date()) > 3
+      this.eligibility = this.shared.monthDiff(new Date(this.currentUser.startDate), new Date()) > 3
     }
   }
 

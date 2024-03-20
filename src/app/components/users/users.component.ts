@@ -1,176 +1,144 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import * as XLSX from 'xlsx';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatDialog } from '@angular/material/dialog';
-import { AddUserComponent } from '../popUps/add-user/add-user.component';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ApisServicesService } from 'src/app/services/apis-services.service';
-import { EditUserComponent } from '../popUps/edit-user/edit-user.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { SharedServicesService } from 'src/app/services/shared-services.service';
+import * as XLSX from 'xlsx'
+
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
-export class UsersComponent {
-  @ViewChild(MatSort) sort!: MatSort;
+export class UsersComponent implements AfterViewInit{
+  ExcelData: any;
+  displayedColumns: string[] = ['email', 'name', 'surname', 'department', 'role', 'action'];
+  dataSource: MatTableDataSource<any>;
+  disabledDataSource: any[] = [];
+  enableDataSource: any[] = []
+  users: any;
+  employees: any;
+  statuses: any = ['active', 'disable']
+  disabledUsers: any = [];
+  enabledUsers: any = []
+
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
-  convertedJson!: string;
-  spreadsheetData: any;
-  mynew: any = [];
-  displayedColumn: string[] = ['Emp_ID', 'Emp_Name', 'Emp_Surname', 'Emp_DOB', 'Emp_Gender', 'Emp_Email', 'Actions'];
-  users: any[] = [];
-  rowActivationStates: { [key: string]: boolean } = {};
-  editUsers: any;
-  dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
-
-
-  constructor(private dialog: MatDialog, private sharedService: ApisServicesService, private snackbar: MatSnackBar,
-    private usersService: SharedServicesService, private apiServ: ApisServicesService) {
-    this.editUsers = this.usersService.getUser('users', 'local');
+  constructor(private sharedService: SharedServicesService, private api: ApisServicesService) {
+    this.getUsers()
+    this.dataSource = new MatTableDataSource(this.users)
+    console.log(this.users)
   }
 
-  ngOnInit(): void {
-    this.users.forEach(row => {
-      this.rowActivationStates[row.Emp_ID] = false;
-    });
+  ngAfterViewInit() {
 
-    this.dataSource = new MatTableDataSource(this.users);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
-  toggleActivation(rowId: string): void {
-    this.rowActivationStates[rowId] = !this.rowActivationStates[rowId];
+  getUsers(): void {
+    this.api.genericGet('/get-all-users')
+    .subscribe({
+      next: (res) => {
+        this.users = res
+        console.log('Inside the next: ', this.users)
+        this.showUsers(res)
+        this.moveUsers(res)
+      },
+      error: () => {},
+      complete: () => {}
+    })
   }
 
-  applyFilter(event: Event): void {
+  showUsers(users: any): void {
+    // Assign the data to the data source for the table to render
+    this.dataSource = new MatTableDataSource(users?.filter((user: any) => {
+      if(user.email !== 'admin@neutrinos.co') {
+        return user
+      }
+    }))
+    console.log(this.dataSource)
+    this.moveUsers(users)
+
+    console.log('Users:', this.users)
+  }
+
+  moveUsers(users: any): void {
+    this.disabledUsers = []
+    this.enabledUsers = []
+    users.forEach((user: any) => {
+      if(user.status === 'disable' && user.email !== 'admin@neutrinos.co') {
+        this.disabledUsers.push(user)
+      }
+    })
+    this.disabledDataSource = this.disabledUsers
+
+    users.forEach((user: any) => {
+      if(user.status === 'active' && user.email !== 'admin@neutrinos.co') {
+        this.enabledUsers.push(user)
+      }
+    })
+    this.enableDataSource = this.enabledUsers
+  }
+
+  onFileChange(event: any): void {
+    let file = event.target.files[0];
+    let fileReader = new FileReader();
+    // fileReader.readAsBinaryString(file)
+    fileReader.readAsArrayBuffer(file);
+    fileReader.onload = (e: any) => {
+      let workBook = XLSX.read(fileReader.result, { type: 'binary' });
+      let sheetNames = workBook.SheetNames;
+      this.ExcelData = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]])
+      console.log(this.ExcelData)
+
+      this.sharedService.storeNewUsers(this.ExcelData)
+      this.api.genericGet('/get-all-users')
+        .subscribe({
+          next: (res) => {this.users = res},
+          error: (err) => {console.log(err)},
+          complete: () => {}
+        })
+      setTimeout(() => {
+        this.dataSource = new MatTableDataSource(this.users.filter((user: any) => {
+          if (user.email !== 'admin@neutrinos.co') {
+            return user
+          }
+        }))
+      }, 5000)
+     console.log(this.users) 
+    };
+
+    // fileReader.readAsArrayBuffer(file);
+  }
+
+  applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
 
-  editUser(userr: any): void {
-    const dialogRef = this.dialog.open(EditUserComponent, {
-      width: '50%',
-      enterAnimationDuration: '500ms',
-      exitAnimationDuration: '500ms',
-      data: userr
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.apiServ.genericPut('/updateUser', result)
-          .subscribe((updatedUser: any) => {
-            const updatedUserIndex = this.users.findIndex(u => u.Emp_ID === updatedUser.Emp_ID);
-            if (updatedUserIndex !== -1) {
-              this.users[updatedUserIndex] = updatedUser;
-              this.dataSource.data = [...this.users];
-              this.snackbar.open('User edited successfully', 'Ok', { duration: 2000 });
-            }
-
-            this.apiServ.genericGet('/getUser').subscribe((data: any) => {
-              const updatedUser = data;
-              const updatedUserIndex = this.users.findIndex(u => u.Emp_ID === updatedUser.Emp_ID);
-              if (updatedUserIndex !== -1) {
-                this.users[updatedUserIndex] = updatedUser;
-                this.dataSource.data = [...this.users];
-                this.snackbar.open('User edited successfully', 'Ok', { duration: 3000 });
-              }
-            }, error => {
-              this.snackbar.open('Failed to fetch updated user data', 'Ok', { duration: 2000 });
-            });
-          });
-      }
-    });
-  }
-
-  openFormPopup(): void {
-    const _popup = this.dialog.open(AddUserComponent, {
-      width: '50%',
-      enterAnimationDuration: '500ms',
-      exitAnimationDuration: '500ms',
-      data: {
-        title: 'Add User'
-      }
-    });
-
-    _popup.afterClosed().subscribe(item => {
-      if (item && item.data) {
-        this.users.push(item.data);
-        this.dataSource.data = this.users;
-      }
-    });
-  }
-
-  fileUpload(event: any) {
-    const selectedFile = event.target.files[0];
-    const fileReader = new FileReader();
-    fileReader.readAsBinaryString(selectedFile);
-    fileReader.onload = (event: any) => {
-      let binaryData = event.target?.result;
-      let workbook = XLSX.read(binaryData, { type: 'binary' });
-      workbook.SheetNames.forEach(sheet => {
-        const data = XLSX.utils.sheet_to_json(workbook.Sheets[sheet]);
-        console.log(data);
-        this.spreadsheetData = data;
-        this.convertedJson = JSON.stringify(data, undefined, 4);
-        // ////////////////
-        const _users = localStorage.getItem('users');
-        const users = _users ? JSON.parse(_users) : [];
-        let doesUserExist: boolean;
-
-        if(users){
-          this.spreadsheetData.forEach((item: any) => {
-            doesUserExist = false;
-            console.log(users)
-            users.forEach((user: {Emp_Email: any}) => {
-              if (item.Emp_Email === user.Emp_Email){
-                doesUserExist = true;
-              }
-            });
-            if(!doesUserExist){
-              this.mynew.push({
-                ...item, 
-                password: this.usersService.generatePwd(),
-              })
-            }
-          });
-
-          this.mynew.forEach(((newUser: any) => {
-            users.push(newUser)
-            this.apiServ.genericPost('/sendPassword', newUser)
-              .subscribe({
-                next: (res) => {console.log(res)},
-                error: (err) => {console.log(err)},
-                complete: () => {}
-              })
-          }))
-
-        localStorage.setItem('users', JSON.stringify(data))
-          this.mynew.forEach((user: any) => {
-          });
-        }
-        if (!this.dataSource) {
-          this.dataSource = new MatTableDataSource<any>();
-        }
-        this.users.push(...data);
-        // Update the data source
-        this.dataSource.data = this.users;
-
-        this.users.forEach((user: any) => {
-          this.sharedService.genericPost('/addUser', user)
-            .subscribe({
-              next: (res: any) => {
-                localStorage.setItem('users', JSON.stringify(res));
-              },
-              error: (err: any) => this.snackbar.open(err.error, 'Ok', { duration: 3000 }),
-              complete: () => { }
-            })
-        })
-      })
-      console.log(workbook);
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
     }
+  }
+
+  updateUserStatus(status: string, user:any): void {
+    console.log(status)
+    this.users?.forEach((_user: any) => {
+      if(user.email === _user.email) {
+        _user['status'] = status
+        this.api.genericUpdate('/update-user', _user)
+          .subscribe({
+            next: (res) => {this.getUsers()},
+            error: (err) => {console.log(err)},
+            complete: () => {}
+          })
+      }
+    })
+
+    
   }
 }

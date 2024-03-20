@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ChangePwdComponent } from '../popUps/change-pwd/change-pwd.component';
 
 
 @Component({
@@ -13,7 +15,7 @@ export class ProfileComponent  {
  
 profile:any;
 editform:FormGroup;
-  constructor() {
+  constructor( private matDialog :MatDialog) {
     console.log(this .profile)
   this.editform = new FormGroup({
     email:new FormControl('', Validators.required),
@@ -26,5 +28,8 @@ editform:FormGroup;
   }
     edit() {
       this.editF ?  this.editF=true : this.editF=true
+    }
+    changePwd() {
+      this.matDialog.open(ChangePwdComponent)
     }
 }

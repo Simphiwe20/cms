@@ -10,26 +10,34 @@ export class ApisServicesService {
 
   baseUrl: string = environment.baseUrl
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   genericGet(endPoint: string) {
-    console.log(this.baseUrl+endPoint)
-    if(endPoint.includes('/download-files')) window.open(this.baseUrl+endPoint)
-    return this.http.get(this.baseUrl+endPoint)
+    console.log(this.baseUrl + endPoint)
+    if (endPoint.includes('/download-files')) window.open(this.baseUrl + endPoint)
+    return this.http.get(this.baseUrl + endPoint)
   }
 
-  genericPost(endPoint:String, payload: any) {
-    return this.http.post(this.baseUrl+endPoint, payload)
+  genericPost(endPoint: String, payload: any) {
+    return this.http.post(this.baseUrl + endPoint, payload)
   }
 
+  genericUpdate(endPoint: string, payload: any) {
+    return this.http.put(this.baseUrl + endPoint, payload)
+  }
+
+  // Generic Post
+  genericPut(endpoint: string, payload: any) {
+    return this.http.put(this.baseUrl + endpoint, payload)
+  }
   
-
-  genericPut(endPoint:String, payload: any) {
-    return this.http.put(this.baseUrl+endPoint, payload)
-  }
+ 
+  // genericPut(endPoint:String, payload: any) {
+  //   return this.http.put(this.baseUrl+endPoint, payload)
+  // }
 
   // Tiisetso Code Might remove
-  addUser(data:any){
+  addUser(data: any) {
     return this.http.post(this.baseUrl, data)
   }
 
