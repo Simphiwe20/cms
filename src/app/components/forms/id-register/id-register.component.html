@@ -13,15 +13,15 @@
                 number
                 correctly and try again or contact us.</p>
         </div>
-        <form [formGroup]="idForm">
+        <form [formGroup]="idForm" class="flex column gap-2-em">
             <div class="idinput ">
                 <mat-form-field class="full-width">
                     <mat-label>Identification Number </mat-label>
-                    <input type="text" matInput placeholder="0000000000" formControlName="Idnumber" (input)="onInput(idForm.get('Idnumber')?.value)">
-                    <mat-error *ngIf="idForm.get('Idnumber')?.hasError('required')">
+                    <input type="number" matInput placeholder="0000000000" formControlName="idNumber">
+                    <mat-error *ngIf="idForm.get('idNumber')?.hasError('required')">
                         Identification Number is required
                     </mat-error>
-                    <mat-error *ngIf="idForm.get('Idnumber')?.hasError('pattern')">
+                    <mat-error *ngIf="idForm.get('idNumber')?.hasError('pattern')">
                         Identification Number is invalid
                     </mat-error>
 
