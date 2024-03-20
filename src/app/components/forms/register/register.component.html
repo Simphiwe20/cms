@@ -35,7 +35,7 @@
                 <!-- id number -->
                 <mat-form-field class="full-width">
                     <mat-label>Identification Number </mat-label>
-                    <input type="text" matInput placeholder="0000000000" formControlName="Idnumber" (input)="extractBirthDate(registrationForm.get('Idnumber')?.value)">
+                    <input type="text" matInput placeholder="0000000000" formControlName="Idnumber">
                     <mat-error *ngIf="registrationForm.get('Idnumber')?.hasError('required')">
                         Identification Number is required
                     </mat-error>
