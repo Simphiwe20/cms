@@ -5,10 +5,14 @@ import { ApisServicesService } from './apis-services.service';
   providedIn: 'root'
 })
 export class SharedServicesService {
+  data: any;
+  user: any;
+  employees: any;
+  users: any[] = [];
+  newUsers: any[] = []
 
-
-  res: any ;
-  currentUser : any ;
+  res: any;
+  currentUser: any;
 
   constructor(private api: ApisServicesService) { }
 
@@ -19,7 +23,7 @@ export class SharedServicesService {
 
   store(value: any, key: string, sessionType: string): void {
     sessionType === 'session' ? sessionStorage.setItem(key, JSON.stringify(value)) : localStorage.setItem(key, JSON.stringify(value));
-    console.log ('User stored')
+    console.log('User stored')
   }
   generatePwd(): any {
     let chars = 'Z*a&9Sx^Dc%V6$fG#b@7N3h!Jm~4Kl`Op/Iu?Y.tR;e2Wq:zAx]Sx[Cd|F\vB-F0g5Hj8MnkL1+'
@@ -35,7 +39,13 @@ export class SharedServicesService {
     return JSON.parse(this.res)
   }
 
-   monthDiff(d1: Date, d2: Date): number  {
+  storeUser(key: string, value: any, storage: string) {
+    this.res = JSON.stringify(value)
+    storage === 'session' ? sessionStorage?.setItem(key, this.res) : localStorage.setItem(key, this.res)
+
+  }
+
+  monthDiff(d1: Date, d2: Date): number {
     let months;
     months = (d2.getFullYear() - d1.getFullYear()) * 12;
     months -= d1.getMonth();
@@ -57,11 +67,76 @@ export class SharedServicesService {
 
   getWhoSubmitted(): any {
     let user = this.getUser('currentUser', 'session')
-    if(user.role === 'agent') {
+    if (user.role === 'agent') {
       return `${user.fullName}(${user.role})`
-    }else {
+    } else {
       return 'This claim came from the policyholder\'s account'
     }
   }
+
+  storeNewUsers(employees: any): void {
+
+    this.api.genericGet('/get-all-users')
+      .subscribe({
+        next: (res: any) => { this.getNewUser(res, employees) },
+        error: () => { },
+        complete: () => { }
+      })
+
+    console.log("Users: ", this.users)
+    console.log(" New users: ", this.newUsers[0])
+
+    console.log("Employees from the spreasSheet", employees)
+
+  }
+
+  getNewUser(users: any, employees: any): void {
+    let doesUserExist: boolean;
+    console.log(users, employees)
+    employees.forEach((employee: any, indx: number) => {
+      doesUserExist = false;
+      users.forEach((user: any, indx: number) => {
+        if (employee.Email === user.email) {
+          console.log('Found User:', user)
+          doesUserExist = true;
+        }
+      })
+      if (!doesUserExist) {
+        this.newUsers.push({
+          ...employee,
+          role: employee.occupation.toLowerCase() == 'agent' ? 'agent' :
+            employee.occupation.toLowerCase() == 'manager' ? 'manager' : 'admin',
+          password: this.generatePwd(),
+          status: 'active',
+          address: {
+            streetName: "Jozi",
+            streetNumber: 20234566,
+            city: "Jozi",
+            code: 2009,
+          },
+          startDate: new Date()
+        })
+        console.log(this.newUsers[this.newUsers.length - 1])
+        this.api.genericPost('/sendPassword', employee)
+          .subscribe({
+            next: () => {},
+            error: () => {},
+            complete: () => {}
+          })
+      }
+    })
+
+    this.newUsers.forEach((user: any, indx: number) => {
+      this.api.genericPost('/add-user', user)
+        .subscribe({
+          next: (res) => { console.log(res) },
+          error: (err) => { console.log(err) },
+          complete: () => { }
+        })
+    })
+  }
+
+
+
 
 }

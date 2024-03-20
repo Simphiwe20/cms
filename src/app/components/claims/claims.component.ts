@@ -19,7 +19,7 @@ export class ClaimsComponent {
   tableData: any[] = []
   clients: any;
   files: any[] = []
-  statuses: any[] = ['Approved', 'Rejected']
+  statuses: any;
   foundFiles: any;
 
   displayedColumns: string[] = ['firstName', 'lastName', 'memberID', 'claimName', 'dateSubmitted', 'status', 'document'];
@@ -60,8 +60,9 @@ export class ClaimsComponent {
                   console.log(this.tableData)
                 })
                 console.log(res)
-                this.deathClaims = res
+                // this.deathClaims = res
                 this.dataSource = new MatTableDataSource(this.tableData)
+                this.updateTable(this.tableData)
               },
               error: (err) => { console.log(err) },
               complete: () => { }
@@ -79,7 +80,7 @@ export class ClaimsComponent {
         error: () => { },
         complete: () => { }
       })
-
+    
     this.currentUser = this.shared.getUser('currentUser', 'session')
 
     this.statuses = this.currentUser.role === 'agent' ? ['Reviewed', 'Rejected'] : ['Approved', 'Rejected']
@@ -105,15 +106,28 @@ export class ClaimsComponent {
     }
   }
 
+  
+  updateTable(data: any) {
+    if (this.currentUser.role === 'claimer') {
+      let userData = data.filter((claim: any) => claim.memberID == this.currentUser.memberID)
+      console.log(userData)
+      this.dataSource = new MatTableDataSource(userData)
+    }
+  }
+
   statusUpdate(status: string, claimID: string): void {
-    console.log(status, claimID)
+    console.log(status, claimID, this.deathClaims)
     this.deathClaims.forEach((claim: any, indx: number) => {
       if (claim.claimID === claimID) {
-        // if(status === 'arrived') {
-        //   this.deathClaims[indx]['arrivalTime'] = this.sharedService.getTimeFromDate(new Date());
-        // }
         this.deathClaims[indx]['status'] = status;
         // this.deathClaims[indx]['updatedBy'] = `${this.currentUser.firstName} ${this.currentUser.lastName}`;
+        this.api.genericUpdate('/update-death-claim', this.deathClaims[indx])
+          .subscribe({
+            next: (res) => { console.log(res) },
+            error: (err) => { console.log(err) },
+            complete: () => { }
+          })
+        console.log(this.deathClaims[indx])
       }
     });
   }

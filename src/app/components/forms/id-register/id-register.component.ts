@@ -30,15 +30,16 @@ export class IdRegisterComponent {
   submit(): any {
    
     this.idnumber0 = this.idForm.value;
+    console.log(this.idnumber0)
     this.api.genericPost('/get-client', this.idnumber0)
       .subscribe({
-        next: async (res: any) => {
+        next: (res: any) => {
 
           console.log('found', res)
-          console.log("looking for", res.Idnumber)
+          console.log("looking for", res.idNumber)
           console.log("form", this.idnumber0.Idnumber)
           const found = res
-          if (res.Idnumber != this.idnumber0.Idnumber) {
+          if (res.idNumber != this.idnumber0.Idnumber) {
             this.show = true
            
           } else {

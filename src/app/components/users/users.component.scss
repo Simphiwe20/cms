@@ -85,149 +85,205 @@
 //     height: 10px;
 // }
 
-.deactivated-row {
-    background-color: #f2f2f2; /* Change to gray color */
-}  
-
-.btnForm {
-    background-color: #163e7b;
-    color: white;
-    width: 162px !important;
-    cursor: pointer;
+.main-container {
+    height: calc(100vh - 64px);
 }
 
-input[type="file"] {
+// .deactivated-row {
+//     background-color: #f2f2f2; /* Change to gray color */
+// }  
+
+// .btnForm {
+//     background-color: #163e7b;
+//     color: white;
+//     width: 162px !important;
+//     cursor: pointer;
+// }
+
+// input[type="file"] {
+//     display: none;
+// }
+
+.width-80 {
+    width: 80%;
+}
+
+// label {
+//     user-select: none;
+//     cursor: pointer;
+//     height: 54px;
+//     color: white;
+//     font-weight: bold;
+//     font-size: 15px;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     width: 182px;
+// }
+
+// .mainContainer {
+//     height: calc(100vh - 64px);
+//     width: 100%;
+//     background-color: gainsboro;
+
+//     .container {
+//         height: 80%;
+//         width: 80%;
+//         display: flex;
+//         flex-direction: column;
+
+//         .button {
+//             height: 54px;
+//             display: flex;
+
+//             mat-form-field{
+//                 height: 100%;
+//                 display: block;
+//             }
+
+//             button {
+//                 color: white;
+//                 height: 54px;
+//                 width: 150px;
+//                 font-weight: bold;
+//                 font-size: 15px;
+//                 margin-right: 42px;
+//             }
+
+//             input {
+//                 width: 150px;
+//                 margin-left: 10px;
+//             }
+//         }
+
+//         .table {
+//             width: 96%;
+//             height: 90%;
+//             overflow: auto;
+
+//             mat-form-field {
+//                 height: 20%;
+//             }
+
+//             table {
+//                 border-collapse: collapse;
+
+
+//                 th,td {
+//                     padding: 8px;
+//                     text-align: left;
+//                 }
+
+//                 button {
+//                     background-color: #163e7b;
+//                     border: none;
+//                     color: white;
+//                     font-weight: bold;
+//                     font-size: 15px;
+//                     padding: 8px 15px;
+
+//                     mat-icon {
+//                         display: inline-flex !important;
+//                         align-items: center;
+//                         justify-content: center;
+//                         color: #4190cb;
+//                     }
+
+//                 }
+
+//                 button:hover {
+//                     cursor: pointer;
+//                 }
+//             }
+//         }
+//     }
+// }
+
+
+// .column {
+//     flex-direction: column;
+// }
+
+// .row {
+//     flex-direction: row;
+// }
+
+// .flex1 {
+//     flex: 1;
+// }
+
+// .gap1em {
+//     gap: 1em;
+// }
+
+// .gap2em {
+//     gap: 2em;
+// }
+
+// .aic {
+//     align-items: center;
+// }
+
+// .jcc {
+//     justify-content: center;
+// }
+
+// .end {
+//     justify-content: end;
+// }
+
+// .darkBlue {
+//     background-color: #163e7b;
+// }
+
+// .lightBlue {
+//     background-color: #4190cb;
+// }
+
+$lightBlue: #4190cb;
+$darkBlue: #163e7b;
+
+.table {
+    height: 400px;
+    overflow-x: auto;
+    button {
+        color: white;
+    }
+}
+
+// .height-350px {
+//     height: 380px;
+// }
+
+input[type='file'] {
     display: none;
 }
 
 label {
-    user-select: none;
-    cursor: pointer;
-    height: 54px;
-    color: white;
-    font-weight: bold;
-    font-size: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 182px;
-}
-
-.mainContainer {
-    height: calc(100vh - 64px);
-    width: 100%;
-    background-color: gainsboro;
-
-    .container {
-        height: 80%;
-        width: 80%;
-        display: flex;
-        flex-direction: column;
-
-        .button {
-            height: 54px;
-            display: flex;
-
-            mat-form-field{
-                height: 100%;
-                display: block;
-            }
-
-            button {
-                color: white;
-                height: 54px;
-                width: 150px;
-                font-weight: bold;
-                font-size: 15px;
-                margin-right: 42px;
-            }
-
-            input {
-                width: 150px;
-                margin-left: 10px;
-            }
-        }
-
-        .table {
-            width: 96%;
-            height: 90%;
-            overflow: auto;
-
-            mat-form-field {
-                height: 20%;
-            }
-
-            table {
-                border-collapse: collapse;
-
-
-                th,td {
-                    padding: 8px;
-                    text-align: left;
-                }
-
-                button {
-                    background-color: #163e7b;
-                    border: none;
-                    color: white;
-                    font-weight: bold;
-                    font-size: 15px;
-                    padding: 8px 15px;
-
-                    mat-icon {
-                        display: inline-flex !important;
-                        align-items: center;
-                        justify-content: center;
-                        color: #4190cb;
-                    }
-
-                }
-
-                button:hover {
-                    cursor: pointer;
-                }
-            }
-        }
+    margin-top: 10px;
+    display: inline-block;
+    padding: 10px;
+    background-color: $darkBlue;
+    color: black;
+    font-size:larger;
+    font-weight: 700;
+    border-radius: 5px;
+    &:hover {
+        cursor: pointer;
+        box-shadow: 5px 5px 5px lightgray;
+        background-color: $lightBlue;
+        color: white;
     }
 }
 
+.block { 
+    display: block;
+ }
 
-.column {
-    flex-direction: column;
+.disabled {
+    background-color: $lightBlue;
 }
 
-.row {
-    flex-direction: row;
-}
-
-.flex1 {
-    flex: 1;
-}
-
-.gap1em {
-    gap: 1em;
-}
-
-.gap2em {
-    gap: 2em;
-}
-
-.aic {
-    align-items: center;
-}
-
-.jcc {
-    justify-content: center;
-}
-
-.end {
-    justify-content: end;
-}
-
-.darkBlue {
-    background-color: #163e7b;
-}
-
-.lightBlue {
-    background-color: #4190cb;
+.enabled {
+    background-color: $darkBlue;
 }

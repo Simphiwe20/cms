@@ -5,6 +5,11 @@ $darkBlue: #163e7b;
     width: 80%;
 }
 
+h2 {
+    margin-top: 70px;
+
+}
+
 .gap-2 {
     gap: 1em;
 }
@@ -22,4 +27,9 @@ $darkBlue: #163e7b;
 
 mat-icon {
     color: $darkBlue
+}
+
+.container {
+    z-index: 0;
+    // position: relative;
 }

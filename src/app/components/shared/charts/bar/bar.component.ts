@@ -1,5 +1,6 @@
 import { Component, Output } from '@angular/core';
 import { ChartConfiguration } from 'chart.js';
+import { ApisServicesService } from 'src/app/services/apis-services.service';
 
 @Component({
   selector: 'app-bar',
