@@ -20,6 +20,8 @@ export class UsersComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   convertedJson!: string;
+  spreadsheetData: any;
+  mynew: any = [];
   displayedColumn: string[] = ['Emp_ID', 'Emp_Name', 'Emp_Surname', 'Emp_DOB', 'Emp_Gender', 'Emp_Email', 'Actions'];
   users: any[] = [];
   rowActivationStates: { [key: string]: boolean } = {};
@@ -102,34 +104,57 @@ export class UsersComponent {
     });
   }
 
-  // dataSource: any;
   fileUpload(event: any) {
-    console.log(event.target.files);
-    // Assinging the event/selected file to a variable
     const selectedFile = event.target.files[0];
-    // An object to read the file
     const fileReader = new FileReader();
-    // Using the method readAsBinaryString to read the file by passing it
     fileReader.readAsBinaryString(selectedFile);
     fileReader.onload = (event: any) => {
-      console.log(event);
-      // taking the binary data from the file reader bc thats the method we used.
       let binaryData = event.target?.result;
-      // Read the binary data after npm install and import of xlsx
       let workbook = XLSX.read(binaryData, { type: 'binary' });
-      // Loop through Workbook.sheet names
       workbook.SheetNames.forEach(sheet => {
-        // Using the XLSX method to convert sheet to JSON, and we are passing our sheetts which are in our workbook
         const data = XLSX.utils.sheet_to_json(workbook.Sheets[sheet]);
         console.log(data);
-
-        // Stringyfy the data
+        this.spreadsheetData = data;
         this.convertedJson = JSON.stringify(data, undefined, 4);
+        // ////////////////
+        const _users = localStorage.getItem('users');
+        const users = _users ? JSON.parse(_users) : [];
+        let doesUserExist: boolean;
+
+        if(users){
+          this.spreadsheetData.forEach((item: any) => {
+            doesUserExist = false;
+            console.log(users)
+            users.forEach((user: {Emp_Email: any}) => {
+              if (item.Emp_Email === user.Emp_Email){
+                doesUserExist = true;
+              }
+            });
+            if(!doesUserExist){
+              this.mynew.push({
+                ...item, 
+                password: this.usersService.generatePwd(),
+              })
+            }
+          });
+
+          this.mynew.forEach(((newUser: any) => {
+            users.push(newUser)
+            this.apiServ.genericPost('/sendPassword', newUser)
+              .subscribe({
+                next: (res) => {console.log(res)},
+                error: (err) => {console.log(err)},
+                complete: () => {}
+              })
+          }))
+
         localStorage.setItem('users', JSON.stringify(data))
+          this.mynew.forEach((user: any) => {
+          });
+        }
         if (!this.dataSource) {
           this.dataSource = new MatTableDataSource<any>();
         }
-        // Push new data to the existing array
         this.users.push(...data);
         // Update the data source
         this.dataSource.data = this.users;
@@ -144,11 +169,8 @@ export class UsersComponent {
               complete: () => { }
             })
         })
-
-
       })
       console.log(workbook);
     }
-
   }
 }
