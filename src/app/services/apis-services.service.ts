@@ -26,10 +26,10 @@ export class ApisServicesService {
   return this.http.put(this.baseUrl+endpoint, payload)
 }
   
-
-  genericPut(endPoint:String, payload: any) {
-    return this.http.put(this.baseUrl+endPoint, payload)
-  }
+ 
+  // genericPut(endPoint:String, payload: any) {
+  //   return this.http.put(this.baseUrl+endPoint, payload)
+  // }
 
   // Tiisetso Code Might remove
   addUser(data:any){

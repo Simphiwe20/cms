@@ -42,7 +42,7 @@ export class ChangePwdComponent {
             console.log(user)
           }
         })
-      this.api.genericPut('/changepsswrd', this.changePwdForm['controls']['currentPwd'].value )
+      this.api.genericPut('/changepsswrd', this.user )
         this.close()
         this.snackBar.open('Your password, hass been changed successfully', 'OK', {duration: 3000})
 

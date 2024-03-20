@@ -20,7 +20,7 @@ export class RegisterComponent {
       lastName: new FormControl('', [Validators.required, Validators.minLength(3)]),
       Idnumber: new FormControl('', [Validators.required , Validators.pattern(this.idpattern)]),
       gender: new FormControl('', [Validators.required]),
-      dateOfBirth:new FormControl(''),
+      // dateOfBirth:new FormControl(''),
       email: new FormControl('', [Validators.required, Validators.pattern(/^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/)]),
       cellNumber: new FormControl('', [Validators.required , Validators.pattern(this.saCellphoneRegex) ]),
       address: new FormGroup({
@@ -52,25 +52,25 @@ export class RegisterComponent {
       this.api.genericPost('/add-client', formValue)
         .subscribe({
           next: (res: any) => {
-           console.log ('done')
+           console.log ('done' ,res)
            this.router.navigate(['/login']);
           },
           error: (err: any) => console.log('Error', err),
           complete: () => { }
         });
     }
-    extractBirthDate(idNumber: string):void{
-      if (idNumber.length !== 13){
-        console.log( "nope")
-      }else(idNumber.length === 13);{
-      const year = parseInt(idNumber.substr(0, 2));
-      const month = parseInt(idNumber.substr(2, 2)) - 1;
-      const day = parseInt(idNumber.substr(4, 2));
-      const fullYear = year < 22 ? 2000 + year : 1900 + year;
-  console.log(new Date(fullYear, month, day));
+  //   extractBirthDate(idNumber: string):void{
+  //     if (idNumber.length !== 13){
+  //       console.log( "nope")
+  //     }else(idNumber.length === 13);{
+  //     const year = parseInt(idNumber.substr(0, 2));
+  //     const month = parseInt(idNumber.substr(2, 2)) - 1;
+  //     const day = parseInt(idNumber.substr(4, 2));
+  //     const fullYear = year < 22 ? 2000 + year : 1900 + year;
+  // console.log(new Date(fullYear, month, day));
   
-    }
-  }
+  //   }
+  // }
   onInput(value: string) {
     if (/\D/.test(value)) { // Check if value contains non-numeric characters
       this.snackbar.open('Only numeric characters are allowed!', 'Close', {
