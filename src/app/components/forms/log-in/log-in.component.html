@@ -12,28 +12,33 @@
             <div class="email">
                 <mat-form-field>
                     <mat-label>Enter your email</mat-label>
-                    <input matInput placeholder="pat@example.com">
-                    <mat-error></mat-error>
+                    <input formControlName="email" matInput placeholder="pat@example.com">
+                    <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+                        Email address is required to log In
+                    </mat-error>
                 </mat-form-field>
             </div>
             <div class="psw">
                 <mat-form-field>
                     <mat-label>Enter your password</mat-label>
-                    <input matInput [type]="hide ? 'password' : 'text'">
+                    <input formControlName="password" matInput [type]="hide ? 'password' : 'text'">
                     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                       <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
+                    <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+                        Please enter your password
+                    </mat-error>
                   </mat-form-field>
                 <div class="forgotP flex end">
                     <p class="forgotPswd">Forgot <span routerLink=""> password</span>?</p>
                 </div>
             </div>
             <div class="buttons flex row gap2em">
-                <button class="btn1" mat-raised-button>Cancel</button>
-                <button class="btn2" mat-raised-button>Log In</button>
+                <button class="btn1" mat-raised-button routerLink="/landing">Cancel</button>
+                <button class="btn2" mat-raised-button (click)="signIn()">Log In</button>
             </div>
             <div class="reg flex center-center">
-                <p routerLink="/register">Registration</p>
+                <p routerLink="/Registration-Identifier">Registration</p>
             </div>
         </form>
     </div>
