@@ -4,10 +4,10 @@
     <div class="content column">
       <img src="../../../assets/urban-line-user-2.gif" alt="" width="64%" *ngIf="profile.gender === 'male'">
       <img src="../../../assets/urban-line-user-3.gif" alt="" width="64%" *ngIf="profile.gender === 'female'">
-      <img src="../../../assets/images/onlaptop.png" alt="" width="64%" *ngIf="profile.gender === undefined">
+      <img src="../../../assets/images/onlaptop.png" alt="" width="64%" *ngIf="profile.gender ? profile.gender== 'undefined' :profile.gender =='none'">
 
     </div>
-   <h2 class="lightBlueC"> {{ profile.name }} {{ profile.surname }} {{profile.fullName}} </h2>
+   <h2 class="lightBlueC"> {{ profile.firstName }} {{ profile.lastName }} {{profile.fullName}} </h2>
     <button mat-raised-button class="btn1" (click)="edit()">edit profile</button>
     <button mat-raised-button class="btn1" (click)=" changePwd()">change Password</button>
 
@@ -24,7 +24,7 @@
       <div class="flex gap-1em">
         <mat-form-field class="half-width">
           <mat-label>ID</mat-label>
-          <input type="number" matInput [value]=" profile.id" readonly>
+          <input type="number" matInput [value]=" profile.idNunber" readonly>
         </mat-form-field>
         <mat-form-field class="half-width">
           <mat-label>Date of Birth</mat-label>
@@ -65,8 +65,7 @@
         <mat-form-field class="full-width">
           <mat-label> adddress</mat-label>
           <input type="text" matInput [value]="profile.streetNumber" readonly>
-          <input type="text" matInput [value]=" profile.streetNumber" readonly>
-          <input type="text" matInput [value]=" profile.suburb" readonly>
+          <input type="text" matInput [value]=" profile.streetName" readonly>
           <input type="text" matInput [value]=" profile.city" readonly>
           <input type="text" matInput [value]=" profile.code" readonly>
         </mat-form-field>
@@ -76,8 +75,7 @@
         <mat-form-field>
           <mat-label> adddress</mat-label>
           <input type="text" matInput [value]=" profile.streetNumber">
-          <input type="text" matInput [value]=" profile.streetNumber">
-          <input type="text" matInput [value]=" profile.suburb">
+          <input type="text" matInput [value]=" profile.streetName">
           <input type="text" matInput [value]=" profile.city">
           <input type="text" matInput [value]=" profile.code">
         </mat-form-field>
