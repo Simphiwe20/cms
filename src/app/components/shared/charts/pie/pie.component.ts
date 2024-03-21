@@ -13,27 +13,53 @@ export class PieComponent implements AfterViewInit {
 
 
   approve: number = 0;
-  _claims = localStorage.getItem('claims');
-  claimData = this._claims ? JSON.parse(this._claims) : []
+  deathClaims: any;
+
+  _claims: any;
+  // claimData = this._claims ? JSON.parse(this._claims) : []
   approvedClaimsCount: number = 0;
   reviewedClaimsCount: number = 0;
+  rejectedClaimsCount: number = 0
   submittedClaimsCount: number = 0
-  constructor() {
-    this.countApprovedClaims();
-    this.countReviewedClaims();
-    this.countSubmittedClaims()
+  constructor(private api: ApisServicesService) {
+
+    this.api.genericGet('/get-death-claims')
+      .subscribe({
+        next: (res) => {
+          this.deathClaims = res
+          this._claims = res
+          console.log(res)
+          this.countApprovedClaims()
+          this.countSubmittedClaims()
+          this.countRejectedClaims()
+          this.countReviewedClaims()
+        },
+        error: (err) => { console.log(err) },
+        complete: () => { }
+      })
   }
 
+
+  
+
   countApprovedClaims(): any {
-    return this.approvedClaimsCount = this.claimData.filter((claim: any) => claim.status === "Approved").length;
+    console.log(this._claims)
+    return this.approvedClaimsCount = this._claims.filter((claim: any) => claim.status === "Approved").length ? this._claims.filter((claim: any) => claim.status === "Approved").length : 0;
   }
   countReviewedClaims(): any {
-    return this.reviewedClaimsCount = this.claimData.filter((claim: any) => claim.status === "Reviewed").length;
+    console.log(this.approvedClaimsCount)
+    return this.submittedClaimsCount = this._claims.filter((claim: any) => claim.status === "Reviewed").length ? this._claims.filter((claim: any) => claim.status === "Reviewed").length : 0;
   }
+
+  countRejectedClaims(): any {
+    return this.rejectedClaimsCount = this._claims.filter((claim: any) => claim.status === "Rejected").length ? this._claims.filter((claim: any) => claim.status === "Rejected").length : 0;
+  }
+
   countSubmittedClaims(): any {
-    return this.submittedClaimsCount = this.claimData.filter((claim: any) => claim.status === "Submitted").length;
+    return this.submittedClaimsCount =  this._claims.filter((claim: any) => claim.status === "Submitted").length ? this._claims.filter((claim: any) => claim.status === "Submitted").length : 0;
   }
   // }
+
 
 
 
@@ -70,18 +96,19 @@ export class PieComponent implements AfterViewInit {
     responsive: false,
   };
 
-  deathClaims: any[] = [];
+  // deathClaims: any[] = [];
 
   ngAfterViewInit(): void {
-    console.log(this.deathClaims)
+    console.log(this._claims)
+    // this.countApprovedClaims();
+    // this.countReviewedClaims();
+    // this.countSubmittedClaims()
   }
-  public pieChartLabels = [['approved'], ['Reviewed'], 'Submitted'];
+  public pieChartLabels = [['Approved'], ['Reviewed'], ['Rejected'], 'Submitted'];
   public pieChartDatasets = [{
-    data: [this.countApprovedClaims(), this.countReviewedClaims(), this.countSubmittedClaims()]
+    data: [this.approvedClaimsCount, this.reviewedClaimsCount, this.rejectedClaimsCount, this.submittedClaimsCount]
   }];
   public pieChartLegend = true;
   public pieChartPlugins = [];
-
-
 
 }
