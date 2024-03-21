@@ -12,9 +12,9 @@ import * as XLSX from 'xlsx'
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
-export class UsersComponent implements AfterViewInit{
+export class UsersComponent implements AfterViewInit {
   ExcelData: any;
-  displayedColumns: string[] = ['email', 'name', 'surname', 'department', 'role', 'action'];
+  displayedColumns: string[] = ['email', 'name', 'surname', 'role', 'action'];
   dataSource: MatTableDataSource<any>;
   disabledDataSource: any[] = [];
   enableDataSource: any[] = []
@@ -42,22 +42,22 @@ export class UsersComponent implements AfterViewInit{
 
   getUsers(): void {
     this.api.genericGet('/get-all-users')
-    .subscribe({
-      next: (res) => {
-        this.users = res
-        console.log('Inside the next: ', this.users)
-        this.showUsers(res)
-        this.moveUsers(res)
-      },
-      error: () => {},
-      complete: () => {}
-    })
+      .subscribe({
+        next: (res) => {
+          this.users = res
+          console.log('Inside the next: ', this.users)
+          this.showUsers(res)
+          this.moveUsers(res)
+        },
+        error: () => { },
+        complete: () => { }
+      })
   }
 
   showUsers(users: any): void {
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(users?.filter((user: any) => {
-      if(user.email !== 'admin@neutrinos.co') {
+      if (user.email !== 'admin@cms.co.za') {
         return user
       }
     }))
@@ -71,14 +71,14 @@ export class UsersComponent implements AfterViewInit{
     this.disabledUsers = []
     this.enabledUsers = []
     users.forEach((user: any) => {
-      if(user.status === 'disable' && user.email !== 'admin@neutrinos.co') {
+      if (user.status === 'disable' && user.email !== 'admin@cms.co.za') {
         this.disabledUsers.push(user)
       }
     })
     this.disabledDataSource = this.disabledUsers
 
     users.forEach((user: any) => {
-      if(user.status === 'active' && user.email !== 'admin@neutrinos.co') {
+      if (user.status === 'active' && user.email !== 'admin@cms.co.za') {
         this.enabledUsers.push(user)
       }
     })
@@ -97,21 +97,17 @@ export class UsersComponent implements AfterViewInit{
       console.log(this.ExcelData)
 
       this.sharedService.storeNewUsers(this.ExcelData)
+      console.log(this.users)
+    };
+
+    setTimeout(() => {
       this.api.genericGet('/get-all-users')
         .subscribe({
-          next: (res) => {this.users = res},
-          error: (err) => {console.log(err)},
-          complete: () => {}
+          next: (res) => this.showUsers(res),
+          error: (err) => { console.log(err) },
+          complete: () => { }
         })
-      setTimeout(() => {
-        this.dataSource = new MatTableDataSource(this.users.filter((user: any) => {
-          if (user.email !== 'admin@neutrinos.co') {
-            return user
-          }
-        }))
-      }, 5000)
-     console.log(this.users) 
-    };
+    }, 500)
 
     // fileReader.readAsArrayBuffer(file);
   }
@@ -125,20 +121,29 @@ export class UsersComponent implements AfterViewInit{
     }
   }
 
-  updateUserStatus(status: string, user:any): void {
+  updateUserStatus(status: string, user: any): void {
     console.log(status)
     this.users?.forEach((_user: any) => {
-      if(user.email === _user.email) {
+      if (user.email === _user.email) {
         _user['status'] = status
-        this.api.genericUpdate('/update-user', _user)
+        this.api.genericUpdate('/updates-user', _user)
           .subscribe({
-            next: (res) => {this.getUsers()},
-            error: (err) => {console.log(err)},
-            complete: () => {}
+            next: (res) => { this.getUsers() },
+            error: (err) => { console.log(err) },
+            complete: () => { }
           })
+        // setTimeout(() => {
+        //   this.api.genericGet('/get-all-users')
+        //     .subscribe({
+        //       next: (res) => this.showUsers(res),
+        //       error: (err) => { console.log(err) },
+        //       complete: () => { }
+        //     })
+        // }, 500)
       }
+
     })
 
-    
+
   }
 }

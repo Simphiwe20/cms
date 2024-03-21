@@ -67,7 +67,8 @@ export class RegisterComponent{
     formValue['role'] = 'claimer',
     formValue['startDate'] = this.receivedClient.startDate
     formValue['memberID'] = this.receivedClient.memberID
-    this.getValues(formValue)
+    formValue['status'] = 'active'
+    // this.getValues(formValue)
     console.log(formValue)
 
     this.api.genericPost('/add-user', formValue)
