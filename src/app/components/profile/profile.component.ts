@@ -9,27 +9,28 @@ import { ChangePwdComponent } from '../popUps/change-pwd/change-pwd.component';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent  {
+export class ProfileComponent {
 
   editF: boolean = false
- 
-profile:any;
-editform:FormGroup;
-  constructor( private matDialog :MatDialog) {
-    console.log(this .profile)
-  this.editform = new FormGroup({
-    email:new FormControl('', Validators.required),
-     cellnumber: new FormControl('', Validators.required),
-  })
-  
+
+  profile: any;
+  editform: FormGroup;
+  constructor(private matDialog: MatDialog) {
+    console.log(this.profile)
+    this.editform = new FormGroup({
+      email: new FormControl('', Validators.required),
+      cellnumber: new FormControl('', Validators.required),
+    })
+
   }
-  ngOnInit():void {
-   this.profile =  JSON.parse(sessionStorage.getItem('currentUser') || '[]');
+  ngOnInit(): void {
+    this.profile = JSON.parse(sessionStorage.getItem('currentUser') || '[]');
   }
-    edit() {
-      this.editF ?  this.editF=true : this.editF=true
-    }
-    changePwd() {
-      this.matDialog.open(ChangePwdComponent)
-    }
+  edit() {
+    this.editF ? this.editF = true : this.editF = true
+  }
+  changePwd() {
+    console.log('Pop  up opened')
+    // this.matDialog.open(ChangePwdComponent)
+  }
 }

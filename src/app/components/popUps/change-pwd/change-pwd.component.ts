@@ -16,7 +16,7 @@ export class ChangePwdComponent {
   user: any
   users: any
 
-  constructor(private api:ApisServicesService, private userInfor: SharedServicesService, private snackBar: MatSnackBar, private matDialogRef: MatDialogRef<Component>) {
+  constructor(private api:ApisServicesService, private userInfor: SharedServicesService, private snackBar: MatSnackBar, private matDialogRef: MatDialogRef<ChangePwdComponent>) {
 
     this.user = this.userInfor.get('currentUser', 'session')
     this.users = this.api.genericGet('/get-users').subscribe((res) => {
