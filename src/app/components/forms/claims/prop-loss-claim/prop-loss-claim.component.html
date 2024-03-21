@@ -15,10 +15,9 @@
                 </mat-form-field>
                 <mat-form-field class="full-width">
                     <mat-label>When was the loss discovered</mat-label>
-                    <input formControlName="discoveryTime" type="text" matInput placeholder="Ex. pat@example.com">
-                    <mat-error *ngIf="claimForm.get('lossDetails.discoveryTime')?.hasError('required')">
-                        Loss discovery time is <strong>required</strong>
-                    </mat-error>
+                    <input formControlName="discoveryTime" matInput [matDatepicker]="picker1" readonly>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
                 </mat-form-field>
             </div>
             <div class="flex gap-1">
@@ -143,8 +142,8 @@
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field class="full-width">
-                                <mat-label>Serial number</mat-label>
-                                <input formControlName="serial_number" type="text" matInput
+                                <mat-label>Make</mat-label>
+                                <input formControlName="make" type="text" matInput
                                     placeholder="Ex. pat@example.com">
                                 <mat-error>
                                     Make is <strong>required</strong>

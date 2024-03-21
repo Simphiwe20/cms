@@ -44,18 +44,7 @@ export class LogInComponent {
         },
         error: (err) => console.log(err),
         complete: () => { }
-      })
-
-    // setTimeout( () => {
-    //   if(!this.users) {
-    //   this.api.genericPost('/add-user', this.adminAccount)
-    //   .subscribe({
-    //     next: (res) => {console.log(res)},
-    //     error: (err) => {console.log(err)},
-    //     complete: () => {}
-    //   })
-    // }
-    // }, 3000)        
+      })     
   }
 
 

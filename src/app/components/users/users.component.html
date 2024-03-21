@@ -32,12 +32,6 @@
                                     <td mat-cell *matCellDef="let row"> {{row.firstName}} </td>
                                 </ng-container>
         
-                                <!-- Department Column -->
-                                <ng-container matColumnDef="department">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Department </th>
-                                    <td mat-cell *matCellDef="let row"> {{row.department}} </td>
-                                </ng-container>
-        
                                 <!-- Occupation Column -->
                                 <ng-container matColumnDef="role">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Roles </th>
@@ -50,7 +44,7 @@
                                     <td mat-cell *matCellDef="let row">
                                         <!-- Change Status -->
                                         <button mat-raised-button matTooltip="Update account status"
-                                            [ngStyle]="{'background-color': row.status === 'disable' ? 'black' : 'grey'}"
+                                            [ngStyle]="{'background-color': row.status === 'disable' ? 'lightblue' : 'darkblue'}"
                                             [matMenuTriggerFor]="menu">{{row.status | titlecase}}</button>
                                         <mat-menu #menu="matMenu">
                                             <button mat-menu-item (click)="updateUserStatus(status, row)"
@@ -127,7 +121,7 @@
                                     <td mat-cell *matCellDef="let row">
                                         <!-- Change Status -->
                                         <button mat-raised-button matTooltip="Update account status"
-                                        [ngStyle]="{'background-color':'grey'}"
+                                        [ngStyle]="{'background-color':'lightblue'}"
                                             [matMenuTriggerFor]="menu" disabled>{{row.status | titlecase}}</button>
                                         <mat-menu #menu="matMenu">
                                             <button mat-menu-item (click)="updateUserStatus(status, row)"
@@ -198,7 +192,7 @@
                                     <td mat-cell *matCellDef="let row">
                                         <!-- Change Status -->
                                         <button mat-raised-button matTooltip="Update account status"
-                                        [ngStyle]="{'background-color': 'black'}"
+                                        [ngStyle]="{'background-color': 'darkblue'}"
                                             [matMenuTriggerFor]="menu" disabled>{{row.status | titlecase}}</button>
                                         <mat-menu #menu="matMenu">
                                             <button mat-menu-item (click)="updateUserStatus(status, row)"

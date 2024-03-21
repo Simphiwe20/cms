@@ -118,7 +118,7 @@ export class SharedServicesService {
           startDate: new Date()
         })
         console.log(this.newUsers[this.newUsers.length - 1])
-        this.api.genericPost('/sendPassword', employee)
+        this.api.genericPost('/sendPassword', this.newUsers[this.newUsers.length - 1])
           .subscribe({
             next: () => {},
             error: () => {},
