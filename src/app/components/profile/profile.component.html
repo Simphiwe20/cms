@@ -2,17 +2,17 @@
   <div class="containerr">
 
     <div class="content column">
-      <img src="../../../assets/urban-line-user-2.gif" alt="" width="64%" *ngIf="profile.gender === 'Male'">
-      <img src="../../../assets/urban-line-user-3.gif" alt="" width="64%" *ngIf="profile.gender === 'Female'">
-      <img src="../../../assets/images/onlaptop.png" alt="" width="64%" *ngIf="profile.gender ==='none'">
+      <img src="../../../assets/urban-line-user-2.gif" alt="" width="64%" *ngIf="profile.gender === 'Male'|| profile.gender === 'male'">
+      <img src="../../../assets/urban-line-user-3.gif" alt="" width="64%" *ngIf="profile.gender === 'Female'||profile.gender === 'female'">
+      <img src="../../../assets/images/onlaptop.png" alt="" width="64%" *ngIf="profile.gender ==='none'||profile.gender ==='None'">
 
     </div>
     <h2 class="lightBlueC"> {{ profile.firstName }} {{ profile.lastName }} </h2>
 
-    <button class="btn2" mat-raised-button (click)="changePwd()">change Password</button>
+    <button class="btn-cancel" mat-raised-button (click)="changePwd()">change Password</button>
 
   </div>
-  <!-- </div> -->
+
   <mat-card>
 
     <mat-card-header>
@@ -59,7 +59,7 @@
         </mat-form-field>
       </div>
 
-      <div *ngIf="!editF">
+      <div >
         <h2> Address </h2>
         <div class="flex gap-1em full-width">
           <mat-form-field class="full-width">
@@ -86,18 +86,7 @@
           </mat-form-field>
         </div>
       </div>
-      <div class="flex column" *ngIf="editF">
-
-        <!-- <mat-form-field>
-          <mat-label> adddress</mat-label>
-          <input type="text" matInput [value]=" profile.streetNumber">
-          <input type="text" matInput [value]=" profile.streetName">
-          <input type="text" matInput [value]=" profile.city">
-          <input type="text" matInput [value]=" profile.code">
-        </mat-form-field> -->
-
-
-      </div>
+      
     </mat-card-content>
 
   </mat-card>
