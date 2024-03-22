@@ -11,49 +11,65 @@ import { SharedServicesService } from 'src/app/services/shared-services.service'
   styleUrls: ['./change-pwd.component.scss']
 })
 export class ChangePwdComponent {
-  changePwdForm: FormGroup
+
+  changePasswordForm: FormGroup
   user: any
   users: any
 
-  constructor(private userInfor: SharedServicesService, private snackBar: MatSnackBar, private matDialogRef: MatDialogRef<ChangePwdComponent>, private api:ApisServicesService) {
+  constructor(private api:ApisServicesService, private userInfor: SharedServicesService, private snackBar: MatSnackBar, private matDialogRef: MatDialogRef<ChangePwdComponent>) {
 
     this.user = this.userInfor.get('currentUser', 'session')
-    this.users = this.userInfor.get('users', 'local')
+    this.users = this.api.genericGet('/get-users').subscribe((res) => {
+      this.users = res;
+    });
+    
 
-    this.changePwdForm = new FormGroup({
-      currentPwd: new FormControl('', [Validators.required]),
-      newPwd: new FormControl('', [Validators.required]),
-      confirmPwd: new FormControl('', [Validators.required])
+    this.changePasswordForm = new FormGroup({
+      currentPassword: new FormControl('', [Validators.required]),
+      newPassword: new FormControl('', [Validators.required]),
+      confirmPassword: new FormControl('', [Validators.required])
     })
   }
-
   save() {
     let currentPassword = this.user.password
-    console.log(currentPassword)
-    console.log('what are u',this.changePwdForm['controls']['currentPwd'].value)
-
-    if(currentPassword !== this.changePwdForm['controls']['currentPwd'].value) {
-      this.snackBar.open('Your current password is incorrect', 'OK', {duration: 3000})
-    }else {
-      if(this.changePwdForm['controls']['confirmPwd'].value === this.changePwdForm['controls']['newPwd'].value) {
-        this.users.forEach((user: any, indx: number) => {
-          if(user.email === this.user.email) {
-            user['password'] = this.changePwdForm['controls']['newPwd'].value
-            console.log(user)
-          }
-        })
-      this.api.genericPut('/changepsswrd', this.user )
-        this.close()
-        this.snackBar.open('Your password, hass been changed successfully', 'OK', {duration: 3000})
-
-      }else {
-        this.snackBar.open('New password and confirm password doesn\'t match', 'OK', {duration: 3000})
+    this.api.genericPost(`/checkPassword`, {
+      plainPassword: this.changePasswordForm.value.currentPassword,
+      hashedPassword: currentPassword
+    }).subscribe((res) => {
+      if (!res) {
+        console.log(res)
+        this.snackBar.open('Your current password is incorrect', 'OK', { duration: 3000 })
+      } else {
+        if (this.changePasswordForm.get('confirmPassword')?.value === this.changePasswordForm.get('newPassword')?.value) {
+          console.log("this.user.email  :", this.user.email)
+          this.users = this.api.genericGet('/get-all-users').subscribe((res) => {
+            this.users = res;
+            this.users.forEach((user: any, indx: number) => {
+            if(user.email === this.user.email) {
+              user.password = this.changePasswordForm.get('newPassword')?.value
+              this.api.genericPost('/update-user-password',user).subscribe({
+                 next: (res: any) => {
+                  console.log('changi passw resp')
+                 } });
+            }
+          })
+          });
+          
+          console.log("this.users.email", this.users.email)
+          this.close()
+          this.snackBar.open('Your password, hass been changed successfully', 'OK', { duration: 3000 })
+  
+        } else {
+          console.log(res)
+          this.snackBar.open('New password and confirm password doesn\'t match', 'OK', { duration: 3000 })
+        }
       }
-    }
+
+    })
 
   }
 
-  
+
   close() {
     this.matDialogRef.close()
   }

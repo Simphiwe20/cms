@@ -1,27 +1,27 @@
-<form [formGroup]="changePwdForm" class="padding-20px">
+<form [formGroup]="changePasswordForm" class="padding-20px">
     <div class="flex column gap-2">
         <p class="close" (click)="close()">X</p>
         <mat-form-field class="example-full-width">
             <mat-label>Current Password</mat-label>
-            <input type="password" matInput formControlName="currentPwd" 
+            <input type="password" matInput formControlName="currentPassword" 
             placeholder="******" required>
-            <mat-error *ngIf="changePwdForm.get('currentPwd')?.hasError('required')">
+            <mat-error *ngIf="changePasswordForm.get('currentPassword')?.hasError('required')">
                 Current password is <strong>required</strong>
             </mat-error>
         </mat-form-field>
         <mat-form-field class="example-full-width">
             <mat-label>New Password</mat-label>
-            <input type="password" matInput formControlName="newPwd" 
+            <input type="password" matInput formControlName="newPassword" 
             placeholder="******" required>
-            <mat-error *ngIf="changePwdForm.get('newPwd')?.hasError('required')">
+            <mat-error *ngIf="changePasswordForm.get('newPassword')?.hasError('required')">
                 New password is <strong>required</strong>
             </mat-error>
         </mat-form-field>
         <mat-form-field class="example-full-width">
             <mat-label>Confirm New Password</mat-label>
-            <input type="password" matInput formControlName="confirmPwd" 
+            <input type="password" matInput formControlName="confirmPassword" 
             placeholder="******" required>
-            <mat-error *ngIf="changePwdForm.get('confirmPwd')?.hasError('required')">
+            <mat-error *ngIf="changePasswordForm.get('confirmPassword')?.hasError('required')">
                 Confirm new password is <strong>required</strong>
             </mat-error>
         </mat-form-field>
