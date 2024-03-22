@@ -11,13 +11,34 @@ import { ApisServicesService } from 'src/app/services/apis-services.service';
 export class BarComponent {
   _claims = localStorage.getItem('claims');
   claimData = this. _claims ? JSON.parse(this._claims) : []
+  deathClaims: any;
+  counts: any;
   approvedClaimsCount: number = 0;
   reviewedClaimsCount:number =0;
   submittedClaimsCount:number =0
-  constructor() {
-    this.countApprovedClaims();
-    this.countReviewedClaims();
-    this.countSubmittedClaims()
+  rejectedClaimsCount: number = 0;
+  constructor(private api: ApisServicesService) {
+    // this.countApprovedClaims();
+    // this.countReviewedClaims();
+    // this.countSubmittedClaims()
+
+    this.api.genericGet('/get-death-claims')
+    .subscribe({
+      next: (res) => {
+        this.deathClaims = res
+        this.deathClaims = this.deathClaims ? this.deathClaims.length : 0;
+        this.counts = res
+        console.log(this.deathClaims)
+        this.approvedClaimsCount = this.counts.filter((claim:any) => claim.status == 'Aproved').length
+        this.reviewedClaimsCount = this.counts.filter((claim:any) => claim.status == 'Reviewed').length
+        this.submittedClaimsCount = this.counts.filter((claim:any) => claim.status == 'Submitted').length
+        this.rejectedClaimsCount = this.counts.filter((claim:any) => claim.status == 'Rejected').length
+        // this._claims = res
+        console.log(this.approvedClaimsCount)
+      },
+      error: (err) => { console.log(err) },
+      complete: () => { }
+    })
   }
  
   countApprovedClaims(): any {
@@ -32,10 +53,10 @@ export class BarComponent {
   public barChartLegend = true;
   public barChartPlugins = [];
 
-  public barChartData: ChartConfiguration<'bar'>['data'] = {
-    labels: [ ' death policy', 'Property Loss and Damage Claim', 'Public Liability Claim' ],
+  barChartData: ChartConfiguration<'bar'>['data'] = {
+    labels: [ ' Death Claim', 'Property Loss and Damage Claim', 'Public Liability Claim' ],
     datasets: [
-      { data: [ this.countApprovedClaims()  ], label: 'approved' },
+      { data: [ this.approvedClaimsCount  ], label: 'approved' },
       { data: [  this.countReviewedClaims() ], label: 'Reviewed' },
       { data: [ this.countSubmittedClaims() ], label: 'Submitted' }
     ]

@@ -14,6 +14,8 @@ export class PieComponent implements AfterViewInit {
 
   approve: number = 0;
   deathClaims: any;
+  pieChartLabels: any;
+  pieChartDatasets: any;
 
   _claims: any;
   // claimData = this._claims ? JSON.parse(this._claims) : []
@@ -29,10 +31,14 @@ export class PieComponent implements AfterViewInit {
           this.deathClaims = res
           this._claims = res
           console.log(res)
-          this.countApprovedClaims()
-          this.countSubmittedClaims()
-          this.countRejectedClaims()
-          this.countReviewedClaims()
+          this.approvedClaimsCount = this._claims.filter((claim:any) => claim.status == 'Aproved').length
+          this.reviewedClaimsCount = this._claims.filter((claim:any) => claim.status == 'Reviewed').length
+          this.submittedClaimsCount = this._claims.filter((claim:any) => claim.status == 'Submitted').length
+          this.rejectedClaimsCount = this._claims.filter((claim:any) => claim.status == 'Rejected').length
+          this.pieChartLabels = [['Approved'], ['Reviewed'], ['Rejected'], 'Submitted'];
+          this.pieChartDatasets = [{
+            data: [this.approvedClaimsCount, this.reviewedClaimsCount, this.rejectedClaimsCount, this.submittedClaimsCount]
+          }];
         },
         error: (err) => { console.log(err) },
         complete: () => { }
@@ -100,14 +106,12 @@ export class PieComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     console.log(this._claims)
-    // this.countApprovedClaims();
-    // this.countReviewedClaims();
-    // this.countSubmittedClaims()
+
   }
-  public pieChartLabels = [['Approved'], ['Reviewed'], ['Rejected'], 'Submitted'];
-  public pieChartDatasets = [{
-    data: [this.approvedClaimsCount, this.reviewedClaimsCount, this.rejectedClaimsCount, this.submittedClaimsCount]
-  }];
+  // public pieChartLabels = [['Approved'], ['Reviewed'], ['Rejected'], 'Submitted'];
+  // public pieChartDatasets = [{
+  //   data: [this.approvedClaimsCount, this.reviewedClaimsCount, this.rejectedClaimsCount, this.submittedClaimsCount]
+  // }];
   public pieChartLegend = true;
   public pieChartPlugins = [];
 

@@ -13,16 +13,16 @@
             </mat-form-field>
         </div>
         <div *ngIf="!eligibility && currentUser.role === 'claimer'">
-            {{currentUser.firstName}}{{ currentUser.lastName}} is currently not eligible for a claim. Our policy says
-            our the clients became eligible after paying with us for 3 months. To find out more please contact our agent
+            {{currentUser.firstName}} {{ currentUser.lastName}} is currently not eligible for a claim. Our policy says
+            our clients became eligible after paying with us for 3 months. To find out more please contact our agent
             or go to the nearest branch. Thank you
         </div>
         <div *ngIf="claim && !eligibility && currentUser.role !== 'claimer'">
             This person is currently not eligible for a claim. Our policy says
-            our the clients became eligible after paying with us for 3 months. To find out more please contact our agent
+            our clients became eligible after paying with us for 3 months. To find out more please contact our agent
             or go to the nearest branch. You can also check out company more which details more about our claim policies. Thank you.
         </div>
-        <p *ngIf="currentUser.role === 'agent' && !claim">To add a claim on behalf of a PolicyHolder, look up the PolicyHolder on the table and click it</p>
+        <p *ngIf="currentUser.role === 'agent' && !claim">To add a claim on behalf of a PolicyHolder, look up the PolicyHolder on the table and click the add circle button on the claim column</p>
         <mat-card class="full-width flex-1 padding-15" *ngIf="currentUser.role === 'agent' && !claim">
             <mat-card-content class="flex column gap-1">
                 <mat-form-field>
@@ -56,6 +56,12 @@
                         <ng-container matColumnDef="policyNumber">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Member ID </th>
                             <td mat-cell *matCellDef="let row"> {{row.memberID}} </td>
+                        </ng-container>
+
+                        <!-- Fruit Column -->
+                        <ng-container matColumnDef="startDate">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Start Date </th>
+                            <td mat-cell *matCellDef="let row"> {{row.startDate | date}} </td>
                         </ng-container>
 
                         <!-- Fruit Column -->

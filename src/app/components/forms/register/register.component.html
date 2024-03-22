@@ -46,10 +46,7 @@
                 
                 <mat-form-field class="full-width">
                     <mat-label>Gender</mat-label>
-                    <mat-select [value]="receivedClient.gender" formControlName="gender">
-                        <mat-option value="female">Female</mat-option>
-                        <mat-option value="male">Male</mat-option>
-                    </mat-select>
+                    <input type="email" [value]="receivedClient.gender" formControlName="gender" matInput placeholder="Ex. pat@example.com" >
                     <mat-error *ngIf="registrationForm.get('gender')?.hasError('required')">
                         Gender is required
                     </mat-error>

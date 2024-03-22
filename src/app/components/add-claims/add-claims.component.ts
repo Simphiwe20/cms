@@ -16,7 +16,7 @@ export class AddClaimsComponent {
   currentUser: any;
 
   dataSource!: MatTableDataSource<[]>;
-  displayedColumns: string[] = ['firstName', 'lastName', 'idNumber', 'policyNumber', 'claim']
+  displayedColumns: string[] = ['firstName', 'lastName', 'idNumber', 'policyNumber', 'startDate', 'claim']
 
   clients: any;
   claims: any[] = ['Death claim', 'Property Loss Claim', 'Public Liability']

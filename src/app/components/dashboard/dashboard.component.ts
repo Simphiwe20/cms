@@ -11,24 +11,25 @@ export class DashboardComponent {
   claimData = this._claims ? JSON.parse(this._claims) : []
   approvedClaimsCount: number = 0;
   reviewedClaimsCount: number = 0;
-  submittedClaimsCount: number = 0
+  submittedClaimsCount: number = 0;
+  rejectedClaimsCount: number = 0
   totalClaims: number = this.claimData.length
   deathClaims: any;
+  counts: any;
   constructor(private api: ApiService) {
     this.api.genericGet('/get-death-claims')
       .subscribe({
         next: (res) => {
           this.deathClaims = res
-          this.deathClaims = this.deathClaims.length
+          this.deathClaims = this.deathClaims ? this.deathClaims.length : 0;
+          this.counts = res
           console.log(this.deathClaims)
-          this.approvedClaimsCount = this.deathClaims.filter((claim:any) => claim.status == 'Approved').length
+          this.approvedClaimsCount = this.counts.filter((claim:any) => claim.status == 'Aproved').length
+          this.reviewedClaimsCount = this.counts.filter((claim:any) => claim.status == 'Reviewed').length
+          this.submittedClaimsCount = this.counts.filter((claim:any) => claim.status == 'Submitted').length
+          this.rejectedClaimsCount = this.counts.filter((claim:any) => claim.status == 'Rejected').length
           // this._claims = res
           console.log(this.approvedClaimsCount)
-          // console.log(res)
-          // this.countApprovedClaims()
-          // this.countSubmittedClaims()
-          // this.countRejectedClaims()
-          // this.countReviewedClaims()
         },
         error: (err) => { console.log(err) },
         complete: () => { }

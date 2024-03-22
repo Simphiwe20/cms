@@ -3,16 +3,16 @@
         <div class="left flex column gap2em">
             <div class="topL">
                 <mat-card class="flex center-center">
-                    <mat-card-content class="flex column ">
+                    <mat-card-content class="flex lightBlue column ">
                         <h3> Claims Status</h3>
-                        <div class="flex  gap2em">
+                        <div class="flex gap2em">
                             <div >
                                 <h4 class="flex"> <mat-icon>check_box</mat-icon>Approved : {{approvedClaimsCount}} </h4>
                                 <h4 class="flex "> <mat-icon>pending</mat-icon> Reviewed :{{reviewedClaimsCount}}</h4>
                             </div>
                             <div>
-                                <h4 class="flex "> <mat-icon>cancel</mat-icon> Submitted:{{submittedClaimsCount}}</h4>
-                                <h4 class="flex "> <mat-icon>cancel</mat-icon> Rejected:{{submittedClaimsCount}}</h4>
+                                <h4 class="flex "> <mat-icon>loyalty</mat-icon> Submitted:{{submittedClaimsCount}}</h4>
+                                <h4 class="flex "> <mat-icon>cancel</mat-icon> Rejected:{{rejectedClaimsCount}}</h4>
                             </div>
                         </div>
                     </mat-card-content>
@@ -25,10 +25,12 @@
         <div class="right flex column gap2em">
             <div class="topR">
                 <mat-card class="flex column center-center">
-                    <mat-card-content class="flex column center-center">
-                        <h3> Claims Status</h3>
-                        <div class="flex">
-                            <h4 class="flex"> <mat-icon>check_box</mat-icon>Death Claims Claims : {{deathClaims}} </h4>
+                    <mat-card-content class="flex lightBlue column center-center">
+                        <h3> Claims </h3>
+                        <div class="">
+                            <h4 class="flex">Death Claims : {{deathClaims}} </h4>
+                            <h4 class="flex">Property Loss Claims : 0 </h4>
+                            <h4 class="flex">Public Liability Claims : 0 </h4>
                             <!-- <h2 class ="flex h2style">   <mat-icon>pending</mat-icon> Pending :{{reviewedClaimsCount}}</h2>
                         <h2 class ="flex h2style">  <mat-icon>cancel</mat-icon> Decline:{{submittedClaimsCount}}</h2> -->
                         </div>

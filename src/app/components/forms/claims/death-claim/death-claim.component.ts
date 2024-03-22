@@ -110,6 +110,7 @@ export class DeathClaimComponent implements AfterViewInit, OnChanges {
 
   fileUpload(e: any, inputIndex: number): void {
     const files: FileList = e.target.files;
+    console.log(files)
     const fileArray: File[] = [];
     for (let i = 0; i < files.length; i++) {
       fileArray.push(files[i]);

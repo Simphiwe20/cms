@@ -30,7 +30,43 @@ export class ClaimsComponent {
 
   constructor(private shared: SharedServicesService, private api: ApisServicesService,
     private matDialog: MatDialog) {
+    this.getUpdatedData()
 
+    this.api.genericGet('/get-all-files')
+      .subscribe({
+        next: (res) => {
+          console.log(res)
+        },
+        error: () => { },
+        complete: () => { }
+      })
+    
+    this.currentUser = this.shared.getUser('currentUser', 'session')
+
+    this.statuses = this.currentUser.role === 'agent' ? ['Reviewed', 'Rejected'] : ['Approved', 'Rejected']
+
+    this.displayedColumns = this.currentUser.role === 'claimer' ? ['firstName', 'lastName', 'memberID', 'claimName', 'dateSubmitted', 'status'] : ['firstName', 'lastName', 'memberID', 'claimName', 'dateSubmitted', 'status', 'document'];
+
+
+    // Assign the data to the data source for the table to render
+    this.dataSource = new MatTableDataSource();
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  getUpdatedData() {
     this.api.genericGet('/get-death-claims')
       .subscribe({
         next: (_res) => {
@@ -72,38 +108,6 @@ export class ClaimsComponent {
         complete: () => { }
       })
 
-    this.api.genericGet('/get-all-files')
-      .subscribe({
-        next: (res) => {
-          console.log(res)
-        },
-        error: () => { },
-        complete: () => { }
-      })
-    
-    this.currentUser = this.shared.getUser('currentUser', 'session')
-
-    this.statuses = this.currentUser.role === 'agent' ? ['Reviewed', 'Rejected'] : ['Approved', 'Rejected']
-
-    this.displayedColumns = this.currentUser.role === 'claimer' ? ['firstName', 'lastName', 'memberID', 'claimName', 'dateSubmitted', 'status'] : ['firstName', 'lastName', 'memberID', 'claimName', 'dateSubmitted', 'status', 'document'];
-
-
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource();
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
   }
 
   
@@ -128,6 +132,16 @@ export class ClaimsComponent {
             complete: () => { }
           })
         console.log(this.deathClaims[indx])
+        this.api.genericGet('/get-death-claims')
+          .subscribe({
+            next: (res) => {
+              let data = res
+              console.log(data)
+            },
+            error: () => {},
+            complete: () => {}
+           })
+
       }
     });
   }
