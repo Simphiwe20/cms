@@ -31,6 +31,6 @@ export class ProfileComponent {
   }
   changePwd() {
     console.log('Pop  up opened')
-    // this.matDialog.open(ChangePwdComponent)
+    const MatDialogRef= this.matDialog.open(ChangePwdComponent)
   }
 }

@@ -22,6 +22,7 @@ export class ChangePwdComponent {
     this.users = this.api.genericGet('/get-users').subscribe((res) => {
       this.users = res;
     });
+    
 
     this.changePasswordForm = new FormGroup({
       currentPassword: new FormControl('', [Validators.required]),
@@ -36,24 +37,30 @@ export class ChangePwdComponent {
       hashedPassword: currentPassword
     }).subscribe((res) => {
       if (!res) {
+        console.log(res)
         this.snackBar.open('Your current password is incorrect', 'OK', { duration: 3000 })
       } else {
-        if (this.changePasswordForm['controls']['confirmPassword'].value === this.changePasswordForm['controls']['newPassword'].value) {
-          console.log("this.user.email", this.user.email)
-          this.users.forEach((user: any, indx: number) => {
+        if (this.changePasswordForm.get('confirmPassword')?.value === this.changePasswordForm.get('newPassword')?.value) {
+          console.log("this.user.email  :", this.user.email)
+          this.users = this.api.genericGet('/get-all-users').subscribe((res) => {
+            this.users = res;
+            this.users.forEach((user: any, indx: number) => {
             if(user.email === this.user.email) {
-              user.password = this.changePasswordForm['controls']['newPassword'].value
+              user.password = this.changePasswordForm.get('newPassword')?.value
               this.api.genericPost('/update-user-password',user).subscribe({
                  next: (res: any) => {
                   console.log('changi passw resp')
                  } });
             }
           })
+          });
+          
           console.log("this.users.email", this.users.email)
           this.close()
           this.snackBar.open('Your password, hass been changed successfully', 'OK', { duration: 3000 })
   
         } else {
+          console.log(res)
           this.snackBar.open('New password and confirm password doesn\'t match', 'OK', { duration: 3000 })
         }
       }

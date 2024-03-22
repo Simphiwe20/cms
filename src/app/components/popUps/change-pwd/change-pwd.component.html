@@ -19,7 +19,7 @@
         </mat-form-field>
         <mat-form-field class="example-full-width">
             <mat-label>Confirm New Password</mat-label>
-            <input type="password" matInput formControlName=" confirmPassword" 
+            <input type="password" matInput formControlName="confirmPassword" 
             placeholder="******" required>
             <mat-error *ngIf="changePasswordForm.get('confirmPassword')?.hasError('required')">
                 Confirm new password is <strong>required</strong>

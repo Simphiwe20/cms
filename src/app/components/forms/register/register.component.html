@@ -108,7 +108,7 @@
                     </mat-form-field>
                     <mat-form-field class="full-width">
                         <mat-label>City</mat-label>
-                        <input type="text" [value]="receivedClient.city" matInput formControlName="city" placeholder="Enter your City">
+                        <input type="text" [value]="receivedClient.address.city" matInput formControlName="city" placeholder="Enter your City">
                         <mat-error *ngIf="registrationForm.get('address.city')?.hasError('required')">
                             City is <strong>required</strong>
                         </mat-error>
