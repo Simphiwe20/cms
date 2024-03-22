@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { ApisServicesService } from 'src/app/services/apis-services.service';
 
 @Component({
@@ -20,11 +21,11 @@ export class PropLossClaimComponent implements OnChanges {
     location: new FormControl('', [Validators.required]),
     lossState: new FormControl('', [Validators.required]),
     premises: new FormControl('', [Validators.required]),
-    byWhom: new FormControl('', [Validators.required]),
-    lastOccuppied: new FormControl('', [Validators.required]),
-    forceEntry: new FormControl('', [Validators.required]),
-    forcedDetails: new FormControl('', [Validators.required]),
-    evidence: new FormControl('', [Validators.required]),
+    byWhom: new FormControl(''),
+    lastOccuppied: new FormControl(''),
+    forceEntry: new FormControl(''),
+    forcedDetails: new FormControl(''),
+    evidence: new FormControl(''),
     alarmActivation: new FormControl('', [Validators.required]),
     alarmCompany: new FormControl('', [Validators.required]),
 
@@ -33,7 +34,6 @@ export class PropLossClaimComponent implements OnChanges {
   item: FormGroup = new FormGroup({
     itemNum: new FormControl('', Validators.required),
     make: new FormControl('', Validators.required),
-    serial_number: new FormControl('', Validators.required),
     purchaseLocation: new FormControl('', Validators.required),
     value: new FormControl('', Validators.required)
   })
@@ -43,7 +43,10 @@ export class PropLossClaimComponent implements OnChanges {
       lossDetails: this.lossDetails,
       items: new FormArray([]),
     })
+
+
   }
+
 
   ngOnChanges(changes: SimpleChanges): void {
     this.client = this.client
@@ -71,16 +74,34 @@ export class PropLossClaimComponent implements OnChanges {
 
   submit() {
 
-    let formValues = this.claimForm.value
+    let itemArray = this.claimForm.get('items') as FormArray
+
+    console.log(itemArray)
+    itemArray.controls.forEach((control: any) => {
+      // the controls should be an array of formGroups here.
+      const valueSubscription: Subscription = control.valueChanges.subscribe(() => {
+        control.updateValueAndValidity()
+      })
+      console.log(valueSubscription)
+
+      if(control.invalid) {
+        console.log('Form array is invalid')
+      }
+
+    })
+
+    let formValues = this.claimForm.getRawValue()
     console.log(formValues)
+    console.log(this.claimForm)
+
     if (!formValues.valid) return
 
-      this.api.genericPost('/add-property-claim', formValues)
-        .subscribe({
-          next: (res) => {console.log(res) },
-          error: (err) => {console.log(err)},
-          complete: () => { }
-        })
+    this.api.genericPost('/add-property-claim', formValues)
+      .subscribe({
+        next: (res) => { console.log(res) },
+        error: (err) => { console.log(err) },
+        complete: () => { }
+      })
 
     console.log(this.claimForm)
   }

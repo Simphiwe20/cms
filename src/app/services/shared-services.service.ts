@@ -113,11 +113,12 @@ export class SharedServicesService {
             streetNumber: 20234566,
             city: "Jozi",
             code: 2009,
+            suburb: 'Jozi'
           },
           startDate: new Date()
         })
         console.log(this.newUsers[this.newUsers.length - 1])
-        this.api.genericPost('/sendPassword', employee)
+        this.api.genericPost('/sendPassword', this.newUsers[this.newUsers.length - 1])
           .subscribe({
             next: () => {},
             error: () => {},

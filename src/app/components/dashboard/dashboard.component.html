@@ -3,24 +3,34 @@
         <div class="left flex column gap2em">
             <div class="topL">
                 <mat-card class="flex center-center">
-                    <mat-card-content>
-                        <h2>All Approved Claims: <span><b>{{totalClaims}}</b></span></h2>
-                     </mat-card-content>
+                    <mat-card-content class="flex column ">
+                        <h3> Claims Status</h3>
+                        <div class="flex  gap2em">
+                            <div >
+                                <h4 class="flex"> <mat-icon>check_box</mat-icon>Approved : {{approvedClaimsCount}} </h4>
+                                <h4 class="flex "> <mat-icon>pending</mat-icon> Reviewed :{{reviewedClaimsCount}}</h4>
+                            </div>
+                            <div>
+                                <h4 class="flex "> <mat-icon>cancel</mat-icon> Submitted:{{submittedClaimsCount}}</h4>
+                                <h4 class="flex "> <mat-icon>cancel</mat-icon> Rejected:{{submittedClaimsCount}}</h4>
+                            </div>
+                        </div>
+                    </mat-card-content>
                 </mat-card>
             </div>
             <div class="bottomL">
-                <app-pie ></app-pie>
+                <app-pie></app-pie>
             </div>
         </div>
         <div class="right flex column gap2em">
             <div class="topR">
                 <mat-card class="flex column center-center">
                     <mat-card-content class="flex column center-center">
-                        <h1> Claims Status</h1>
-                        <div class="flex box ">
-                            <h2 class ="flex h2style">   <mat-icon >check_box</mat-icon>Approved : {{approvedClaimsCount}} </h2>
-                        <h2 class ="flex h2style">   <mat-icon>pending</mat-icon> Pending :{{reviewedClaimsCount}}</h2>
-                        <h2 class ="flex h2style">  <mat-icon>cancel</mat-icon> Decline:{{submittedClaimsCount}}</h2>
+                        <h3> Claims Status</h3>
+                        <div class="flex">
+                            <h4 class="flex"> <mat-icon>check_box</mat-icon>Death Claims Claims : {{deathClaims}} </h4>
+                            <!-- <h2 class ="flex h2style">   <mat-icon>pending</mat-icon> Pending :{{reviewedClaimsCount}}</h2>
+                        <h2 class ="flex h2style">  <mat-icon>cancel</mat-icon> Decline:{{submittedClaimsCount}}</h2> -->
                         </div>
                     </mat-card-content>
                 </mat-card>
