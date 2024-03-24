@@ -88,8 +88,8 @@ export class UsersComponent implements AfterViewInit {
   onFileChange(event: any): void {
     let file = event.target.files[0];
     let fileReader = new FileReader();
-    // fileReader.readAsBinaryString(file)
-    fileReader.readAsArrayBuffer(file);
+    fileReader.readAsBinaryString(file)
+    // fileReader.readAsArrayBuffer(file);
     fileReader.onload = (e: any) => {
       let workBook = XLSX.read(fileReader.result, { type: 'binary' });
       let sheetNames = workBook.SheetNames;
@@ -120,6 +120,26 @@ export class UsersComponent implements AfterViewInit {
       this.dataSource.paginator.firstPage();
     }
   }
+//   updateUserStatus(status: string, user: any): void {
+//     console.log(status)
+//     if (user.email !== 'admin@cms.co.za') {
+//         this.users?.forEach((_user: any) => {
+//             if (user.email === _user.email) {
+//                 _user['status'] = status
+//                 this.api.genericUpdate('/updates-user', _user)
+//                     .subscribe({
+//                         next: (res) => { this.getUsers() },
+//                         error: (err) => { console.log(err) },
+//                         complete: () => { }
+//                     })
+//             }
+//         })
+//     } else {
+//         console.log('Cannot disable admin account');
+//     }
+// }
+
+  
 
   updateUserStatus(status: string, user: any): void {
     console.log(status)
@@ -141,9 +161,6 @@ export class UsersComponent implements AfterViewInit {
         //     })
         // }, 500)
       }
-
     })
-
-
   }
 }

@@ -1,0 +1,15 @@
+p{
+    background-color: red;
+}
+
+$lightBlue: #4190cb;
+
+.close {
+    margin-bottom: 0;
+    margin-right: 15px;
+    text-align: end !important;
+    &:hover {
+        cursor: pointer;
+        color: $lightBlue;
+    }
+}

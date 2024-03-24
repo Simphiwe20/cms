@@ -23,7 +23,7 @@
                 <div class="flex gap-2">
                     <mat-form-field appearance="fill" class="full-width">
                         <mat-label>Date of Death</mat-label>
-                        <input formControlName="deathDate" matInput [matDatepicker]="picker1" readonly>
+                        <input formControlName="deathDate" matInput [matDatepicker]="picker1" [max]="maxDate" readonly>
                         <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
                         <mat-error *ngIf="deathClaimForm.get('deceasedDetails.deathDate')?.hasError('required')">

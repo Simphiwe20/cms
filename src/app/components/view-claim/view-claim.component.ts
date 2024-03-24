@@ -27,6 +27,7 @@ export class ViewClaimComponent {
 
   close() {
     this.dialogRef.close()
+
   }
 
   getFiles() {

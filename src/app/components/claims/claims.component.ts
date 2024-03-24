@@ -6,6 +6,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ApisServicesService } from 'src/app/services/apis-services.service';
 import { SharedServicesService } from 'src/app/services/shared-services.service';
 import { ViewClaimComponent } from '../view-claim/view-claim.component';
+import { PaymentComponent } from '../popUps/payment/payment.component';
+import { RejectReasonComponent } from '../popUps/reject-reason/reject-reason.component';
+import { ReadReasonComponent } from '../popUps/read-reason/read-reason.component';
 
 @Component({
   selector: 'app-claims',
@@ -22,11 +25,14 @@ export class ClaimsComponent {
   statuses: any;
   foundFiles: any;
 
-  displayedColumns: string[] = ['firstName', 'lastName', 'memberID', 'claimName', 'dateSubmitted', 'status', 'document'];
+  // displayedColumns: string[] = ['firstName', 'lastName', 'memberID', 'claimName', 'dateSubmitted', 'status', 'document'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'memberID', 'claimName', 'dateSubmitted', 'status', 'document', 'payment', 'giveReason', 'readReason'];
   dataSource: MatTableDataSource<[]>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
+  // row: any;
 
   constructor(private shared: SharedServicesService, private api: ApisServicesService,
     private matDialog: MatDialog) {
@@ -51,6 +57,7 @@ export class ClaimsComponent {
                           status: claim.status,
                           dateSubmitted: claim.dateSubmitted,
                           claimID: claim.claimID,
+                          reason: '',
                           submittedBy: claim.submittedBy
                         }
                       )
@@ -80,12 +87,26 @@ export class ClaimsComponent {
         error: () => { },
         complete: () => { }
       })
-    
+
     this.currentUser = this.shared.getUser('currentUser', 'session')
 
     this.statuses = this.currentUser.role === 'agent' ? ['Reviewed', 'Rejected'] : ['Approved', 'Rejected']
 
-    this.displayedColumns = this.currentUser.role === 'claimer' ? ['firstName', 'lastName', 'memberID', 'claimName', 'dateSubmitted', 'status'] : ['firstName', 'lastName', 'memberID', 'claimName', 'dateSubmitted', 'status', 'document'];
+    // this.displayedColumns = this.currentUser.role === 'claimer' ? ['firstName', 'lastName', 'memberID', 'claimName', 'dateSubmitted', 'status'] : ['firstName', 'lastName', 'memberID', 'claimName', 'dateSubmitted', 'status', 'document'];
+    // this.displayedColumns = this.currentUser.role === 'claimer' ? ['firstName', 'lastName', 'memberID', 'claimName', 'dateSubmitted', 'status', 'payment', 'readReason'] : ['firstName', 'lastName', 'memberID', 'claimName', 'dateSubmitted', 'status', 'document', 'giveReason'];
+
+    this.displayedColumns = this.currentUser.role === 'claimer' ?
+      ['firstName', 'lastName', 'memberID', 'claimName', 'dateSubmitted', 'status', 'payment', 'readReason'] :
+      ['firstName', 'lastName', 'memberID', 'claimName', 'dateSubmitted', 'status', 'document', 'giveReason'];
+
+    if (this.currentUser.role === 'agent') {
+      this.displayedColumns = ['firstName', 'lastName', 'memberID', 'claimName', 'dateSubmitted', 'status', 'document'];
+    }
+
+    if (this.currentUser.role === 'manager') {
+      this.displayedColumns = ['firstName', 'lastName', 'memberID', 'claimName', 'dateSubmitted', 'status', 'document', 'giveReason'];
+    }
+
 
 
     // Assign the data to the data source for the table to render
@@ -106,7 +127,7 @@ export class ClaimsComponent {
     }
   }
 
-  
+
   updateTable(data: any) {
     if (this.currentUser.role === 'claimer') {
       let userData = data.filter((claim: any) => claim.memberID == this.currentUser.memberID)
@@ -134,5 +155,69 @@ export class ClaimsComponent {
 
   viewClaim(ele: any) {
     this.matDialog.open(ViewClaimComponent, { data: ele })
+  }
+
+  paymentUpdate(row: any) {
+    if (this.currentUser.role === 'claimer' && row.status === 'Approved') {
+      this.matDialog.open(PaymentComponent,
+        {
+          width: '60%',
+          enterAnimationDuration: '500ms',
+          exitAnimationDuration: '500ms',
+        })
+    }
+  }
+
+  reasonUpdate(row: any): void {
+    console.log('rejecting')
+    if (this.currentUser.role === 'manager' && row.status === 'Rejected') {
+      const dialogRef = this.matDialog.open(RejectReasonComponent, {
+        width: '50%',
+        height: '60%',
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          const status = 'Rejected';
+          this.statusUpdate(status, result)
+          console.log(result, status)
+          row.reason = result
+        }
+      });
+    }
+  }
+
+  // reasonRead(row: any): void {
+  //   if (this.currentUser.role === 'claimer' && row.status === 'Rejected') {
+  //     const dialogRef = this.matDialog.open(ReadReasonComponent, {
+  //       width: '400px'
+  //     });
+
+  //     dialogRef.afterClosed().subscribe(result => {
+  //       if (result) {
+  //         const status = 'Rejected';
+  //         this.statusUpdate(status, result)
+  //       }
+  //     });
+  //   }
+  // }
+
+  reasonRead(rejectReason: string):void{
+    this.matDialog.open(ReadReasonComponent, {
+      width: '400px',
+      height: '500px',
+      data: {rejectReason: rejectReason}
+    });
+
+    console.log('Read reason', rejectReason)
+  }
+
+  onStatusChange(status: string){
+    if(status === 'Approved' || status === 'Rejected'){
+      this.api.sendEmailToClaimers().subscribe(
+        () => console.log('Emails sent successfully'),
+        error => console.error('Error sending emails', error)
+      );
+    }
   }
 }

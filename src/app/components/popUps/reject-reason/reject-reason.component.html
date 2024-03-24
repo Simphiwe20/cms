@@ -1,0 +1,11 @@
+<p class="close" (click)="close()">X</p>
+<div class="mainContainer flex center-center column">
+    <h2>Enter a reason for rejection the claim</h2>
+    <mat-form-field appearance="fill">
+        <mat-label>Reject Reason</mat-label>
+        <textarea matInput [(ngModel)]="rejectReason" required></textarea>
+    </mat-form-field>
+
+    <button mat-button (click)="onSubmit()">Submit</button>
+
+</div>

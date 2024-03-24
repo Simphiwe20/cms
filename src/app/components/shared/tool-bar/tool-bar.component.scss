@@ -33,3 +33,9 @@ $darkBlue: #163e7b;
 .gap-1 {
     gap: 1em;
 }
+
+.active {
+    color: $lightBlue !important;
+    // color: white !important;
+    border-bottom: 3px;
+}

@@ -68,6 +68,39 @@
                         </td>
                     </ng-container>
 
+                    <!-- Claimer payment -->
+                    <ng-container matColumnDef="payment" *ngIf="currentUser.role === 'claimer'">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Payment </th>
+                        <td mat-cell *matCellDef="let row; let i = index">
+                            <button mat-raised-button matTooltip="View Payment Deatils" (click)="paymentUpdate(row)"
+                            [disabled]="row.status !=='Approved'">
+                                <img src="../../../assets/images/icons8-eye-48.png" alt="" set="">
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="giveReason" *ngIf="currentUser.role === 'manager'">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> State Reason </th>
+                        <td mat-cell *matCellDef="let row; let i = index">
+                            <button mat-raised-button matTooltip="Give Rejection Reason" (click)="reasonUpdate(row)"
+                            [disabled]="row.status !== 'Rejected'">
+                                <img src="../../../assets/images/icons8-eye-48.png" alt="" set="">
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="readReason" *ngIf="currentUser.role === 'claimer'">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Read Reason </th>
+                        <td mat-cell *matCellDef="let row; let i = index">
+                            <button mat-raised-button matTooltip="View Rejection Reason" (click)="reasonRead(row)"
+                            [disabled]="row.status === 'Submitted' && currentUser.role === 'claimer' 
+                            || row.status === 'Reviewed' && currentUser.role === 'claimer' 
+                            || row.status === 'Approved' && currentUser.role === 'claimer'">
+                                <img src="../../../assets/images/icons8-eye-48.png" alt="" set="">
+                            </button>
+                        </td>
+                    </ng-container>
+
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 

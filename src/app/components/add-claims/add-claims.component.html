@@ -13,7 +13,7 @@
             </mat-form-field>
         </div>
         <div *ngIf="!eligibility && currentUser.role === 'claimer'">
-            {{currentUser.firstName}}{{ currentUser.lastName}} is currently not eligible for a claim. Our policy says
+            {{currentUser.firstName}} {{ currentUser.lastName}} is currently not eligible for a claim. Our policy says
             our the clients became eligible after paying with us for 3 months. To find out more please contact our agent
             or go to the nearest branch. Thank you
         </div>

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApisServicesService } from './apis-services.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -68,7 +69,7 @@ export class SharedServicesService {
   getWhoSubmitted(): any {
     let user = this.getUser('currentUser', 'session')
     if (user.role === 'agent') {
-      return `${user.fullName}(${user.role})`
+      return `${user.fullName} (${user.role})`
     } else {
       return 'This claim came from the policyholder\'s account'
     }
@@ -96,7 +97,7 @@ export class SharedServicesService {
     employees.forEach((employee: any, indx: number) => {
       doesUserExist = false;
       users.forEach((user: any, indx: number) => {
-        if (employee.Email === user.email) {
+        if (employee.email === user.email) {
           console.log('Found User:', user)
           doesUserExist = true;
         }
@@ -120,7 +121,7 @@ export class SharedServicesService {
         console.log(this.newUsers[this.newUsers.length - 1])
         this.api.genericPost('/sendPassword', this.newUsers[this.newUsers.length - 1])
           .subscribe({
-            next: () => {},
+            next: (res) => {console.log(res)},
             error: () => {},
             complete: () => {}
           })
@@ -136,6 +137,14 @@ export class SharedServicesService {
         })
     })
   }
+
+  _reason! : string;
+
+  getReason(reason: string){
+     this._reason = reason
+  }
+
+  
 
 
 

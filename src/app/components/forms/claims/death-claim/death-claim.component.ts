@@ -22,6 +22,7 @@ export class DeathClaimComponent implements AfterViewInit, OnChanges {
   uploadedfiles: File[][] = [];
   formData: FormData[] = []
   currentUser: any;
+  maxDate = new Date();
 
 
 

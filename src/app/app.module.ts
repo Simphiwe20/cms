@@ -32,6 +32,9 @@ import { HomeComponent } from './components/home/home.component';
 import { ViewClaimComponent } from './components/view-claim/view-claim.component';
 import { AddUserComponent } from './components/popUps/add-user/add-user.component';
 import { EditUserComponent } from './components/popUps/edit-user/edit-user.component';
+import { PaymentComponent } from './components/popUps/payment/payment.component';
+import { RejectReasonComponent } from './components/popUps/reject-reason/reject-reason.component';
+import { ReadReasonComponent } from './components/popUps/read-reason/read-reason.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +62,10 @@ import { EditUserComponent } from './components/popUps/edit-user/edit-user.compo
     HomeComponent,
     ViewClaimComponent,
     AddUserComponent,
-    EditUserComponent
+    EditUserComponent,
+    PaymentComponent,
+    RejectReasonComponent,
+    ReadReasonComponent
   ],
   imports: [
     BrowserModule,

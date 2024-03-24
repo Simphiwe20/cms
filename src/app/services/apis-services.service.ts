@@ -45,6 +45,10 @@ export class ApisServicesService {
     return this.http.put(this.baseUrl, data);
   }
 
+  sendEmailToClaimers(): Observable<any>{
+    return this.http.post('/sendEmailToClaimers', {})
+  }
+
 
 
 }
