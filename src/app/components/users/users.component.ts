@@ -107,7 +107,7 @@ export class UsersComponent implements AfterViewInit {
           error: (err) => { console.log(err) },
           complete: () => { }
         })
-    }, 500)
+    }, 700)
 
     // fileReader.readAsArrayBuffer(file);
   }

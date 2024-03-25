@@ -1,0 +1,37 @@
+<div class="form-container">
+    <div class="full-width">
+    <div class="full-width">
+        <h2 class="center">Forgot Password</h2>
+        <form [formGroup]="forgotPasswordForm" class="flex column">
+            <!-- email -->
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="email" type="email" name="email" formControlName="email" required>
+                <mat-error *ngIf="forgotPasswordForm.get('email')?.hasError('required')">Email is required</mat-error>
+                <mat-error *ngIf="forgotPasswordForm.get('email')?.hasError('email')">Please enter a valid email
+                    address</mat-error>
+            </mat-form-field>
+             <!-- id -->
+             <mat-form-field appearance="fill" class="full-width">
+                <mat-label>ID</mat-label>
+                <input class="full-width" matInput placeholder="ID Number" type="number" name="id" formControlName="idNumber" required>
+                <mat-error *ngIf="forgotPasswordForm.get('idNumber')?.hasError('required')">ID number is required</mat-error>
+                <mat-error *ngIf="forgotPasswordForm.get('idNumber')?.hasError('minLength')">ID number is to short</mat-error>
+                <mat-error *ngIf="forgotPasswordForm.get('idNumber')?.hasError('maxLength')">ID number is to long</mat-error>
+            </mat-form-field>
+
+
+            <!-- buttons -->
+            <!-- <span routerLink="/login" class="span"> Login</span> -->
+            <div class="flex gap">
+                <button mat-raised-button [disabled]="forgotPasswordForm.invalid" (click)="sendEmail()" class="send">
+                    Send
+                </button>
+                <button mat-raised-button (click)="close()"  class="cancel">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
