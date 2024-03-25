@@ -1,0 +1,35 @@
+$lightBlue: #4190cb;
+$darkBlue: #163e7b;
+
+.form-container {
+    width: 500px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    box-sizing: border-box;
+}
+
+.full-width {
+    width: 100%
+}
+
+.gap {
+    gap: 2em;
+}
+
+.send {
+    background-color: $darkBlue;
+    color: white;
+}
+
+.cancel {
+    background-color: white;
+    color: $darkBlue;
+    border: 1px solid $darkBlue;
+    &:hover {
+        background-color: $darkBlue;
+        color: white;
+    }
+}

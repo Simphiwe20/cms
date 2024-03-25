@@ -108,6 +108,7 @@ export class DeathClaimComponent implements AfterViewInit, OnChanges {
         complete: () => { }
       })
     this.snackBar.open(`Member ID: ${formValues.memberID}'s Claim has been successfully submitted`, 'OK', {duration: 3000})
+    this.deathClaimForm.reset()
   }
 
   fileUpload(e: any, inputIndex: number): void {
