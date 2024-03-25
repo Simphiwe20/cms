@@ -182,7 +182,7 @@
                 <div class="flex gap-2">
                     <p class="width-20">PH's ID</p>
                     <div class="file flex start-center">
-                        <input class="m-l-30" type="file">
+                        <input class="m-l-30" (change)="fileUpload($event, 0)" id="file" type="file" multiple>
                         <!-- <mat-error *ngIf="claimForm.get('attachment.Id')?.hasError('required')">
                             PH's ID is <strong>required</strong>
                         </mat-error> -->
@@ -191,7 +191,7 @@
                 <div class="flex gap-2">
                     <p class="width-20">Loss or damaged proof</p>
                     <div class="file flex start-center">
-                        <input class="m-l-30" type="file">
+                        <input class="m-l-30" (change)="fileUpload($event, 1)" id="file" type="file" multiple>
                         <!-- <mat-error *ngIf="claimForm.get('attachment.proof')?.hasError('required')">
                             Loss or damaged proof is <strong>required</strong>
                         </mat-error> -->
@@ -207,7 +207,7 @@
             <ng-template matStepLabel>Done</ng-template>
             <p>You are now done.</p>
 
-            <div class="flex center-center">
+            <div class="">
                 <button mat-raised-button (click)="submit()" color="primary">Submit claim</button>
             </div>
         </mat-step>

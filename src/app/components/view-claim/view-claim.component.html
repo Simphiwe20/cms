@@ -20,8 +20,22 @@
         <p>Submitted by: {{client.submittedBy}}</p>
     </div>
     <h2>Attachments</h2>
-    <div class="flex gap-2">
-        <p *ngFor="let file of files" class=" column flex center-center hover" (click)="viewFile(file.fileId)">
+    <div *ngIf="client.claimName.includes('Death')" class="flex gap-2">
+        <p *ngFor="let file of deathClaimFiles" class=" column flex center-center hover"
+            (click)="viewFile(file.fileId)">
+            <mat-icon>{{file.icon}}</mat-icon>
+            <small>{{file.docType}}</small>
+        </p>
+    </div>
+    <div *ngIf="client.claimName.includes('Public')" class="flex gap-2">
+        <p *ngFor="let file of publicClaimFiles" class=" column flex center-center hover"
+            (click)="viewFile(file.fileId)">
+            <mat-icon>{{file.icon}}</mat-icon>
+            <small>{{file.docType}}</small>
+        </p>
+    </div> <div *ngIf="client.claimName.includes('Property')" class="flex gap-2">
+        <p *ngFor="let file of propClaimFiles" class=" column flex center-center hover"
+            (click)="viewFile(file.fileId)">
             <mat-icon>{{file.icon}}</mat-icon>
             <small>{{file.docType}}</small>
         </p>

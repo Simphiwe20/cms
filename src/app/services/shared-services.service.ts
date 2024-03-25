@@ -53,7 +53,7 @@ export class SharedServicesService {
     return months <= 0 ? 0 : months;
   }
 
-  uploadFiles(files: File[][]): Promise<any> {
+  uploadFiles(files: File[][], fileType: string): Promise<any> {
     const formData = new FormData();
     files.forEach((fileArray, index) => {
       fileArray.forEach((file, subIndex) => {
@@ -62,7 +62,7 @@ export class SharedServicesService {
     });
 
 
-    return this.api.genericPost('/upload', formData).toPromise();
+    return this.api.genericPost(`${fileType}`, formData).toPromise();
   }
 
   getWhoSubmitted(): any {

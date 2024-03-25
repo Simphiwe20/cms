@@ -1,17 +1,19 @@
-<div class="flex center-center full-height m-t-3em">
+<div class="flex center-center height-95 m-t-3em">
   <div class="containerr">
 
     <div class="content column">
-      <img src="../../../assets/urban-line-user-2.gif" alt="" width="64%" *ngIf="profile.gender === 'male'">
-      <img src="../../../assets/urban-line-user-3.gif" alt="" width="64%" *ngIf="profile.gender === 'female'">
-      <img src="../../../assets/images/onlaptop.png" alt="" width="64%" *ngIf="profile.gender === undefined">
+      <img src="../../../assets/urban-line-user-2.gif" alt="" width="64%"
+        *ngIf="profile.gender === 'Male' || profile.gender=== 'male'">
+      <img src="../../../assets/urban-line-user-3.gif" alt="" width="64%" *ngIf="profile.gender === 'Female'">
+      <img src="../../../assets/images/onlaptop.png" alt="" width="64%" *ngIf="profile.gender ==='none'">
 
     </div>
-   <h2 class="lightBlueC"> {{ profile.name }} {{ profile.surname }} {{profile.fullName}} </h2>
-    <button mat-raised-button class="btn1" (click)="edit()">edit profile</button>
-    <button mat-raised-button class="btn1" (click)=" changePwd()">change Password</button>
+    <h2 class="lightBlueC"> {{ profile.firstName }} {{ profile.lastName }} </h2>
+
+    <button class="btn2" mat-raised-button (click)="changePwd()">change Password</button>
 
   </div>
+  <!-- </div> -->
   <mat-card>
 
     <mat-card-header>
@@ -24,11 +26,11 @@
       <div class="flex gap-1em">
         <mat-form-field class="half-width">
           <mat-label>ID</mat-label>
-          <input type="number" matInput [value]=" profile.id" readonly>
+          <input type="number" matInput [value]=" profile.idNumber" readonly>
         </mat-form-field>
         <mat-form-field class="half-width">
           <mat-label>Date of Birth</mat-label>
-          <input type="text" matInput [value]="profile.dateOfBirth |date  " readonly>
+          <input type="text" matInput [value]="profile.idNumber.toString().substring(0, 6)" readonly>
         </mat-form-field>
       </div>
       <div class="flex gap-1em">
@@ -36,24 +38,21 @@
           <mat-label> Gender</mat-label>
           <input type="text" matInput [value]=" profile.gender" readonly>
         </mat-form-field>
-        <mat-form-field class="half-width" *ngIf=" profile.agentNumber !== undefined">
-          <mat-label> policy Number</mat-label>
-          <input type="text" matInput [value]=" profile.policyNumber" readonly>
-        </mat-form-field>
-        <mat-form-field class="half-width" *ngIf="profile.role !== 'claimer' ">
+        <mat-form-field class="half-width" *ngIf=" profile.employeeID !== undefined" readonly>
           <mat-label> Agent Number</mat-label>
-          <input type="text" matInput [value]="profile.agentNumbert ? profile.agentNumbert : 'None'" readonly>
+          <input type="text" matInput [value]=" profile.employeeID" readonly>
+        </mat-form-field>
+        <mat-form-field class="half-width" *ngIf="profile.role === 'claimer' ">
+          <mat-label> member ID</mat-label>
+          <input type="text" matInput [value]="profile.memberID" readonly>
         </mat-form-field>
       </div>
       <div class="flex gap-1em">
         <mat-form-field class="half-width" *ngIf="!editF">
-          <mat-label>cell Number</mat-label>
-          <input type="number" matInput [value]="profile.contact">
+          <mat-label>Cell Number</mat-label>
+          <input type="number" matInput [value]="profile.cellNumber" readonly>
         </mat-form-field>
-        <mat-form-field class="half-width" *ngIf="editF">
-          <mat-label>cell Number</mat-label>
-          <input type="number" matInput [value]="profile.contact">
-        </mat-form-field>
+
 
         <mat-form-field class="half-width">
           <mat-label>Email</mat-label>
@@ -62,29 +61,46 @@
       </div>
 
       <div *ngIf="!editF">
-        <mat-form-field class="full-width">
-          <mat-label> adddress</mat-label>
-          <input type="text" matInput [value]="profile.streetNumber" readonly>
-          <input type="text" matInput [value]=" profile.streetNumber" readonly>
-          <input type="text" matInput [value]=" profile.suburb" readonly>
-          <input type="text" matInput [value]=" profile.city" readonly>
-          <input type="text" matInput [value]=" profile.code" readonly>
-        </mat-form-field>
+        <h2> Address </h2>
+        <div class="flex gap-1em full-width">
+          <mat-form-field class="full-width">
+            <mat-label> Street Number</mat-label>
+            <input type="text" matInput [value]="profile.address.streetNumber" readonly>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <mat-label> Street Name</mat-label>
+            <input type="text" matInput [value]=" profile.address.streetName" readonly>
+          </mat-form-field>
+        </div>
+        <div class="flex gap-1em full-width">
+          <mat-form-field class="full-width">
+            <mat-label> Suburb</mat-label>
+            <input type="text" matInput [value]=" profile.address.suburb" readonly>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <mat-label> City</mat-label>
+            <input type="text" matInput [value]=" profile.address.city" readonly>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <mat-label> Code</mat-label>
+            <input type="text" matInput [value]=" profile.address.code" readonly>
+          </mat-form-field>
+        </div>
       </div>
       <div class="flex column" *ngIf="editF">
 
-        <mat-form-field>
+        <!-- <mat-form-field>
           <mat-label> adddress</mat-label>
           <input type="text" matInput [value]=" profile.streetNumber">
-          <input type="text" matInput [value]=" profile.streetNumber">
-          <input type="text" matInput [value]=" profile.suburb">
+          <input type="text" matInput [value]=" profile.streetName">
           <input type="text" matInput [value]=" profile.city">
           <input type="text" matInput [value]=" profile.code">
-        </mat-form-field>
+        </mat-form-field> -->
 
 
       </div>
     </mat-card-content>
-   
+
   </mat-card>
+
 </div>

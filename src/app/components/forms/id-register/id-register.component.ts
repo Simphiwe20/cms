@@ -30,7 +30,7 @@ export class IdRegisterComponent {
   submit(): any {
    
     this.idnumber0 = this.idForm.value;
-    console.log(this.idnumber0)
+    console.log("form",this.idnumber0)
     this.api.genericPost('/get-client', this.idnumber0)
       .subscribe({
         next: (res: any) => {

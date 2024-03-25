@@ -15,6 +15,7 @@ export class AddClaimsComponent {
 
   currentUser: any;
 
+
   dataSource!: MatTableDataSource<[]>;
   displayedColumns: string[] = ['firstName', 'lastName', 'idNumber', 'policyNumber', 'startDate', 'claim']
 

@@ -81,7 +81,7 @@
                 <div class="flex gap-1em">
                     <mat-form-field class="full-width">
                         <mat-label>Street Name</mat-label>
-                        <input type="text" [value]="receivedClient.streetName" matInput formControlName="streetName" placeholder="Enter your Street Name">
+                        <input type="text" [value]="receivedClient.address.streetName" matInput formControlName="streetName" placeholder="Enter your Street Name">
                         <mat-error *ngIf="registrationForm.get('address.streetName')?.hasError('required')">
                             Street Name is <strong>required</strong>
                         </mat-error>
@@ -105,7 +105,7 @@
                     </mat-form-field>
                     <mat-form-field class="full-width">
                         <mat-label>City</mat-label>
-                        <input type="text" [value]="receivedClient.city" matInput formControlName="city" placeholder="Enter your City">
+                        <input type="text" [value]="receivedClient.address.city" matInput formControlName="city" placeholder="Enter your City">
                         <mat-error *ngIf="registrationForm.get('address.city')?.hasError('required')">
                             City is <strong>required</strong>
                         </mat-error>

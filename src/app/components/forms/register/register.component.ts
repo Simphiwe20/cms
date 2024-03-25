@@ -35,11 +35,11 @@ export class RegisterComponent{
       email: new FormControl({value: `${this.receivedClient.email}`, disabled: true}, [Validators.required, Validators.pattern(/^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/)]),
       cellNumber: new FormControl({value: `0${this.receivedClient.cellPhone}`, disabled: true}, [Validators.required]),
       address: new FormGroup({
-        streetName: new FormControl('', [Validators.required]),
-        streetNumber: new FormControl(null, [Validators.required]),
-        suburb: new FormControl('', [Validators.required]),
-        city: new FormControl('', [Validators.required]),
-        code: new FormControl(null, [Validators.required , Validators.max(9999)]),
+        streetName: new FormControl({value: `${this.receivedClient.address.streetName}`, disabled: true}, [Validators.required]),
+        streetNumber: new FormControl({value:`${this.receivedClient.address.streetNumber}`,disabled: true}, [Validators.required]),
+        suburb: new FormControl({value: `${this.receivedClient.address.suburb}`,disabled: true}, [Validators.required]),
+        city: new FormControl({value: `${this.receivedClient.address.city}`, disabled: true}, [Validators.required]),
+        code: new FormControl({value: `${this.receivedClient.address.code}`, disabled: true}, [Validators.required , Validators.max(9999)]),
 
       }),
 
@@ -77,7 +77,10 @@ export class RegisterComponent{
           console.log('done')
           this.router.navigate(['/login']);
         },
-        error: (err: any) => console.log('Error', err),
+        error: (err: any) => {
+          console.log('Error', err)
+          this.snackbar.open(err.error, 'OK', {duration: 3000})
+        },
         complete: () => { }
       });
   }

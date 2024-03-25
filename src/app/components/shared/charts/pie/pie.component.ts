@@ -31,7 +31,7 @@ export class PieComponent implements AfterViewInit {
           this.deathClaims = res
           this._claims = res
           console.log(res)
-          this.approvedClaimsCount = this._claims.filter((claim:any) => claim.status == 'Aproved').length
+          this.approvedClaimsCount = this._claims.filter((claim:any) => claim.status == 'Approved').length
           this.reviewedClaimsCount = this._claims.filter((claim:any) => claim.status == 'Reviewed').length
           this.submittedClaimsCount = this._claims.filter((claim:any) => claim.status == 'Submitted').length
           this.rejectedClaimsCount = this._claims.filter((claim:any) => claim.status == 'Rejected').length
@@ -43,6 +43,8 @@ export class PieComponent implements AfterViewInit {
         error: (err) => { console.log(err) },
         complete: () => { }
       })
+      this.getPropCount()
+      this.getPublicCount()
   }
 
 
@@ -68,32 +70,47 @@ export class PieComponent implements AfterViewInit {
 
 
 
+  getPropCount() {
+    this.api.genericGet('/get-prop-claims')
+    .subscribe({
+      next: (res) => {
+        this.deathClaims = res
+        this._claims = res
+        console.log(res)
+        this.approvedClaimsCount += this._claims.filter((claim:any) => claim.status == 'Approved').length
+        this.reviewedClaimsCount += this._claims.filter((claim:any) => claim.status == 'Reviewed').length
+        this.submittedClaimsCount += this._claims.filter((claim:any) => claim.status == 'Submitted').length
+        this.rejectedClaimsCount += this._claims.filter((claim:any) => claim.status == 'Rejected').length
+        this.pieChartLabels = [['Approved'], ['Reviewed'], ['Rejected'], 'Submitted'];
+        this.pieChartDatasets = [{
+          data: [this.approvedClaimsCount, this.reviewedClaimsCount, this.rejectedClaimsCount, this.submittedClaimsCount]
+        }];
+      },
+      error: (err) => { console.log(err) },
+      complete: () => { }
+    })
+  }
 
-  // constructor(){
-  // this.countStatus();
-
-  // for(let i =0 ;i< claims.length ;i++){
-  //   if(claims[i].status ==='Approved'){
-  //   this.approve +=this.approve
-  //   }
-  // }
-
-  //    console.log('number',claims.status)
-  //  console.log(this.aprovedcount())
-
-  // }
-
-  // statusCounts: { [status: string]: number } = {};
-  // countStatus(): void {
-  //   this.approvedClaimsCount = this.claimData.filter(claim => claim.status === "Approved").length;
-  // this.claimData.forEach((claim: { status: string | number; }):any => {
-  //   if (this.statusCounts[claim.status] ) {
-  //     this.statusCounts[claim.status]++;
-  //   } else {
-  //     this.statusCounts[claim.status] = 1;
-  //   }
-  //   console.log(claim.status)
-  // }
+  getPublicCount() {
+    this.api.genericGet('/get-public-claims')
+    .subscribe({
+      next: (res) => {
+        this.deathClaims = res
+        this._claims = res
+        console.log(res)
+        this.approvedClaimsCount += this._claims.filter((claim:any) => claim.status == 'Approved').length
+        this.reviewedClaimsCount += this._claims.filter((claim:any) => claim.status == 'Reviewed').length
+        this.submittedClaimsCount += this._claims.filter((claim:any) => claim.status == 'Submitted').length
+        this.rejectedClaimsCount += this._claims.filter((claim:any) => claim.status == 'Rejected').length
+        this.pieChartLabels = [['Approved'], ['Reviewed'], ['Rejected'], 'Submitted'];
+        this.pieChartDatasets = [{
+          data: [this.approvedClaimsCount, this.reviewedClaimsCount, this.rejectedClaimsCount, this.submittedClaimsCount]
+        }];
+      },
+      error: (err) => { console.log(err) },
+      complete: () => { }
+    })
+  }
 
 
 

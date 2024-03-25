@@ -1,7 +1,9 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { ApisServicesService } from 'src/app/services/apis-services.service';
+import { SharedServicesService } from 'src/app/services/shared-services.service';
 
 @Component({
   selector: 'app-prop-loss-claim',
@@ -14,6 +16,12 @@ export class PropLossClaimComponent implements OnChanges {
   isAdded: boolean = false
   claimForm!: FormGroup
   @Input() client: any;
+  currentUser: any;
+  fileElement: any;
+  fileElement1: any;
+  fileUploadResult: any = 0;
+  uploadedfiles: File[][] = [];
+  formData: FormData[] = []
 
   lossDetails: FormGroup = new FormGroup({
     dateTime: new FormControl('', [Validators.required]),
@@ -32,13 +40,16 @@ export class PropLossClaimComponent implements OnChanges {
   })
 
   item: FormGroup = new FormGroup({
-    itemNum: new FormControl('', Validators.required),
-    make: new FormControl('', Validators.required),
-    purchaseLocation: new FormControl('', Validators.required),
-    value: new FormControl('', Validators.required)
+    itemNum: new FormControl(''),
+    make: new FormControl(''),
+    purchaseLocation: new FormControl(''),
+    value: new FormControl('')
   })
 
-  constructor(private api: ApisServicesService) {
+  constructor(private api: ApisServicesService, private shared: SharedServicesService,
+     private snackBar: MatSnackBar) {
+    this.currentUser = this.shared.getUser('currentUser', 'session')
+
     this.claimForm = new FormGroup({
       lossDetails: this.lossDetails,
       items: new FormArray([]),
@@ -62,6 +73,7 @@ export class PropLossClaimComponent implements OnChanges {
     this.getItems().controls.push(this.item)
     this.isAdded = true
     this.count
+    this.claimForm.updateValueAndValidity();
   }
 
   removeItem(i: number): any {
@@ -70,31 +82,42 @@ export class PropLossClaimComponent implements OnChanges {
     if (!this.getItems().length) {
       this.isAdded = false
     }
+    this.claimForm.updateValueAndValidity();
   }
 
   submit() {
 
-    let itemArray = this.claimForm.get('items') as FormArray
 
-    console.log(itemArray)
-    itemArray.controls.forEach((control: any) => {
-      // the controls should be an array of formGroups here.
-      const valueSubscription: Subscription = control.valueChanges.subscribe(() => {
-        control.updateValueAndValidity()
-      })
-      console.log(valueSubscription)
-
-      if(control.invalid) {
-        console.log('Form array is invalid')
-      }
-
-    })
+    // Manually validate each control in the FormArray
+    this.getItems().controls.forEach(control => {
+      control.markAsTouched(); // Mark control as touched to trigger validation
+      control.updateValueAndValidity(); // Validate control
+      console.log(control.valid); // Log validity state of each control
+    });
 
     let formValues = this.claimForm.getRawValue()
+    formValues['memberID'] = this.currentUser.role === 'agent' ? this.client.memberID : this.currentUser.memberID
+    formValues['status'] = this.currentUser.role === 'agent' ? 'Reviewed' : 'Submitted'
+    formValues['dateSubmitted'] = new Date()
+    formValues['claimID'] = `Claim-${new Date().getFullYear()}${Math.floor(Math.random() * (500 - 100) + 100)}`
+    formValues['submittedBy'] = this.shared.getWhoSubmitted()
+
     console.log(formValues)
     console.log(this.claimForm)
 
-    if (!formValues.valid) return
+    if (!this.claimForm.valid) return
+    console.log(this.claimForm)
+
+    const formData = new FormData();
+    this.uploadedfiles.forEach((fileArray, index) => {
+      fileArray.forEach((file, subIndex) => {
+        formData.append(`file${index + 1}-${subIndex + 1}`, file);
+      });
+    })
+
+    this.shared.uploadFiles(this.uploadedfiles, '/upload-prop-files')
+      .then((res) => console.log(res)),
+      // .catch((err) => console.log(err))
 
     this.api.genericPost('/add-property-claim', formValues)
       .subscribe({
@@ -102,7 +125,20 @@ export class PropLossClaimComponent implements OnChanges {
         error: (err) => { console.log(err) },
         complete: () => { }
       })
-
     console.log(this.claimForm)
+    this.snackBar.open(`Member ID: ${formValues.memberID}'s Claim has been successfully submitted`, 'OK', { duration: 3000 })
   }
+
+  fileUpload(e: any, inputIndex: number): void {
+    const files: FileList = e.target.files;
+    console.log(files)
+    const fileArray: File[] = [];
+    for (let i = 0; i < files.length; i++) {
+      fileArray.push(files[i]);
+    }
+    this.uploadedfiles[inputIndex] = fileArray;
+  }
+
 }
+
+
