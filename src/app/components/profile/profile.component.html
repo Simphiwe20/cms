@@ -1,8 +1,9 @@
-<div class="flex center-center full-height m-t-3em">
+<div class="flex center-center height-95 m-t-3em">
   <div class="containerr">
 
     <div class="content column">
-      <img src="../../../assets/urban-line-user-2.gif" alt="" width="64%" *ngIf="profile.gender === 'Male'">
+      <img src="../../../assets/urban-line-user-2.gif" alt="" width="64%"
+        *ngIf="profile.gender === 'Male' || profile.gender=== 'male'">
       <img src="../../../assets/urban-line-user-3.gif" alt="" width="64%" *ngIf="profile.gender === 'Female'">
       <img src="../../../assets/images/onlaptop.png" alt="" width="64%" *ngIf="profile.gender ==='none'">
 
@@ -29,7 +30,7 @@
         </mat-form-field>
         <mat-form-field class="half-width">
           <mat-label>Date of Birth</mat-label>
-          <input type="date" matInput [value]="profile.DOB | date" readonly>
+          <input type="text" matInput [value]="profile.idNumber.toString().substring(0, 6)" readonly>
         </mat-form-field>
       </div>
       <div class="flex gap-1em">

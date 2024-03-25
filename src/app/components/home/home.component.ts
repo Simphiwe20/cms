@@ -36,8 +36,9 @@ export class HomeComponent {
         { item: 'Claims', route: '/home/claims' },
         { item: 'Add Claims', route: '/home/add-claim' },
         { item: 'Profile', route: '/home/profile' },
-        { item: 'Log Out', route: '/login' }
-      ]
+        { item: 'Log Out', route: '/login' }]
+        this.router.navigate(['/home/claims'])
+
     } else if (this.currentUser.role === 'manager') {
       this.menuItems = [
         { item: 'Dashboard', route: '/home/dashboard' },

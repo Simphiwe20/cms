@@ -34,19 +34,21 @@
             </mat-step>
             <mat-step>
                 <ng-template matStepLabel>Incident Date & Place</ng-template>
-                <div class="flex column gap-2">
-                    <mat-form-field class="full-width">
+                <div class="flex gap-2">
+                    <mat-form-field appearance="fill" class="full-width">
                         <mat-label>Date of incident</mat-label>
-                        <input formControlName="incidentDate" type="text" matInput placeholder="Ex. pat@example.com">
+                        <input formControlName="incidentDate" matInput [matDatepicker]="picker2" readonly>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
                         <mat-error *ngIf="publicLiabilityForm.get('incidentDate')?.hasError('required')">
                             Date of incident is <strong>required</strong>
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="full-width">
                         <mat-label>Time of incident</mat-label>
-                        <input formControlName="incidentTime" type="text" matInput placeholder="Ex. pat@example.com">
+                        <input formControlName="incidentTime" type="time" matInput placeholder="Ex. pat@example.com">
                         <mat-error *ngIf="publicLiabilityForm.get('incidentTime')?.hasError('required')">
-                            Incident time to the deceased is <strong>required</strong>
+                            Incident time is <strong>required</strong>
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -57,9 +59,11 @@
                         Place where incident occurred is required
                     </mat-error>
                 </mat-form-field>
-                <mat-form-field class=" full-width">
-                    <mat-label>On what date did the insured become aware of the incident </mat-label>
-                    <input formControlName="awareDate" type="text" matInput placeholder="Ex. pat@example.com">
+                <mat-form-field appearance="fill" class="full-width">
+                    <mat-label>On what date did the insured become aware of the incident</mat-label>
+                    <input formControlName="awareDate" matInput [matDatepicker]="picker1" readonly>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
                     <mat-error *ngIf="publicLiabilityForm.get('awareDate')?.hasError('required')">
                         Place where incident occurred is required
                     </mat-error>
@@ -164,8 +168,8 @@
                             </mat-error>
                         </mat-radio-group>
                     </section>
-                    <div *ngIf="publicLiabilityForm.get('hasInsuredInv')?.value">
-                        <mat-form-field class=" full-width">
+                    <div *ngIf="publicLiabilityForm.get('hasInsuredInv')?.value === 'Yes'">
+                        <mat-form-field class=" full-width" *ngIf="publicLiabilityForm.get('hasInsuredInv')?.value === 'Yes'">
                             <mat-label>What is the insured’s views / comments on Liability</mat-label>
                             <textarea formControlName="insuredComment" type="text" matInput
                                 placeholder="Ex. pat@example.com"></textarea>
@@ -173,7 +177,7 @@
                                 Details of damage is required
                             </mat-error>
                         </mat-form-field>
-                        <mat-form-field class=" full-width">
+                        <mat-form-field class=" full-width" *ngIf="publicLiabilityForm.get('hasInsuredInv')?.value === 'Yes'">
                             <mat-label>What is the insured’s view/comments on the amount claimed </mat-label>
                             <textarea formControlName="insuredOnAmount" type="text" matInput
                                 placeholder="Ex. pat@example.com"></textarea>
@@ -181,7 +185,7 @@
                                 insured’s view/comments on the amount claimed is required
                             </mat-error>
                         </mat-form-field>
-                        <mat-form-field class=" full-width">
+                        <mat-form-field class=" full-width " *ngIf="publicLiabilityForm.get('hasInsuredInv')?.value === 'Yes'">
                             <mat-label>Are there other individuals/parties who may have contributed to the incident?
                                 (excluding
                                 cleaning services) </mat-label>
@@ -191,7 +195,7 @@
                                 insured’s view/comments on the amount claimed is required
                             </mat-error>
                         </mat-form-field>
-                        <mat-form-field class=" full-width">
+                        <mat-form-field class=" full-width" *ngIf="publicLiabilityForm.get('hasInsuredInv')?.value === 'Yes'">
                             <mat-label>Are there any additional details which you wish to notify us</mat-label>
                             <textarea formControlName="additionalDetails" type="text" matInput
                                 placeholder="Ex. pat@example.com"></textarea>
@@ -223,7 +227,7 @@
                                 </div>
                                 <mat-form-field class="full-width">
                                     <mat-label>First Name</mat-label>
-                                    <input formControlName="firstName" type="number" matInput placeholder="15">
+                                    <input formControlName="firstName" type="text" matInput placeholder="15">
                                     <mat-error *ngIf="publicLiabilityForm.get('firstName')?.hasError('required')">
                                         Number of items is <strong>required</strong>
                                     </mat-error>
@@ -238,14 +242,14 @@
                                 </mat-form-field>
                                 <mat-form-field class="full-width">
                                     <mat-label>Cellphone number</mat-label>
-                                    <input formControlName="cellPhoneNo" type="text" matInput placeholder="Marko">
+                                    <input formControlName="cellPhoneNo" type="number" matInput placeholder="Marko">
                                     <mat-error *ngIf="publicLiabilityForm.get('cellPhoneNo')?.hasError('required')">
                                         Place of purchase <strong>required</strong>
                                     </mat-error>
                                 </mat-form-field>
                                 <mat-form-field class="full-width">
                                     <mat-label>Email</mat-label>
-                                    <input formControlName="email" type="text" matInput placeholder="R1000">
+                                    <input formControlName="email" type="email" matInput placeholder="R1000">
                                     <mat-error *ngIf="publicLiabilityForm.get('email')?.hasError('required')">
                                         value is <strong>required</strong>
                                     </mat-error>
@@ -265,23 +269,23 @@
             <mat-step>
                 <ng-template matStepLabel>Attachments</ng-template>
                 <p>Please upload the required documents below</p>
-                <div class="flex column gap-2" formGroupName="attachment">
+                <div class="flex column gap-2">
                     <div class="flex gap-2">
                         <p class="width-20">Third Party's ID</p>
                         <div class="file flex start-center">
-                            <input formControlName="Id" class="m-l-30" type="file">
-                            <mat-error *ngIf="publicLiabilityForm.get('attachment.Id')?.hasError('required')">
+                            <input class="m-l-30" (change)="fileUpload($event, 0)" id="file" type="file" multiple>
+                            <!-- <mat-error *ngIf="publicLiabilityForm.get('attachment.Id')?.hasError('required')">
                                 Third Party's ID is <strong>required</strong>
-                            </mat-error>
+                            </mat-error> -->
                         </div>
                     </div>
                     <div class="flex gap-2">
                         <p class="width-20">Proff of PL</p>
                         <div class="file flex start-center">
-                            <input formControlName="proof" class="m-l-30" type="file">
-                            <mat-error *ngIf="publicLiabilityForm.get('attachment.proof')?.hasError('required')">
+                            <input class="m-l-30" (change)="fileUpload($event, 1)" id="file" type="file" multiple>
+                            <!-- <mat-error *ngIf="publicLiabilityForm.get('attachment.proof')?.hasError('required')">
                                 Proff of PL is <strong>required</strong>
-                            </mat-error>
+                            </mat-error> -->
                         </div>
                     </div>
                     <div class="flex gap-2">

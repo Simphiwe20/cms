@@ -132,14 +132,6 @@ export class UsersComponent implements AfterViewInit {
             error: (err) => { console.log(err) },
             complete: () => { }
           })
-        // setTimeout(() => {
-        //   this.api.genericGet('/get-all-users')
-        //     .subscribe({
-        //       next: (res) => this.showUsers(res),
-        //       error: (err) => { console.log(err) },
-        //       complete: () => { }
-        //     })
-        // }, 500)
       }
 
     })

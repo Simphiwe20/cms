@@ -1,4 +1,4 @@
-<div class="barC flex center-center">
+<div *ngIf="loaded" class="barC flex center-center">
     <canvas baseChart
         [data]="barChartData"
         [options]="barChartOptions"

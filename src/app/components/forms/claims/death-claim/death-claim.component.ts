@@ -22,6 +22,7 @@ export class DeathClaimComponent implements AfterViewInit, OnChanges {
   uploadedfiles: File[][] = [];
   formData: FormData[] = []
   currentUser: any;
+  maxDate = new Date()
 
 
 
@@ -33,9 +34,10 @@ export class DeathClaimComponent implements AfterViewInit, OnChanges {
 
   deceasedDetails: FormGroup = new FormGroup({
     fullName: new FormControl('', [Validators.required]),
-    idNum: new FormControl('', [Validators.required]),
+    idNum: new FormControl('', [Validators.required, Validators.maxLength(13)]),
     deathDate: new FormControl('', [Validators.required]),
     deathCause: new FormControl('', [Validators.required]),
+    Other:  new FormControl(''),
     certifiedPer: new FormControl('', [Validators.required]),
     telPhone: new FormControl('', [Validators.required]),
     deathPlace: new FormControl(''),
@@ -95,7 +97,7 @@ export class DeathClaimComponent implements AfterViewInit, OnChanges {
     if (!this.deathClaimForm.valid) return
     console.log('Form Data', formData)
 
-    this.shared.uploadFiles(this.uploadedfiles)
+    this.shared.uploadFiles(this.uploadedfiles, '/upload-death-files')
       .then((res) => console.log(res)),
       // .catch((err) => console.log(err))
 
@@ -110,6 +112,7 @@ export class DeathClaimComponent implements AfterViewInit, OnChanges {
 
   fileUpload(e: any, inputIndex: number): void {
     const files: FileList = e.target.files;
+    console.log(files)
     const fileArray: File[] = [];
     for (let i = 0; i < files.length; i++) {
       fileArray.push(files[i]);

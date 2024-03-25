@@ -2,7 +2,7 @@
     <form [formGroup]="deathClaimForm" class="flex column center-center">
         <h1 class="align-text">Death Claim Form</h1>
         <mat-stepper class="full-width" orientation="vertical" #stepper>
-            <mat-step formGroupName="deceasedDetails" class="full-width flex column">
+            <mat-step formGroupName="deceasedDetails" [stepControl]="deceasedDetails" class="full-width flex column">
                 <ng-template matStepLabel>Deceased Details</ng-template>
                 <div class="flex gap-2 m-t-20">
                     <mat-form-field class="full-width">
@@ -14,16 +14,19 @@
                     </mat-form-field>
                     <mat-form-field class="full-width">
                         <mat-label>ID No.</mat-label>
-                        <input formControlName="idNum" type="text" matInput placeholder="Ex. pat@example.com">
+                        <input formControlName="idNum" type="number" matInput placeholder="9808265758083">
                         <mat-error *ngIf="deathClaimForm.get('deceasedDetails.idNum')?.hasError('required')">
                             ID number is <strong>required</strong>
+                        </mat-error>
+                        <mat-error *ngIf="deathClaimForm.get('deceasedDetails.idNum')?.hasError('maxLength')">
+                            ID number should have 13 digits <strong>required</strong>
                         </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="flex gap-2">
                     <mat-form-field appearance="fill" class="full-width">
                         <mat-label>Date of Death</mat-label>
-                        <input formControlName="deathDate" matInput [matDatepicker]="picker1" readonly>
+                        <input formControlName="deathDate" matInput [matDatepicker]="picker1" [max]="maxDate" readonly>
                         <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
                         <mat-error *ngIf="deathClaimForm.get('deceasedDetails.deathDate')?.hasError('required')">
@@ -39,6 +42,14 @@
                         </mat-select>
                         <mat-error *ngIf="deathClaimForm.get('deceasedDetails.deathCause')?.hasError('required')">
                             Death cause is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class=" full-width" *ngIf="deathClaimForm.get('deceasedDetails.deathCause')?.value === 'Other'">
+                        <mat-label>Other death cause</mat-label>
+                        <input formControlName="Other" type="text" matInput
+                            placeholder="Ex. pat@example.com">
+                        <mat-error *ngIf="deathClaimForm.get('deceasedDetails.Other')?.hasError('required')">
+                            person who certified the death <strong>is required</strong>
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -83,7 +94,7 @@
                     </div>
                 </div>
                 <div>
-                    <button mat-raised-button color="primary" matStepperNext>Next</button>
+                    <button mat-raised-button color="primary" matStepperNext="deceasedDetails.valid">Next</button>
                 </div>
             </mat-step>
             <mat-step formGroupName="undertakerDetails">
