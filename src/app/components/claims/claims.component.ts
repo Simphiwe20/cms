@@ -24,6 +24,7 @@ export class ClaimsComponent {
   files: any[] = []
   statuses: any;
   foundFiles: any;
+  claims: any;
 
   // displayedColumns: string[] = ['firstName', 'lastName', 'memberID', 'claimName', 'dateSubmitted', 'status', 'document'];
   displayedColumns: string[] = ['firstName', 'lastName', 'memberID', 'claimName', 'dateSubmitted', 'status', 'document', 'payment', 'giveReason', 'readReason'];
@@ -57,7 +58,8 @@ export class ClaimsComponent {
                           status: claim.status,
                           dateSubmitted: claim.dateSubmitted,
                           claimID: claim.claimID,
-                          reason: '',
+                          reason: claim.reason,
+                          claimerEmail: claim.email,
                           submittedBy: claim.submittedBy
                         }
                       )
@@ -92,9 +94,6 @@ export class ClaimsComponent {
 
     this.statuses = this.currentUser.role === 'agent' ? ['Reviewed', 'Rejected'] : ['Approved', 'Rejected']
 
-    // this.displayedColumns = this.currentUser.role === 'claimer' ? ['firstName', 'lastName', 'memberID', 'claimName', 'dateSubmitted', 'status'] : ['firstName', 'lastName', 'memberID', 'claimName', 'dateSubmitted', 'status', 'document'];
-    // this.displayedColumns = this.currentUser.role === 'claimer' ? ['firstName', 'lastName', 'memberID', 'claimName', 'dateSubmitted', 'status', 'payment', 'readReason'] : ['firstName', 'lastName', 'memberID', 'claimName', 'dateSubmitted', 'status', 'document', 'giveReason'];
-
     this.displayedColumns = this.currentUser.role === 'claimer' ?
       ['firstName', 'lastName', 'memberID', 'claimName', 'dateSubmitted', 'status', 'payment', 'readReason'] :
       ['firstName', 'lastName', 'memberID', 'claimName', 'dateSubmitted', 'status', 'document', 'giveReason'];
@@ -107,9 +106,6 @@ export class ClaimsComponent {
       this.displayedColumns = ['firstName', 'lastName', 'memberID', 'claimName', 'dateSubmitted', 'status', 'document', 'giveReason'];
     }
 
-
-
-    // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource();
   }
 
@@ -182,42 +178,65 @@ export class ClaimsComponent {
           this.statusUpdate(status, result)
           console.log(result, status)
           row.reason = result
+          console.log(row)
+          this.api.genericGet('/get-death-claims')
+            .subscribe({
+              next: (res) => {
+                this.claims = res
+                console.log('Row', row)
+                console.log('claims', this.claims)
+
+                let claim = this.claims.find((claim: any, indx: number) => claim.claimID === row.claimID)
+                console.log('Reason claim', claim)
+                claim['reason'] = result 
+                console.log('Updated reason', claim)
+                this.api.genericUpdate('/update-death-claim', claim)
+                  .subscribe({
+                    next: (res) => { console.log(res) },
+                    error: (err) => { console.log(err) },
+                    complete: () => { }
+                  })
+              },
+              error: () => { },
+              complete: () => { }
+            })
         }
       });
     }
   }
 
-  // reasonRead(row: any): void {
-  //   if (this.currentUser.role === 'claimer' && row.status === 'Rejected') {
-  //     const dialogRef = this.matDialog.open(ReadReasonComponent, {
-  //       width: '400px'
-  //     });
-
-  //     dialogRef.afterClosed().subscribe(result => {
-  //       if (result) {
-  //         const status = 'Rejected';
-  //         this.statusUpdate(status, result)
-  //       }
-  //     });
-  //   }
-  // }
-
   reasonRead(rejectReason: string):void{
     this.matDialog.open(ReadReasonComponent, {
-      width: '400px',
-      height: '500px',
+      width: '40%',
+      height: '55%',
       data: {rejectReason: rejectReason}
     });
 
     console.log('Read reason', rejectReason)
   }
 
-  onStatusChange(status: string){
-    if(status === 'Approved' || status === 'Rejected'){
-      this.api.sendEmailToClaimers().subscribe(
-        () => console.log('Emails sent successfully'),
-        error => console.error('Error sending emails', error)
-      );
+
+  // onStatusChange(status: string){
+  //   if(status === 'Approved' || status === 'Rejected'){
+  //     this.api.sendEmailToClaimers()
+  //       .subscribe({
+  //         next: () => {
+  //           console.log('Emails sent successfully')
+  //         },
+  //         error: (err) => { console.log(err) },
+  //         complete: () => {}
+  //       })
+  //   }
+  // }
+
+  updateClaimsStatus(status: string, claimID: string){
+    if (status === 'Approved' || status === 'Rejected'){
+      const claim = this.tableData.find(claim => claim.claimID === claimID)
+      if (claim){
+        const claimerEmail = claim.claimerEmail
+        this.shared.sendEmailToClaimer(claimerEmail, status)
+      }
     }
   }
+
 }

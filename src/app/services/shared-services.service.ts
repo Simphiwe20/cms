@@ -144,6 +144,22 @@ export class SharedServicesService {
      this._reason = reason
   }
 
+  sendEmailToClaimer(email: string, status: string): void{
+    let mailData ={
+      from: 'gsimphiwe212@gmail.com',
+      to: email, 
+      subject: 'Claim Status Update',
+      text: `Your claim status has been updated to ${status}. Please log into your CMS account to get more details. `
+    };
+
+    this.api.genericPost('/sendEmail', mailData)
+      .subscribe({
+        next: () => console.log('Email sent successfully'),
+        error: (err) => console.error('Error sending email', err),
+        complete: () => {}
+      })
+  }
+
   
 
 

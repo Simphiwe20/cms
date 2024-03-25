@@ -7,7 +7,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./read-reason.component.scss']
 })
 export class ReadReasonComponent {
-  rejectReason: string;
+  rejectReason: any;
 
   constructor(public dialogRef: MatDialogRef<ReadReasonComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) 

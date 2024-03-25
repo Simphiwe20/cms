@@ -135,7 +135,7 @@
                         </mat-form-field>
                         <mat-form-field appearance="fill" class="full-width">
                             <mat-label>Date of burial or cremation</mat-label>
-                            <input formControlName="burialDate" matInput [matDatepicker]="picker2" readonly>
+                            <input formControlName="burialDate" matInput [matDatepicker]="picker2" readonly [min]="deathClaimForm.get('deceasedDetails.deathDate')?.value">
                             <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
                             <mat-datepicker #picker2></mat-datepicker>
                             <mat-error *ngIf="deathClaimForm.get('undertakerDetails.burialDate')?.hasError('required')">
