@@ -3,12 +3,9 @@
 }
 
 .close {
-    position: absolute;
-    right: 0;
-    top: 0;
-    margin: 0 7px;
-    cursor: pointer;
-    &:hover {
-        color: #7575ff;
-    }
+    margin: 0px;
+    height: 28px;
+    width: 28px;
+    border-radius: 50%;
+    margin: 10px 10px 0px 0px;
 }

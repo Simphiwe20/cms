@@ -1,8 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Rubik+Bubbles&display=swap');
+
 html, body { height: 100%; }
+
 body { margin: 0; 
-    font-family: "Poppins", sans-serif;}
+       font-family: "Poppins", sans-serif !important;
+}
+
+$primary-color: #4190cb;
+$aliceblue: aliceblue;
+
+@mixin btn-theme($bg: $primary-color, $color: $aliceblue) {
+    background-color: $primary-color;
+    color: $color;
+}
 
 // Size
 
@@ -29,6 +40,10 @@ body { margin: 0;
     align-items: center;
 }
 
+.flex-end {
+    justify-content: end;
+}
+
 .spacebetween-center {
     justify-content: space-between;
     align-items: center;
@@ -39,5 +54,58 @@ body { margin: 0;
 }
 
 .gap-1 {
-    gap: 1
+    gap: 1em;
+}
+
+// buttons
+
+.primary-btn {
+    .mat-mdc-raised-button:not(:disabled) {
+        @include btn-theme;
+    }
+}
+
+// colors
+.hover {
+    cursor: pointer;
+    &:hover {
+        color: $aliceblue;
+        background-color: $primary-color;
+    }
+}
+
+// fonts
+.poppins {
+    font-family: "Poppins", sans-serif !important;
+}
+
+
+.font-15 {
+    font-size: 15px;
+}
+
+.font-weight-600 {
+    font-weight: 600
+}
+
+/* width */
+*::-webkit-scrollbar {
+    width: 7px;
+    height: 5px;
+}
+
+/* Track */
+*::-webkit-scrollbar-track {
+    background: $aliceblue;
+}
+
+/* Handle */
+*::-webkit-scrollbar-thumb {
+    background: $primary-color;
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+*::-webkit-scrollbar-thumb:hover {
+    background: $primary-color;
 }

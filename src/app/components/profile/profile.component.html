@@ -1,4 +1,4 @@
-<div class="flex center-center height-95 m-t-3em">
+<div class="flex center-center gap-1 height-95 m-t-3em">
   <div class="containerr">
 
     <div class="content column">
@@ -8,10 +8,13 @@
       <img src="../../../assets/images/onlaptop.png" alt="" width="64%" *ngIf="profile.gender ==='none'">
 
     </div>
-    <h2 class="lightBlueC"> {{ profile.firstName }} {{ profile.lastName }} </h2>
+    <div class="flex center-center">
+      <h2 class="lightBlueC"> {{ profile.firstName }} {{ profile.lastName }} </h2>
+    </div>
 
-    <button class="btn2" mat-raised-button (click)="changePwd()">change Password</button>
-
+    <div class="primary-btn flex center-center">
+      <button mat-raised-button (click)="changePwd()">change Password</button>
+    </div>
   </div>
   <!-- </div> -->
   <mat-card>
