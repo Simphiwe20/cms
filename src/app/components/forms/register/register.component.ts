@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/service/api.service';
+import { SharedServicesService } from 'src/app/services/shared-services.service';
 
 @Component({
   selector: 'app-register',
@@ -17,40 +18,25 @@ export class RegisterComponent {
   saCellphoneRegex = /^0(6|7|8){1}[0-9]{1}[0-9]{7}$/;
   idpattern = /^(((\d{2}((0[13578]|1[02])(0[1-9]|[12]\d|3[01])|(0[13456789]|1[012])(0[1-9]|[12]\d|30)|02(0[1-9]|1\d|2[0-8])))|([02468][048]|[13579][26])0229))(( |-)(\d{4})( |-)(\d{3})|(\d{7}))/;
   registrationForm: FormGroup;
+  internalUser: boolean = false
+  roles: Array<any> = [{value: "agent", option: "Agent"}, {value: "admin", option: "Admin"}]
+  genders: Array<any> = [{value: "male", option: "Male"}, {value: "female", option: "Female"}]
 
   constructor(private snackbar: MatSnackBar, private api: ApiService, private router: Router,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute, private sharedService: SharedServicesService) {
 
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams?.subscribe(params => {
       this.receivedClient = JSON.parse(params['data'])
       console.log(this.receivedClient)
     })
 
-    this.registrationForm = new FormGroup({
-      firstName: new FormControl({ value: `${this.receivedClient.firstName}`, disabled: true }, [Validators.required, Validators.minLength(3)]),
-      lastName: new FormControl({ value: `${this.receivedClient.lastName}`, disabled: true }, [Validators.required, Validators.minLength(3)]),
-      idNumber: new FormControl({ value: `${this.receivedClient.idNumber}`, disabled: true }, [Validators.required]),
-      gender: new FormControl({ value: `${this.receivedClient.gender}`, disabled: true }, [Validators.required]),
-      DOB: new FormControl(''),
-      email: new FormControl({ value: `${this.receivedClient.email}`, disabled: true }, [Validators.required, Validators.pattern(/^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/)]),
-      cellNumber: new FormControl({ value: `0${this.receivedClient.cellPhone}`, disabled: true }, [Validators.required]),
-      address: new FormGroup({
-        streetName: new FormControl({ value: `${this.receivedClient.address.streetName}`, disabled: true }, [Validators.required]),
-        streetNumber: new FormControl({ value: `${this.receivedClient.address.streetNumber}`, disabled: true }, [Validators.required]),
-        suburb: new FormControl({ value: `${this.receivedClient.address.suburb}`, disabled: true }, [Validators.required]),
-        city: new FormControl({ value: `${this.receivedClient.address.city}`, disabled: true }, [Validators.required]),
-        code: new FormControl({ value: `${this.receivedClient.address.code}`, disabled: true }, [Validators.required, Validators.max(9999)]),
+    if (!this.receivedClient?.firstName) {
+      this.internalUser = true
+    }
 
-      }),
-
-      password: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]),
-      confirmPassword: new FormControl('', [Validators.required])
-    })
+    this.registrationForm = this.sharedService.getFormControl(this.internalUser, this.receivedClient)
+    console.log("register: ", this.registrationForm)
   }
-
-  // ngOnInit(): void {
-
-  // }
 
   submit(): void {
     console.log(this.registrationForm.getRawValue())
@@ -64,17 +50,19 @@ export class RegisterComponent {
 
     let formValue = this.registrationForm.getRawValue();
     delete formValue.confirmPassword; // Remove password from Form Value
-    formValue['role'] = 'claimer',
-      formValue['startDate'] = this.receivedClient.startDate
-    formValue['memberID'] = this.receivedClient.memberID
-    formValue['status'] = 'active'
-    // this.getValues(formValue)
+
+    this.setUserDetails(formValue)
     console.log(formValue)
 
     this.api.genericPost('/add-user', formValue)
       .subscribe({
         next: (res: any) => {
-          console.log('done')
+          if(this.internalUser) {
+            this.sharedService.sendPwd(formValue)
+            let newUser = `${formValue.firstName} ${formValue.lastName}`
+            this.router.navigate(['/feedback'], {queryParams: {data: JSON.stringify(newUser)}})
+            return
+          }
           this.router.navigate(['/login']);
         },
         error: (err: any) => {
@@ -83,6 +71,19 @@ export class RegisterComponent {
         },
         complete: () => { }
       });
+  }
+
+  setUserDetails(formValue: any): void {
+    formValue['status'] = 'active'
+
+    if (!this.internalUser) {
+      formValue['role'] = 'claimer',
+      formValue['startDate'] = this.receivedClient.startDate
+      formValue['memberID'] = this.receivedClient.memberID
+    }else {
+      formValue['password'] = this.sharedService.generatePwd()
+      formValue['startDate'] = new Date()
+    }
   }
 
   extractBirthDate(idNumber: string): void {

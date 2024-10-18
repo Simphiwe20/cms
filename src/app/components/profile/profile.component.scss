@@ -4,14 +4,10 @@ textarea{
 .gap-1em{
     gap: 1em;
 }
-// .m-t-3em{
-//     margin-top: 3em;
-// }
 .containerr{
-    // z-index: -1;
+
     flex-direction: column;
-        width: 17%;
-        // height: 97%;
+        width: 235px;
         display: flex;
         justify-content: center;
 }
@@ -34,36 +30,18 @@ mat-card{
     z-index: -1;
     // text-align: center;
 }
-// .btn1 {
-//     border: 2px solid #163e7b;
-//     color: #163e7b;
-//     width: fit-content;
-    // margin: 1em;
-// }
-// .btn2 {
-//     background-color: #163e7b;
-//     color: white;
-//     cursor: pointer;
-// }
-
-// .btn2:hover {
-//     background-color: #00305a;
-// }
 
 .lightBlueC {
     color: #4190cb;
 }
 
-// .btn1:hover {
-//     background-color: #163e7b;
-//     color: white;
-// }
 mat-icon{
     font-size: -webkit-xxx-large;
     width: 74px;
     height: 42px;
     margin-left: 16px;
 }
+
 .btn-cancel {
     // background: #f00101 !important;
     color: #1a3f7e !important;
@@ -72,9 +50,8 @@ mat-icon{
  
     border:  2px solid #1a3f7e !important;
  }
+
 .btn-cancel:hover{
     background-color: #1a3f7e !important;
     color: #ffffff !important ;
-
-
  }

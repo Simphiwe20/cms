@@ -11,12 +11,14 @@ import { UsersComponent } from './components/users/users.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomeComponent } from './components/home/home.component';
 import { IdRegisterComponent } from './components/forms/id-register/id-register.component';
+import { FeedbackComponent } from './components/shared/feedback/feedback.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/landing', pathMatch: 'full' },
   { path: 'landing', component: LandingComponent, },
   {
-    path: 'home', component: HomeComponent, children: [
+    path: 'home', component: HomeComponent, canActivate: [ AuthGuard ], children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'claims', component: ClaimsComponent },
       { path: 'add-claim', component: AddClaimsComponent },
@@ -27,11 +29,8 @@ const routes: Routes = [
   {path:'Registration-Identifier',component:IdRegisterComponent},
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LogInComponent },
+  { path: 'feedback', component: FeedbackComponent },
   { path: '**', component: PageNotFoundComponent }
-
-
-
-
 ];
 
 @NgModule({

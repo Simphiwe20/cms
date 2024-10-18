@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApisServicesService } from './apis-services.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -117,13 +118,8 @@ export class SharedServicesService {
           },
           startDate: new Date()
         })
-        console.log(this.newUsers[this.newUsers.length - 1])
-        this.api.genericPost('/sendPassword', this.newUsers[this.newUsers.length - 1])
-          .subscribe({
-            next: () => {},
-            error: () => {},
-            complete: () => {}
-          })
+        let newUser = this.newUsers[this.newUsers.length - 1]
+        this.sendPwd(newUser)
       }
     })
 
@@ -135,6 +131,61 @@ export class SharedServicesService {
           complete: () => { }
         })
     })
+  }
+
+  sendPwd(newUser: any): any {
+    this.api.genericPost('/sendPassword', newUser)
+          .subscribe({
+            next: () => { },
+            error: () => { },
+            complete: () => { }
+    })
+  }
+
+  getFormControl(isReceived: boolean, data: any): FormGroup {
+    if (!isReceived) {
+      return new FormGroup({
+        firstName: new FormControl({ value: `${data.firstName}`, disabled: isReceived }, [Validators.required, Validators.minLength(3)]),
+        lastName: new FormControl({ value: `${data.lastName}`, disabled: isReceived}, [Validators.required, Validators.minLength(3)]),
+        idNumber: new FormControl({ value: `${data.idNumber}`, disabled: isReceived }, [Validators.required]),
+        gender: new FormControl({ value: `${data.gender}`, disabled: data.gender }, [Validators.required]),
+        DOB: new FormControl(''),
+        email: new FormControl({ value: `${data.email}`, disabled: data.email }, [Validators.required, Validators.pattern(/^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/)]),
+        cellNumber: new FormControl({ value: `0${data.cellPhone}`, disabled: data.cellPhone }, [Validators.required]),
+        address: new FormGroup({
+          streetName: new FormControl({ value: `${data.address.streetName}`, disabled: data.streetName }, [Validators.required]),
+          streetNumber: new FormControl({ value: `${data.address.streetNumber}`, disabled: data.streetNumber }, [Validators.required]),
+          suburb: new FormControl({ value: `${data.address.suburb}`, disabled: data.suburb }, [Validators.required]),
+          city: new FormControl({ value: `${data.address.city}`, disabled: data.city }, [Validators.required]),
+          code: new FormControl({ value: `${data.address.code}`, disabled: data.code }, [Validators.required, Validators.max(9999)]),
+
+        }),
+
+        password: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]),
+        confirmPassword: new FormControl('', [Validators.required])
+      })
+
+    }else {
+      return new FormGroup({
+        firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),
+        lastName: new FormControl('', [Validators.required, Validators.minLength(3)]),
+        idNumber: new FormControl('', [Validators.required]),
+        gender: new FormControl('', [Validators.required]),
+        DOB: new FormControl(''),
+        email: new FormControl('', [Validators.required, Validators.pattern(/^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/)]),
+        cellNumber: new FormControl('' , [Validators.required]),
+        address: new FormGroup({
+          streetName: new FormControl('', [Validators.required]),
+          streetNumber: new FormControl('', [Validators.required]),
+          suburb: new FormControl('', [Validators.required]),
+          city: new FormControl('', [Validators.required]),
+          code: new FormControl('', [Validators.required, Validators.max(9999)]),
+
+        }),
+        employeeID: new FormControl('' , [Validators.required]),
+        role: new FormControl('' , [Validators.required]),
+      })        
+    }
   }
 
 

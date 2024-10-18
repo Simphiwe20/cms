@@ -67,10 +67,13 @@
                         </div>
                     </div>
                     <div class="flex center-center">
-                        <label for="addUser" matTooltip="Upload a spreedsheet to add users">
-                            <input id="addUser" class="" type="file" matTooltip="Click to add users"
-                                (change)="onFileChange($event)"> Add Users
-                        </label>
+                            <input id="addUser" type="file" matTooltip="Click to add users"
+                                (change)="onFileChange($event)"> 
+                        <button mat-button [matMenuTriggerFor]="menu" class="btn">Add User/s</button>
+                        <mat-menu #menu="matMenu">
+                            <label mat-menu-item  for="addUser" matTooltip="Upload a spreedsheet to add users">Upload</label>
+                            <label mat-menu-item  routerLink='/register' matTooltip="Fill a form to add a user">Fill Form</label>
+                        </mat-menu>
                     </div>
                 </div>
             </mat-tab>

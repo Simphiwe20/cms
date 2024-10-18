@@ -1,7 +1,9 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { ApisServicesService } from 'src/app/services/apis-services.service';
 import { SharedServicesService } from 'src/app/services/shared-services.service';
 import * as XLSX from 'xlsx'
@@ -28,7 +30,7 @@ export class UsersComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private sharedService: SharedServicesService, private api: ApisServicesService) {
+  constructor(private sharedService: SharedServicesService, private api: ApisServicesService, private routes: Router) {
     this.getUsers()
     this.dataSource = new MatTableDataSource(this.users)
     console.log(this.users)
@@ -135,7 +137,5 @@ export class UsersComponent implements AfterViewInit {
       }
 
     })
-
-
   }
 }

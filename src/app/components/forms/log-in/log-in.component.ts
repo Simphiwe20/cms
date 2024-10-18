@@ -38,6 +38,7 @@ export class LogInComponent {
     this.api.genericPost('/log-in', logInForm)
       .subscribe({
         next: (res) => {
+          console.log("LOG IN NOW !!")
           this.router.navigate(['/home'])
           this.shared.storeUser('currentUser', res, 'session')
         },
