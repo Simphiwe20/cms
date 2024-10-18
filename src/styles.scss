@@ -29,6 +29,12 @@ $aliceblue: aliceblue;
     width: 50%;
 }
 
+.standard-width {
+    width: 50%;
+    min-width: 300px;
+    max-width: 400px;
+}
+
 // Flex styles 
 
 .flex {

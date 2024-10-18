@@ -12,7 +12,7 @@
             <div class="flex gap-1em full-width">
                 <mat-form-field class="full-width">
                     <mat-label>First Name</mat-label>
-                    <input type="text" [value]="receivedClient.firstName" matInput formControlName="firstName" placeholder="Enter your First Name">
+                    <input type="text" matInput formControlName="firstName" placeholder="Enter your First Name">
                     <mat-error *ngIf="registrationForm.get('firstName')?.hasError('required')">
                         First Name is <strong>required</strong>
                     </mat-error>
@@ -22,7 +22,7 @@
                 </mat-form-field>
                 <mat-form-field class="full-width">
                     <mat-label>Last Name</mat-label>
-                    <input type="text" [value]="receivedClient.lastName" matInput formControlName="lastName" placeholder="Enter your Last Name">
+                    <input type="text" matInput formControlName="lastName" placeholder="Enter your Last Name">
                     <mat-error *ngIf="registrationForm.get('lastName')?.hasError('required')">
                         Last Name is <strong>required</strong>
                     </mat-error>
@@ -35,7 +35,7 @@
                 <!-- id number -->
                 <mat-form-field class="full-width">
                     <mat-label>Identification Number </mat-label>
-                    <input type="number" [value]="receivedClient.idNumber" matInput placeholder="0000000000" formControlName="idNumber">
+                    <input type="number" matInput placeholder="0000000000" formControlName="idNumber">
                     <mat-error *ngIf="registrationForm.get('idNumber')?.hasError('required')">
                         Identification Number is required
                     </mat-error>
@@ -43,10 +43,13 @@
                         Identification Number requires 13 characters
                     </mat-error>
                 </mat-form-field>
-                
-                <mat-form-field class="full-width">
+                <mat-form-field  class="full-width">
                     <mat-label>Gender</mat-label>
-                    <input type="email" [value]="receivedClient.gender" formControlName="gender" matInput placeholder="Ex. pat@example.com" >
+                    <mat-select formControlName="gender" >
+                      <mat-option *ngFor="let gender of genders" [value]="gender.value">
+                        {{gender.option}}
+                      </mat-option>
+                    </mat-select>
                     <mat-error *ngIf="registrationForm.get('gender')?.hasError('required')">
                         Gender is required
                     </mat-error>
@@ -55,10 +58,10 @@
             <h3>Contact Details</h3>
             <div class="flex gap-1em full-width">
                 <mat-form-field class="full-width">
-                    <mat-label>Email</mat-label>
-                    <input type="email" [value]="receivedClient.email" matInput formControlName="email" placeholder="Ex. pat@example.com" >
+                    <mat-label>{{!internalUser ? "Email" : "Company email"}}</mat-label>
+                    <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com" >
                     <mat-error *ngIf="registrationForm.get('email')?.hasError('required')">
-                        Email is <strong>required</strong>
+                        {{!internalUser ? "Email" : "Company email"}} is <strong>required</strong>
                     </mat-error>
                     <mat-error *ngIf="registrationForm.get('email')?.hasError('pattern')">
                         Please enter a valid email address
@@ -66,7 +69,7 @@
                 </mat-form-field>
                 <mat-form-field class="full-width">
                     <mat-label>Cell Number</mat-label>
-                    <input type="text" matInput [value]="receivedClient.cellNumber" formControlName="cellNumber" placeholder="Enter your Cell Number"
+                    <input type="text" matInput formControlName="cellNumber" placeholder="Enter your Cell Number"
                         maxlength="10" minlength="10"  (input)="onInput(registrationForm.get('cellNumber')?.value)">
                     <mat-error *ngIf="registrationForm.get('cellNumber')?.hasError('required')">
                         Cell Number is <strong>required</strong>
@@ -81,14 +84,14 @@
                 <div class="flex gap-1em">
                     <mat-form-field class="full-width">
                         <mat-label>Street Name</mat-label>
-                        <input type="text" [value]="receivedClient.address.streetName" matInput formControlName="streetName" placeholder="Enter your Street Name">
+                        <input type="text" matInput formControlName="streetName" placeholder="Enter your Street Name">
                         <mat-error *ngIf="registrationForm.get('address.streetName')?.hasError('required')">
                             Street Name is <strong>required</strong>
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="full-width">
                         <mat-label>Street Number</mat-label>
-                        <input type="number" [value]="receivedClient.streetName" matInput formControlName="streetNumber"
+                        <input type="number" matInput formControlName="streetNumber"
                             placeholder="Enter your Street Number"  >
                         <mat-error *ngIf="registrationForm.get('address.streetNumber')?.hasError('required')">
                             Street Number is <strong>required</strong>
@@ -98,29 +101,29 @@
                 <div class="flex gap-1em full-width">
                     <mat-form-field class="full-width">
                         <mat-label>Suburb</mat-label>
-                        <input type="text" [value]="receivedClient.suburb" matInput formControlName="suburb" placeholder="Enter your Suburb">
+                        <input type="text" matInput formControlName="suburb" placeholder="Enter your Suburb">
                         <mat-error *ngIf="registrationForm.get('address.suburb')?.hasError('required')">
                             Suburb is <strong>required</strong>
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="full-width">
                         <mat-label>City</mat-label>
-                        <input type="text" [value]="receivedClient.address.city" matInput formControlName="city" placeholder="Enter your City">
+                        <input type="text" matInput formControlName="city" placeholder="Enter your City">
                         <mat-error *ngIf="registrationForm.get('address.city')?.hasError('required')">
                             City is <strong>required</strong>
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="full-width">
                         <mat-label>Code</mat-label>
-                        <input type="number" [value]="receivedClient.code" matInput formControlName="code" placeholder="Enter your Code"  >
+                        <input type="number" matInput formControlName="code" placeholder="Enter your Code"  >
                         <mat-error *ngIf="registrationForm.get('address.code')?.hasError('required')">
                             Code is <strong>required</strong>
                         </mat-error>
                     </mat-form-field>
                 </div>
             </div>
-            <h3>Security Details</h3>
-            <div class="flex gap-1em full-width full-width">
+            <h3>{{!internalUser ? "Security Details" : "Employee Details"}}</h3>
+            <div class="flex gap-1em full-width full-width" *ngIf='!internalUser'>
                 <mat-form-field class="full-width">
                     <mat-label>Password</mat-label>
                     <input type="password" matInput formControlName="password" placeholder="Enter your Password"
@@ -149,6 +152,26 @@
                     </mat-error>
                     <mat-error *ngIf="registrationForm.get('confirmPassword')?.hasError('pattern')">
                         Your password doesn't match!
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="flex gap-1em full-width full-width" *ngIf='internalUser'>
+                <mat-form-field  class="full-width">
+                    <mat-label>Role</mat-label>
+                    <mat-select formControlName="role" >
+                      <mat-option *ngFor="let role of roles" [value]="role.value">
+                        {{role.option}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="registrationForm.get('role')?.hasError('required')">
+                        Role is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="full-width">
+                    <mat-label>Employee ID</mat-label>
+                    <input type="text" matInput formControlName="employeeID" placeholder="Enter Employee ID">
+                    <mat-error *ngIf="registrationForm.get('employeeID')?.hasError('required')">
+                        Employee ID is <strong>required</strong>
                     </mat-error>
                 </mat-form-field>
             </div>

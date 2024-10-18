@@ -33,6 +33,7 @@ import { ViewClaimComponent } from './components/view-claim/view-claim.component
 import { AddUserComponent } from './components/popUps/add-user/add-user.component';
 import { EditUserComponent } from './components/popUps/edit-user/edit-user.component';
 import { ForgotpaswordComponent } from './components/popUps/forgotpasword/forgotpasword.component';
+import { FeedbackComponent } from './components/shared/feedback/feedback.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { ForgotpaswordComponent } from './components/popUps/forgotpasword/forgot
     ViewClaimComponent,
     AddUserComponent,
     EditUserComponent,
-    ForgotpaswordComponent
+    ForgotpaswordComponent,
+    FeedbackComponent
   ],
   imports: [
     BrowserModule,
