@@ -151,13 +151,13 @@ export class SharedServicesService {
         gender: new FormControl({ value: `${data.gender}`, disabled: data.gender }, [Validators.required]),
         DOB: new FormControl(''),
         email: new FormControl({ value: `${data.email}`, disabled: data.email }, [Validators.required, Validators.pattern(/^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/)]),
-        cellNumber: new FormControl({ value: `0${data.cellPhone}`, disabled: data.cellPhone }, [Validators.required]),
+        cellNumber: new FormControl({ value: `0${data.cellPhone ? data.cellPhone : ""}`, disabled: data.cellPhone }, [Validators.required]),
         address: new FormGroup({
-          streetName: new FormControl({ value: `${data.address.streetName}`, disabled: data.streetName }, [Validators.required]),
-          streetNumber: new FormControl({ value: `${data.address.streetNumber}`, disabled: data.streetNumber }, [Validators.required]),
-          suburb: new FormControl({ value: `${data.address.suburb}`, disabled: data.suburb }, [Validators.required]),
-          city: new FormControl({ value: `${data.address.city}`, disabled: data.city }, [Validators.required]),
-          code: new FormControl({ value: `${data.address.code}`, disabled: data.code }, [Validators.required, Validators.max(9999)]),
+          streetName: new FormControl({ value: `${data.address?.streetName ? data.address?.streetName : ""}`, disabled: data.streetName }, [Validators.required]),
+          streetNumber: new FormControl({ value: `${data.address?.streetNumber ? data.address?.streetNumber : ""}`, disabled: data.streetNumber }, [Validators.required]),
+          suburb: new FormControl({ value: `${data.address?.suburb ? data.address?.suburb : ""}`, disabled: data.suburb }, [Validators.required]),
+          city: new FormControl({ value: `${data.address?.city ? data.address?.city : ""}`, disabled: data.city }, [Validators.required]),
+          code: new FormControl({ value: `${data.address?.code  ? data.address?.code : ""}`, disabled: data.code }, [Validators.required, Validators.max(9999)]),
 
         }),
 
@@ -187,8 +187,4 @@ export class SharedServicesService {
       })        
     }
   }
-
-
-
-
-}
+ }
