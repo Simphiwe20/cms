@@ -4,6 +4,10 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Development server
 Run `ng serve` to run the application. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
+## Prerequisite for ruining this app sucessfully
+    -> Please clone the backend, using the link below
+    ----> https://github.com/Simphiwe20/cmsBackEnd
+
 ## Logs in
 The is a default user, admin. Credntials are as follows.
     -> username(admin@cms.com) and password(admin123)
